@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
-// import Suggestions from "../..assets/Suggestions.svg"
+import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 
 interface Props {
@@ -63,7 +63,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 aria-label="Ask question button"
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
-            >
+            ><img src={Suggestions} className={styles.questionInputSendButton}/>
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
                     :
