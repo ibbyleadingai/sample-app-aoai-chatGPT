@@ -15,6 +15,16 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
+    const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(true)
+    const promptArr = ["Help me write a school trip letter to parents", 
+    "What steps should I take when a student has constantly misbehaved",
+    "Write me an email to send to my students about the uniform policy",]
+
+    const getPrompt = () => {
+        return promptArr.map(prompt => 
+            <li>{prompt}</li>
+        )
+    }
 
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -57,13 +67,23 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
             />
+            {isSuggestionShown && 
+            <div className={styles.displaySuggestions}>
+                <ul>{getPrompt()}</ul>
+            </div>}
+
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
                 tabIndex={0}
                 aria-label="Ask question button"
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
-            ><img src={Suggestions} className={styles.questionInputSendButton}/>
+            >
+                <img src={Suggestions} 
+                className={styles.questionInputSendButton} 
+                onMouseEnter={() => setIsSuggestionShown(true)}
+                onMouseLeave={() => setIsSuggestionShown(false)}/>
+
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
                     :
