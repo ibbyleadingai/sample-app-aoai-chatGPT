@@ -16,9 +16,9 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(true)
-    const promptArr = ["Help me write a school trip letter to parents", 
-    "What steps should I take when a student has constantly misbehaved",
-    "Write me an email to send to my students about the uniform policy",]
+    const promptArr = ["Help me write a school trip letter to parents.", 
+    "What steps should I take when a student has constantly misbehaved?",
+    "Write me an email to send to my students about the uniform policy.",]
 
     const getPrompt = () => {
         return promptArr.map(prompt => 
@@ -69,7 +69,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             {isSuggestionShown && 
             <div className={styles.displaySuggestions}>
-                <ul>{getPrompt()}</ul>
+                <ul className={styles.listPrompt}>{getPrompt()}</ul>
             </div>}
 
             <div className={styles.questionInputSendButtonContainer} 

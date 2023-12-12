@@ -69,3 +69,8 @@
     border-radius: 10px;
     text-align: center;
 }
+
+.listPrompt{
+    list-style-type: none;
+    padding: 0px;
+}
