@@ -30,6 +30,7 @@
 }
 
 .questionInputSendButton {
+    cursor: pointer;
     width: 24px;
     height: 23px;
 }
@@ -61,11 +62,11 @@
 
 .displaySuggestions{
     position: absolute;
-    left: 81%;
-    bottom: 143%;
-    background-color: #bdbdbd;
-    height: 200px;
-    width: 200px;
+    left: 74%;
+    bottom: 114%;
+    background-color: whitesmoke;
+    height: auto;
+    width: 250px;
     border-radius: 10px;
     text-align: center;
 }
@@ -73,4 +74,11 @@
 .listPrompt{
     list-style-type: none;
     padding: 0px;
+    overflow-y: auto; /* This enables vertical scrolling if needed */
+}
+
+.prompts{
+    padding: 10px;
+    font-size: 11px;
+    cursor: pointer;
 }

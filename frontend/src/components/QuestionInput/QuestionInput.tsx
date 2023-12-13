@@ -15,15 +15,27 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
-    const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(true)
-    const promptArr = ["Help me write a school trip letter to parents.", 
+    const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(false)
+    const promptArr = ["Help me write a school trip letter to parents.", //IMPORT THIS //also maybe use % for responsiveness
     "What steps should I take when a student has constantly misbehaved?",
-    "Write me an email to send to my students about the uniform policy.",]
+    "Write me an email to send to my students about the uniform policy.",
+    "What are the policies for missing equipment in a classroom?",
+    "How long can I give a student detention for?"]
 
-    const getPrompt = () => {
-        return promptArr.map(prompt => 
-            <li>{prompt}</li>
-        )
+    // const getPrompt = () => {
+    //     return promptArr.map(prompt => 
+    //         <li className={styles.prompts}>{prompt}</li>
+    //     )
+    // }
+
+    const getPrompt = (count:number) => {
+        const promptElements = [];
+        const shuffledPrompts = [...promptArr].sort(() => Math.random() - 0.5);
+
+        for (let i = 0; i < count; i++){
+            promptElements.push(<li className={styles.prompts}>{shuffledPrompts[i]}</li>)
+        }
+        return promptElements
     }
 
     const sendQuestion = () => {
@@ -69,7 +81,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             {isSuggestionShown && 
             <div className={styles.displaySuggestions}>
-                <ul className={styles.listPrompt}>{getPrompt()}</ul>
+                <ul className={styles.listPrompt}>{getPrompt(3)}</ul>
             </div>}
 
             <div className={styles.questionInputSendButtonContainer} 
@@ -81,8 +93,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             >
                 <img src={Suggestions} 
                 className={styles.questionInputSendButton} 
-                onMouseEnter={() => setIsSuggestionShown(true)}
-                onMouseLeave={() => setIsSuggestionShown(false)}/>
+                onClick={() => setIsSuggestionShown(prevState => !prevState)}/>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
