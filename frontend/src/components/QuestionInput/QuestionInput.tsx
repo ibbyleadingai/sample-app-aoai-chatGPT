@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
-// import Suggestions from "../..assets/Suggestions.svg"
+import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
+import promptArr from "./promptData"
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -15,6 +16,17 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
+    const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(false)
+
+    const getPrompt = (count:number) => {
+        const promptElements = [];
+        const shuffledPrompts = [...promptArr].sort(() => Math.random() - 0.5);
+
+        for (let i = 0; i < count; i++){
+            promptElements.push(<li className={styles.prompts} onClick={() => onPromptClick(shuffledPrompts[i])}>{shuffledPrompts[i]}</li>) //onclick?
+        }
+        return promptElements
+    }
 
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -45,6 +57,11 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const sendQuestionDisabled = disabled || !question.trim();
 
+    const onPromptClick = (prompt: string) => {
+        setQuestion(prompt);
+        setIsSuggestionShown(false);
+      };
+
     return (
         <Stack horizontal className={styles.questionInputContainer}>
             <TextField
@@ -57,6 +74,11 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
             />
+            {isSuggestionShown && 
+            <div className={styles.displaySuggestions}>
+                <ul className={styles.listPrompt}>{getPrompt(3)}</ul>
+            </div>}
+
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
                 tabIndex={0}
@@ -64,6 +86,13 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
+                <img src={Suggestions} 
+                className={styles.questionInputSendButton} 
+                onClick={(e) => {
+                    e.stopPropagation();//this onclick wont trigger the parent divs onclick
+                    setIsSuggestionShown(prevState => !prevState)}
+                }/>
+
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
                     :

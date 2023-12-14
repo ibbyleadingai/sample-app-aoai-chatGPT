@@ -23,9 +23,14 @@
     position: absolute;
     right: 24px;
     bottom: 20px;
+    display: flex;
+    flex-direction:column;
+    gap: 30px; 
+    /* gap between icons */
 }
 
 .questionInputSendButton {
+    cursor: pointer;
     width: 24px;
     height: 23px;
 }
@@ -53,4 +58,26 @@
     cursor: pointer;
     width: 27px;
     height: 30px;
+}
+
+.displaySuggestions{
+    position: absolute;
+    left: 70%;
+    bottom: 114%;
+    background-color: whitesmoke;
+    height: auto;
+    width: 30%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.listPrompt{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.prompts{
+    padding: 10px;
+    font-size: 11px;
+    cursor: pointer;
 }
