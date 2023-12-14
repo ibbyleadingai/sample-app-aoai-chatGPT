@@ -62,11 +62,11 @@
 
 .displaySuggestions{
     position: absolute;
-    left: 74%;
+    left: 70%;
     bottom: 114%;
     background-color: whitesmoke;
     height: auto;
-    width: 250px;
+    width: 30%;
     border-radius: 10px;
     text-align: center;
 }
@@ -74,7 +74,6 @@
 .listPrompt{
     list-style-type: none;
     padding: 0px;
-    overflow-y: auto; /* This enables vertical scrolling if needed */
 }
 
 .prompts{

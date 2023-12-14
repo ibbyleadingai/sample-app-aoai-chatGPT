@@ -4,6 +4,7 @@ import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
 import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
+import promptArr from "./promptData"
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -16,24 +17,13 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(false)
-    const promptArr = ["Help me write a school trip letter to parents.", //IMPORT THIS //also maybe use % for responsiveness
-    "What steps should I take when a student has constantly misbehaved?",
-    "Write me an email to send to my students about the uniform policy.",
-    "What are the policies for missing equipment in a classroom?",
-    "How long can I give a student detention for?"]
-
-    // const getPrompt = () => {
-    //     return promptArr.map(prompt => 
-    //         <li className={styles.prompts}>{prompt}</li>
-    //     )
-    // }
 
     const getPrompt = (count:number) => {
         const promptElements = [];
         const shuffledPrompts = [...promptArr].sort(() => Math.random() - 0.5);
 
         for (let i = 0; i < count; i++){
-            promptElements.push(<li className={styles.prompts}>{shuffledPrompts[i]}</li>)
+            promptElements.push(<li className={styles.prompts} onClick={() => onPromptClick(shuffledPrompts[i])}>{shuffledPrompts[i]}</li>) //onclick?
         }
         return promptElements
     }
@@ -67,6 +57,11 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const sendQuestionDisabled = disabled || !question.trim();
 
+    const onPromptClick = (prompt: string) => {
+        setQuestion(prompt);
+        setIsSuggestionShown(false);
+      };
+
     return (
         <Stack horizontal className={styles.questionInputContainer}>
             <TextField
@@ -93,7 +88,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             >
                 <img src={Suggestions} 
                 className={styles.questionInputSendButton} 
-                onClick={() => setIsSuggestionShown(prevState => !prevState)}/>
+                onClick={(e) => {
+                    e.stopPropagation();//this onclick wont trigger the parent divs onclick
+                    setIsSuggestionShown(prevState => !prevState)}
+                }/>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
