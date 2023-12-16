@@ -69,6 +69,14 @@
     width: 30%;
     border-radius: 10px;
     text-align: center;
+    opacity: 0; 
+    transition: opacity 0.2s ease-in-out;
+    visibility: hidden;
+}
+
+.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .listPrompt{

@@ -74,10 +74,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
             />
-            {isSuggestionShown && 
-            <div className={styles.displaySuggestions}>
+
+            <div className={`${styles.displaySuggestions} ${isSuggestionShown ? styles.show : ""}`}>
                 <ul className={styles.listPrompt}>{getPrompt(3)}</ul>
-            </div>}
+            </div>
 
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
@@ -89,7 +89,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 <img src={Suggestions} 
                 className={styles.questionInputSendButton} 
                 onClick={(e) => {
-                    e.stopPropagation();//this onclick wont trigger the parent divs onclick
+                    e.stopPropagation();//this onclick won't trigger the parent divs onclick
                     setIsSuggestionShown(prevState => !prevState)}
                 }/>
 
