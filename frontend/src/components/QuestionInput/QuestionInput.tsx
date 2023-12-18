@@ -75,10 +75,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
             />
-            {isSuggestionShown && 
-            <div className={styles.displaySuggestions}>
+
+            <div className={`${styles.displaySuggestions} ${isSuggestionShown ? styles.show : ""}`}>
                 <ul className={styles.listPrompt}>{getPrompt(3)}</ul>
-            </div>}
+            </div>
 
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
@@ -87,7 +87,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
-                <img title="Display suggestions" src={Suggestions} 
+                <img title="Display prompt suggestions" src={Suggestions} 
                 className={styles.questionInputSendButton} 
                 onClick={(e) => {
                     e.stopPropagation();//this onclick wont trigger the parent divs onclick

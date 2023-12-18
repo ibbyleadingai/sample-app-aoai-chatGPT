@@ -62,13 +62,22 @@
 
 .displaySuggestions{
     position: absolute;
-    left: 600%;
+    left: 60%;
     bottom: 114%;
     background-color: whitesmoke;
     height: auto;
     width: 40%;
     border-radius: 10px;
     text-align: center;
+
+    opacity: 0; 
+    transition: opacity 0.2s ease-in-out;
+    visibility: hidden;
+}
+
+.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .listPrompt{
@@ -77,7 +86,7 @@
 }
 
 .prompts{
-    padding: 10px;
+    padding: 15px;
     font-size: 11px;
     cursor: pointer;
 }
