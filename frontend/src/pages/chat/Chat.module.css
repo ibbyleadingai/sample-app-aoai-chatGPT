@@ -216,7 +216,7 @@
 .stopGeneratingIcon {
     width: 14px;
     height: 14px;
-    color: #424242;
+    color: whitesmoke;
 }
 
 .stopGeneratingText {
@@ -228,7 +228,7 @@
     line-height: 20px;
     display: flex;
     align-items: center;
-    color: #242424;
+    color: whitesmoke;
     flex: none;
     order: 0;
     flex-grow: 0;

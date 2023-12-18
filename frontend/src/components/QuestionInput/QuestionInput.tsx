@@ -53,6 +53,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const onQuestionChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setQuestion(newValue || "");
+        setIsSuggestionShown(false);
     };
 
     const sendQuestionDisabled = disabled || !question.trim();

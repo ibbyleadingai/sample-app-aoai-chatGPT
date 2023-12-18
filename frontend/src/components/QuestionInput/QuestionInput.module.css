@@ -62,11 +62,11 @@
 
 .displaySuggestions{
     position: absolute;
-    left: 70%;
+    left: 600%;
     bottom: 114%;
     background-color: whitesmoke;
     height: auto;
-    width: 30%;
+    width: 40%;
     border-radius: 10px;
     text-align: center;
 }
