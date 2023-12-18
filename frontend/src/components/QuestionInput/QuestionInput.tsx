@@ -87,7 +87,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
-                <img src={Suggestions} 
+                <img title="Display suggestions" src={Suggestions} 
                 className={styles.questionInputSendButton} 
                 onClick={(e) => {
                     e.stopPropagation();//this onclick wont trigger the parent divs onclick
@@ -97,7 +97,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
                     :
-                    <img src={Send} className={styles.questionInputSendButton}/>
+                    <img title="Send prompt" src={Send} className={styles.questionInputSendButton}/>
                 }
             </div>
             <div className={styles.questionInputBottomBorder} />
