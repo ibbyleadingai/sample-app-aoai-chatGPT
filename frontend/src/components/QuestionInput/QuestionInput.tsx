@@ -53,6 +53,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const onQuestionChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setQuestion(newValue || "");
+        setIsSuggestionShown(false);
     };
 
     const sendQuestionDisabled = disabled || !question.trim();
@@ -86,7 +87,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
-                <img src={Suggestions} 
+                <img title="Display prompt suggestions" src={Suggestions} 
                 className={styles.questionInputSendButton} 
                 onClick={(e) => {
                     e.stopPropagation();//this onclick won't trigger the parent divs onclick
@@ -96,7 +97,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
                     :
-                    <img src={Send} className={styles.questionInputSendButton}/>
+                    <img title="Send prompt" src={Send} className={styles.questionInputSendButton}/>
                 }
             </div>
             <div className={styles.questionInputBottomBorder} />
