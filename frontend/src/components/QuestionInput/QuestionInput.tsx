@@ -90,7 +90,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 <img title="Display prompt suggestions" src={Suggestions} 
                 className={styles.questionInputSendButton} 
                 onClick={(e) => {
-                    e.stopPropagation();//this onclick wont trigger the parent divs onclick
+                    e.stopPropagation();//this onclick won't trigger the parent divs onclick
                     setIsSuggestionShown(prevState => !prevState)}
                 }/>
 
