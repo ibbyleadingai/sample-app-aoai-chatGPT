@@ -115,7 +115,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     className={styles.improvePromptButton}
                     onClick={(e) => {
                         e.stopPropagation();
-                        improvePrompt
+                        improvePrompt()
                     }}
                 >Improve my prompt
                 </button>
