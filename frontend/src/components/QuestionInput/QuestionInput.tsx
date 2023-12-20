@@ -44,6 +44,28 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
     };
 
+    const improvePrompt = async () => {
+        try {
+          const response = await fetch('/improve-prompt', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question }),
+          });
+    
+          if (response.ok) {
+            const improvedData = await response.json();
+            setQuestion(improvedData.improved_prompt);
+          } else {
+            // Handle error case
+            console.error('Failed to improve prompt');
+          }
+        } catch (error) {
+          console.error('Error improving prompt', error);
+        }
+      };
+
     const onEnterPress = (ev: React.KeyboardEvent<Element>) => {
         if (ev.key === "Enter" && !ev.shiftKey) {
             ev.preventDefault();
@@ -87,6 +109,17 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
+
+                <button
+                    title="Improve my prompt"
+                    className={styles.improvePromptButton}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        improvePrompt
+                    }}
+                >Improve my prompt
+                </button>
+                
                 <img title="Display prompt suggestions" src={Suggestions} 
                 className={styles.questionInputSendButton} 
                 onClick={(e) => {

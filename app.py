@@ -444,6 +444,31 @@ def conversation_with_data(request_body):
     else:
         return Response(stream_with_data(body, headers, endpoint, history_metadata), mimetype='text/event-stream')
 
+def improve_prompt_with_data(request_body):
+    body, headers = prepare_body_headers_with_data(request_body)
+    base_url = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
+    endpoint = f"{base_url}openai/deployments/{AZURE_OPENAI_MODEL}/extensions/improve-prompt?api-version={AZURE_OPENAI_PREVIEW_API_VERSION}"
+
+    try:
+        r = requests.post(endpoint, headers=headers, json=body)
+        status_code = r.status_code
+        r = r.json()
+
+        if AZURE_OPENAI_PREVIEW_API_VERSION == "2023-06-01-preview":
+            r['history_metadata'] = request_body.get("history_metadata", {})
+            return Response(format_as_ndjson(r), status=status_code)
+        else:
+            result = formatApiResponseNoStreaming(r)
+            result['history_metadata'] = request_body.get("history_metadata", {})
+            return Response(format_as_ndjson(result), status=status_code)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/improve-prompt", methods=["POST"])
+def improve_prompt_route():
+    request_body = request.json
+    return improve_prompt_with_data(request_body) 
+
 def stream_without_data(response, history_metadata={}):
     responseText = ""
     for line in response:
