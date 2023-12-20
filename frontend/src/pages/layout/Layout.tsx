@@ -39,7 +39,7 @@ const Layout = () => {
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const appStateContext = useContext(AppStateContext)
     // const AZURE_HISTORY_VISIBILITY = import.meta.env.VITE_AZURE_HISTORY_VISIBILITY === 'true';
-    // console.log(appStateContext?.state.isCosmosDBAvailable?.status)
+    console.log(appStateContext?.state.isCosmosDBAvailable?.status)
 
 
     const handleShareClick = () => {
