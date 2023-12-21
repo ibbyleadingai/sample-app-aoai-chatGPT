@@ -45,6 +45,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     };
 
     const improvePrompt = async () => {
+        console.log("About to start the improvePrompt function");
         try {
           const response = await fetch('/improve-prompt', {
             method: 'POST',
@@ -56,6 +57,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     
           if (response.ok) {
             const improvedData = await response.json();
+            console.log("Improved prompt:", improvedData.improved_prompt);
             setQuestion(improvedData.improved_prompt);
           } else {
             // Handle error case
