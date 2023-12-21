@@ -38,7 +38,21 @@ const Layout = () => {
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const appStateContext = useContext(AppStateContext)
-    const AZURE_HISTORY_VISIBLE = import.meta.env.VITE_AZURE_HISTORY_VISIBLE;
+    const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchVisibilityConfig = async () => {
+          try {
+            const response = await fetch('/get-visibility-config');
+            const data = await response.json();
+            setIsHistoryVisible(data.azure_history_visible === 'true');
+          } catch (error) {
+            console.error('Error fetching visibility config:', error);
+          }
+        };
+    
+        fetchVisibilityConfig();
+      }, []);
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
@@ -84,7 +98,7 @@ const Layout = () => {
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
-                            {AZURE_HISTORY_VISIBLE && 
+                            {isHistoryVisible && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             }
                             {/* {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
