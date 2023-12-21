@@ -44,28 +44,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
     };
 
-    const improvePrompt = async () => {
-        console.log("Running func")
-        try {
-            // Make an API call to improve the prompt using fetch
-            const response = await fetch("/improve-prompt", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ user_prompt: question }),
-            });
-            if (!response.ok) {
-                throw new Error(`Failed to improve prompt: ${response.status} ${response.statusText}`);
-            }
-            const data = await response.json();
-            // Update the prompt in the textbox with the improved prompt
-            setQuestion(data.improved_prompt);
-        } catch (error) {
-            console.error("Failed to improve prompt", error);
-        }
-    };
-
     const onEnterPress = (ev: React.KeyboardEvent<Element>) => {
         if (ev.key === "Enter" && !ev.shiftKey) {
             ev.preventDefault();
@@ -115,7 +93,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     className={styles.improvePromptButton}
                     onClick={(e) => {
                         e.stopPropagation();
-                        improvePrompt()
                     }}
                 >Improve my prompt
                 </button>

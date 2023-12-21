@@ -451,31 +451,6 @@ def conversation_with_data(request_body):
     else:
         return Response(stream_with_data(body, headers, endpoint, history_metadata), mimetype='text/event-stream')
 
-def improve_prompt_logic(prompt):
-    # Use your OpenAI code here to improve the prompt
-    # For simplicity, let's just append " (improved)" to the prompt
-    improved_prompt = f"{prompt} (improved)"
-    return improved_prompt
-
-# New function for improving the prompt
-@app.route("/improve-prompt", methods=["POST"])
-def improve_prompt_endpoint():
-    try:
-        request_body = request.json
-
-        # Extract the user's prompt from the request body
-        user_prompt = request_body.get("user_prompt", "")
-
-        # Improve the prompt using the separate function
-        improved_prompt = improve_prompt_logic(user_prompt)
-
-        # Return the improved prompt in the response
-        return jsonify({"improved_prompt": improved_prompt}), 200
-
-    except Exception as e:
-        logging.exception("Exception in /improve-prompt")
-        return jsonify({"error": str(e)}), 500
-
 
 def stream_without_data(response, history_metadata={}):
     responseText = ""
