@@ -38,7 +38,7 @@ const Layout = () => {
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const appStateContext = useContext(AppStateContext)
-    const AZURE_HISTORY_VISIBILITY = import.meta.env.VITE_AZURE_HISTORY_VISIBILITY;
+    const AZURE_HISTORY_VISIBLE = import.meta.env.VITE_AZURE_HISTORY_VISIBLE;
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
@@ -84,7 +84,7 @@ const Layout = () => {
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
-                            {AZURE_HISTORY_VISIBILITY && 
+                            {AZURE_HISTORY_VISIBLE && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             }
                             {/* {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
