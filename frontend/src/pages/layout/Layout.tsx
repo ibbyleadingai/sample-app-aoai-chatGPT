@@ -38,7 +38,8 @@ const Layout = () => {
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const appStateContext = useContext(AppStateContext)
-    const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(false);
+    const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(true);
+    console.log("Component rendered: check db")
 
     useEffect(() => {
         const fetchVisibilityConfig = async () => {
