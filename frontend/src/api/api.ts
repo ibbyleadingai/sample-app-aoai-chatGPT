@@ -18,11 +18,21 @@ export async function conversationApi(options: ConversationRequest, abortSignal:
 
 export const fetchData = async () => {
     try {
+      console.log("Fetching history visibility...");
       const response = await fetch("/get-history-visibility");
       const data = await response.json();
-      return data.history_visible
+      console.log("Fetched data:", data);
+  
+      if (data && typeof data.history_visible !== "undefined") {
+        console.log("History visibility:", data.history_visible);
+        return data.history_visible;
+      } else {
+        console.error("Invalid data structure:", data);
+        return false; // Or handle the case where data is not as expected
+      }
     } catch (error) {
       console.error("Failed to fetch history visibility:", error);
+      return false; // Or handle the error as needed
     }
   };
 
