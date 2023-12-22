@@ -44,6 +44,8 @@ const Layout = () => {
         const fetchHistoryVisibility = async () => {
           const historyVisible = await fetchData();
           setIsHistoryVisible(historyVisible);
+          console.log("isHistoryVisible", isHistoryVisible)
+          console.log("historyVisible",historyVisible)
         };
     
         fetchHistoryVisibility();
