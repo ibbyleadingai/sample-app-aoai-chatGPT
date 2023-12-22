@@ -6,7 +6,7 @@ import { CommandBarButton, Dialog, Stack, TextField, ICommandBarStyles, IButtonS
 import { useContext, useEffect, useState } from "react";
 import { HistoryButton, ShareButton } from "../../components/common/Button";
 import { AppStateContext } from "../../state/AppProvider";
-import { CosmosDBStatus } from "../../api";
+import { CosmosDBStatus, fetchData } from "../../api";
 
 const shareButtonStyles: ICommandBarStyles & IButtonStyles = {
     root: {
@@ -38,6 +38,16 @@ const Layout = () => {
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const appStateContext = useContext(AppStateContext)
+    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+
+    useEffect(() => {
+        const fetchHistoryVisibility = async () => {
+          const historyVisible = await fetchData();
+          setIsHistoryVisible(historyVisible);
+        };
+    
+        fetchHistoryVisibility();
+      }, []); // Fetch the data once on component mount
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
@@ -83,7 +93,10 @@ const Layout = () => {
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
-                            {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
+                            {/* {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
+                                <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
+                            } */}
+                            {isHistoryVisible && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             }
                             <ShareButton onClick={handleShareClick} />

@@ -16,6 +16,16 @@ export async function conversationApi(options: ConversationRequest, abortSignal:
     return response;
 }
 
+export const fetchData = async () => {
+    try {
+      const response = await fetch("/get-history-visibility");
+      const data = await response.json();
+      return data.history_visible
+    } catch (error) {
+      console.error("Failed to fetch history visibility:", error);
+    }
+  };
+
 export async function getUserInfo(): Promise<UserInfo[]> {
     const response = await fetch('/.auth/me');
     if (!response.ok) {

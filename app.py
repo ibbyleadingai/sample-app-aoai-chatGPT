@@ -802,3 +802,7 @@ def generate_title(conversation_messages):
 
 if __name__ == "__main__":
     app.run()
+
+@app.route("/get-history-visibility", methods=["GET"])
+def get_history_visibility():
+    return jsonify({"history_visible": os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"})
