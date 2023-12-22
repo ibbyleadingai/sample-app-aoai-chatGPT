@@ -17,6 +17,7 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(false)
+    const [improvedPrompt, setImprovedPrompt] = useState("");
 
     const getPrompt = (count:number) => {
         const promptElements = [];
@@ -27,6 +28,31 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
         return promptElements
     }
+
+    const handleImprovePrompt = async () => {
+        try {
+          // Make a POST request to the Flask API using fetch
+          const response = await fetch("/improve-prompt", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_input: question }),
+          });
+    
+          // Check if the request was successful (status code 200)
+          if (response.ok) {
+            const data = await response.json();
+            // Update the state with the improved prompt
+            setImprovedPrompt(data.improved_prompt);
+          } else {
+            // Handle error cases
+            console.error("Error improving prompt:", response.status, response.statusText);
+          }
+        } catch (error) {
+          console.error("Error improving prompt:", error);
+        }
+      };
 
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -93,6 +119,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     className={styles.improvePromptButton}
                     onClick={(e) => {
                         e.stopPropagation();
+                        handleImprovePrompt()
                     }}
                 >Improve my prompt
                 </button>

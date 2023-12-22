@@ -121,11 +121,6 @@ if AZURE_COSMOSDB_DATABASE and AZURE_COSMOSDB_ACCOUNT and AZURE_COSMOSDB_CONVERS
         logging.exception("Exception in CosmosDB initialization", e)
         cosmos_conversation_client = None
 
-@app.route('/get-visibility-config')
-def get_visibility_config():
-    azure_history_visible = os.environ.get("AZURE_HISTORY_VISIBLE", "true")
-    return jsonify({'azure_history_visible': azure_history_visible})
-
 def is_chat_model():
     if 'gpt-4' in AZURE_OPENAI_MODEL_NAME.lower() or AZURE_OPENAI_MODEL_NAME.lower() in ['gpt-35-turbo-4k', 'gpt-35-turbo-16k']:
         return True
@@ -477,6 +472,26 @@ def stream_without_data(response, history_metadata={}):
         }
         yield format_as_ndjson(response_obj)
 
+@app.route("/improve-prompt", methods=["POST"])
+def improve_prompt():
+    try:
+        # Extract the user input from the request
+        user_input = request.json.get("user_input", "")
+
+        # Call a function to interact with OpenAI and get a better prompt
+        improved_prompt = get_improved_prompt(user_input)
+
+        # Return the improved prompt as JSON
+        return jsonify({"improved_prompt": improved_prompt}), 200
+
+    except Exception as e:
+        # Handle exceptions
+        return jsonify({"error": str(e)}), 500
+
+def get_improved_prompt(user_input):
+    # Call OpenAI or use any method to improve the prompt
+    # For demonstration, let's say we just append " (Improved)" to the input
+    return user_input + " (Improved)"
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"
