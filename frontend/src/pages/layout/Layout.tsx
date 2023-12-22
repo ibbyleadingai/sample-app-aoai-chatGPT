@@ -40,12 +40,13 @@ const Layout = () => {
     const appStateContext = useContext(AppStateContext)
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
 
+    console.log(fetchData)
+
     useEffect(() => {
         const fetchHistoryVisibility = async () => {
           const historyVisible = await fetchData();
           setIsHistoryVisible(historyVisible);
-          console.log("isHistoryVisible", isHistoryVisible)
-          console.log("historyVisible",historyVisible)
+          console.log("isHistoryVisible", historyVisible);
         };
     
         fetchHistoryVisibility();
