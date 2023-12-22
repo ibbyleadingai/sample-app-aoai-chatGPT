@@ -488,10 +488,10 @@ def improve_prompt():
         # Handle exceptions
         return jsonify({"error": str(e)}), 500
 
-def get_improved_prompt(user_input):
+def get_improved_prompt(request_body):
     # Call OpenAI or use any method to improve the prompt
     # For demonstration, let's say we just append " (Improved)" to the input
-    return user_input + " (Improved)"
+    return request_body + " (Improved)"
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"
