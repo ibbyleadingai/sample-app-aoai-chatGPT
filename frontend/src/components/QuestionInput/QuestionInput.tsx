@@ -42,16 +42,16 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     
           // Check if the request was successful (status code 200)
           if (response.ok) {
-            const data = await response.json();
+            const data = await response.json()
             // Update the state with the improved prompt
-            // setImprovedPrompt(data.improved_prompt);
+            setImprovedPrompt(data.improved_prompt)
             setQuestion(data.improved_prompt)
           } else {
             // Handle error cases
-            console.error("Error improving prompt:", response.status, response.statusText);
+            console.error("Error improving prompt:", response.status, response.statusText)
           }
         } catch (error) {
-          console.error("Error improving prompt:", error);
+          console.error("Error improving prompt:", error)
         }
       };
 
