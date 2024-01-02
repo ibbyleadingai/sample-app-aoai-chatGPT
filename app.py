@@ -490,7 +490,6 @@ def improve_prompt():
 
 def get_improved_prompt(request_body):
     # Call OpenAI or use any method to improve the prompt
-    # For demonstration, let's say we just append " (Improved)" to the input
     print("Request Body:", request_body)
 
     openai.api_type = "azure"
