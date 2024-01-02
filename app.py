@@ -491,6 +491,8 @@ def improve_prompt():
 def get_improved_prompt(request_body):
     # Call OpenAI or use any method to improve the prompt
     # For demonstration, let's say we just append " (Improved)" to the input
+    print("Request Body:", request_body)
+
     openai.api_type = "azure"
     openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
     openai.api_version = "2023-08-01-preview"
@@ -512,7 +514,7 @@ def get_improved_prompt(request_body):
         stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
     )
 
-    return "Improved Prompt:" + response.choices[0].message.content
+    return response.choices[0].message.content
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"
