@@ -500,7 +500,7 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": "Optimize the quality of the input prompts provided. If the prompt is already at its best, acknowledge that further improvement is not possible. If the input appears to be gibberish or unclear, provide a message indicating that the input could not be understood."
+            "content": f"Improve the prompt: {request_body}"
         }
     ]
 
@@ -512,7 +512,7 @@ def get_improved_prompt(request_body):
         stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
     )
 
-    return request_body + "Improved Prompt:" + response.choices[0].message.content
+    return "Improved Prompt:" + response.choices[0].message.content
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"
