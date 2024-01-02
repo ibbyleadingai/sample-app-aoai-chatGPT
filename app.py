@@ -513,7 +513,7 @@ def get_improved_prompt(request_body):
         stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
     )
 
-    return response.choices[0].message.content
+    return "The old response: " + request_body + " " + response.choices[0].message.content
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"
