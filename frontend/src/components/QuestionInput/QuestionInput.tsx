@@ -32,7 +32,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const handleImprovePrompt = async () => {
         try {
           // Make a POST request to the Flask API using fetch
-          alert("Current question state: " + question);
           const response = await fetch("/improve-prompt", {
             method: "POST",
             headers: {

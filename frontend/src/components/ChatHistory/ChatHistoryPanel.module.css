@@ -40,7 +40,7 @@
 }
 
 .itemButton:hover {
-    background-color: #E6E6E6;
+    background-color: #23252c;
 }
 
 .chatGroup {
@@ -57,6 +57,7 @@
     font-weight: 600;
     margin-bottom: 5px;
     padding-left: 15px;
+    color: whitesmoke;
 }
 
 .chatTitle {
@@ -64,4 +65,5 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color: whitesmoke;
 }
