@@ -500,7 +500,7 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": "Improve my prompt: As a user, I want to ask questions about policies, so I need the AI to generate more accurate and concise responses."
+            "content": "Improve this prompt: {request_body}"
         }
     ]
 
@@ -512,7 +512,7 @@ def get_improved_prompt(request_body):
         stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
     )
 
-    return response.choices[0].message.content
+    return "Improved Prompt:" + response.choices[0].message.content
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"
