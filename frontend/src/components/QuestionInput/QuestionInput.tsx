@@ -44,7 +44,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           if (response.ok) {
             const data = await response.json();
             // Update the state with the improved prompt
-            setImprovedPrompt(data.improved_prompt);
+            // setImprovedPrompt(data.improved_prompt);
+            setQuestion(data.improved_prompt)
           } else {
             // Handle error cases
             console.error("Error improving prompt:", response.status, response.statusText);

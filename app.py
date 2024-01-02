@@ -491,7 +491,28 @@ def improve_prompt():
 def get_improved_prompt(request_body):
     # Call OpenAI or use any method to improve the prompt
     # For demonstration, let's say we just append " (Improved)" to the input
-    return request_body + " (Improved)"
+    openai.api_type = "azure"
+    openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
+    openai.api_version = "2023-08-01-preview"
+    openai.api_key = AZURE_OPENAI_KEY
+
+    # request_messages = request_body["messages"]
+    messages = [
+        {
+            "role": "system",
+            "content": "Optimize the quality of the input prompts provided. If the prompt is already at its best, acknowledge that further improvement is not possible. If the input appears to be gibberish or unclear, provide a message indicating that the input could not be understood."
+        }
+    ]
+
+    response = openai.ChatCompletion.create(
+        engine=AZURE_OPENAI_MODEL,
+        messages = messages,
+        max_tokens=int(AZURE_OPENAI_MAX_TOKENS),
+        top_p=float(AZURE_OPENAI_TOP_P),
+        stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
+    )
+
+    return request_body + "Improved Prompt:" + response
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"
