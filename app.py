@@ -501,7 +501,11 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": f"Improve this prompt: {request_body}"
+            "content": "You optimize and improve prompts. And thats all."
+        },
+        {
+            "role": "user",
+            "content": f"{request_body}"
         }
     ]
 
