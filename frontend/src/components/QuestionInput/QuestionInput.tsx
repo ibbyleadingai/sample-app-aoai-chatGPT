@@ -37,7 +37,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ user_input: question }),
+            body: JSON.stringify({ request_body: question }),
           });
     
           // Check if the request was successful (status code 200)

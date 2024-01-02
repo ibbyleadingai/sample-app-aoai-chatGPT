@@ -476,7 +476,7 @@ def stream_without_data(response, history_metadata={}):
 def improve_prompt():
     try:
         # Extract the user input from the request
-        user_input = request.json.get("user_input", "")
+        user_input = request.json.get("request_body", "")
 
         # Call a function to interact with OpenAI and get a better prompt
         improved_prompt = get_improved_prompt(user_input)
