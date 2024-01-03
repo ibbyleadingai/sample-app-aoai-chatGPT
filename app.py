@@ -501,7 +501,7 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": "You phrase whatever the user says in a better, improved and clear way"
+            "content": "Improve the clarity and effectiveness of the user's input. If the prompt is already clear, acknowledge its quality. Avoid engaging in a conversation or providing additional information beyond prompt improvement."
         },
         {
             "role": "user",
