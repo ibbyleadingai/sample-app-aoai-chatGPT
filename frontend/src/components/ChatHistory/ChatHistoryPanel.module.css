@@ -23,7 +23,7 @@
 }
 
 .itemCell:hover {
-    background: #E6E6E6;
+    background: #23252c;
 }
 
 .itemButton {
@@ -40,7 +40,7 @@
 }
 
 .itemButton:hover {
-    background-color: #23252c;
+    background-color: #E6E6E6;
 }
 
 .chatGroup {
