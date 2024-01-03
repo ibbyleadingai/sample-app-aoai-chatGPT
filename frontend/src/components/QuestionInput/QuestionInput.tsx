@@ -122,7 +122,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         e.stopPropagation();
                         handleImprovePrompt()
                     }}
-                >Improve my prompt
+                    disabled={isLoadingImproved}
+                >{isLoadingImproved ? "Loading..." : "Improve my prompt"}
                 </button>
                 
                 <img title="Display prompt suggestions" src={Suggestions} 
