@@ -93,5 +93,7 @@
 
 .improvePromptButton{
     cursor: pointer;
-    
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
 }

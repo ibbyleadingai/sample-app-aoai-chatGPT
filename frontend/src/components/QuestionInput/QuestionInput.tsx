@@ -40,8 +40,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             },
             body: JSON.stringify({ request_body: question }),
           });
-    
-          // Check if the request was successful (status code 200)
           if (response.ok) {
             const data = await response.json()
             // Update the state with the improved prompt
