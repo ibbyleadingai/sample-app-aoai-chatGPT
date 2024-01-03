@@ -501,7 +501,7 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the prompt is already at its best, acknowledge that further improvement may not be necessary. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context."
+            "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the prompt is already at its best, acknowledge that further improvement may not be necessary. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context. #### user:'What is the policy for constant student absences? system:'What is the institution's policy regarding frequent student absences?'"
         },
         {
             "role": "user",
