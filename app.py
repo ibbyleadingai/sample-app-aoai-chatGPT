@@ -501,11 +501,11 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": "Optimize and enhance the clarity of the input prompts provided. If the prompt is already at its best, acknowledge that further improvement may not be necessary. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context."
+            "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the prompt is already at its best, acknowledge that further improvement may not be necessary. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context."
         },
         {
             "role": "user",
-            "content": f"{request_body}"
+            "content": f"Improve this prompt: {request_body}"
         }
     ]
 
