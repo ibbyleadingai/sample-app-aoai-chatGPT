@@ -123,7 +123,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         handleImprovePrompt()
                     }}
                     disabled={isLoadingImproved}
-                >{isLoadingImproved ? "Loading..." : "Improve my prompt"}
+                >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
                 
                 <img title="Display prompt suggestions" src={Suggestions} 

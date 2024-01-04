@@ -16,16 +16,18 @@
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 12px;
-    margin-right: 12px;
+    margin-right: 150px;
 }
 
 .questionInputSendButtonContainer {
     position: absolute;
-    right: 24px;
-    bottom: 20px;
+    right: 10px;
+    bottom: 5px;
     display: flex;
     flex-direction:column;
-    gap: 30px; 
+    gap: 9px;
+    align-items: center;
+    top: 12px
     /* border: 1px solid lightgreen;  */
     /* gap between icons */
 }
@@ -93,8 +95,15 @@
 }
 
 .improvePromptButton{
+    background-color: #3498db;
+    color: #ffffff;
     cursor: pointer;
     padding: 7px;
     border-radius: 3px;
     border: none;
+}
+
+.improvePromptButton:hover {
+    background-color: #2980b9;
+    color: #ffffff; 
 }
