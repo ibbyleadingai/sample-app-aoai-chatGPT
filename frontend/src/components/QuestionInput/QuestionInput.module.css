@@ -25,11 +25,9 @@
     bottom: 5px;
     display: flex;
     flex-direction:column;
-    gap: 9px;
+    gap: 9px; /* gap between icons */
     align-items: center;
-    top: 12px
-    /* border: 1px solid lightgreen;  */
-    /* gap between icons */
+    top: 12px;
 }
 
 .questionInputSendButton {

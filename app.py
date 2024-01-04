@@ -489,7 +489,6 @@ def improve_prompt():
         return jsonify({"error": str(e)}), 500
 
 def get_improved_prompt(request_body):
-    # Call OpenAI or use any method to improve the prompt
     print("Request Body:", request_body)
 
     openai.api_type = "azure"
@@ -497,7 +496,6 @@ def get_improved_prompt(request_body):
     openai.api_version = "2023-08-01-preview"
     openai.api_key = AZURE_OPENAI_KEY
 
-    # request_messages = request_body["messages"]
     messages = [
         {
             "role": "system",
