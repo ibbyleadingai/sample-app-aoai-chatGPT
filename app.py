@@ -505,7 +505,7 @@ def get_improved_prompt(request_body):
         },
         {
             "role": "user",
-            "content": f"Improve this prompt: {request_body}"
+            "content": f"Improve this prompt: {request_body}. Give me up to 3 examples of an improved prompt"
         }
     ]
 
