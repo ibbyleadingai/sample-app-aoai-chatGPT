@@ -489,8 +489,6 @@ def improve_prompt():
         return jsonify({"error": str(e)}), 500
 
 def get_improved_prompt(request_body):
-    print("Request Body:", request_body)
-
     openai.api_type = "azure"
     openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
     openai.api_version = "2023-08-01-preview"

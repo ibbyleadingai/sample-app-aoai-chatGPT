@@ -5,6 +5,7 @@ import Send from "../../assets/Send.svg";
 import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
+import { handleImprovePromptApi } from "../../api";
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -31,30 +32,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const handleImprovePrompt = async () => {
         try {
-          // Make a POST request to the Flask API using fetch
-          setIsLoadingImproved(true)
-          const response = await fetch("/improve-prompt", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ request_body: question }),
-          });
-          if (response.ok) {
-            const data = await response.json()
-            // Update the state with the improved prompt
-            setQuestion(data.improved_prompt)
-          } else {
-            // Handle error cases
-            console.error("Error improving prompt:", response.status, response.statusText)
-          }
-        } catch (error) {
-          console.error("Error improving prompt:", error)
+          setIsLoadingImproved(true);
+          const improvedPrompt = await handleImprovePromptApi(question);
+          setQuestion(improvedPrompt);
         } finally {
-            setIsLoadingImproved(false);
+          setIsLoadingImproved(false);
         }
       };
-
+      
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
             return;
