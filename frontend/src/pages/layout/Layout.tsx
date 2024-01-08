@@ -40,6 +40,7 @@ const Layout = () => {
     const appStateContext = useContext(AppStateContext)
     const { env } = import.meta;
     const isHistoryVisible = env.VITE_AZURE_HISTORY_VISIBLE === 'true';
+    console.log('Is History Visible:', isHistoryVisible);
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
