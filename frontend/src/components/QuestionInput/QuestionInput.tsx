@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
@@ -18,6 +18,26 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+    const [shuffledPrompts, setShuffledPrompts] = useState<string[]>([]);
+
+    useEffect(() => {
+        const shuffled = [...promptArr].sort(() => Math.random() - 0.5);
+        setShuffledPrompts(shuffled);
+      }, []); // Run only once on mount
+    
+      const getPrompt = (count: number): React.ReactNode => {
+        const promptElements = [];
+    
+        for (let i = 0; i < count; i++) {
+          promptElements.push(
+            <li key={i} className={styles.prompts} onClick={() => onPromptClick(shuffledPrompts[i])}>
+              {shuffledPrompts[i]}
+            </li>
+          );
+        }
+    
+        return promptElements;
+      };
 
     const handleImprovePrompt = async () => {
         try {
@@ -74,6 +94,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
             />
+
+            <div className={styles.displaySuggestions}>
+                <ul className={styles.listPrompt}>{getPrompt(3)}</ul>
+            </div>
 
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 

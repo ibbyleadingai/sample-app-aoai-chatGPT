@@ -63,6 +63,28 @@
     height: 30px;
 }
 
+.displaySuggestions{
+    position: absolute;
+    left: 60%;
+    bottom: 114%;
+    background-color: whitesmoke;
+    height: auto;
+    width: 40%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.listPrompt{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.prompts{
+    padding: 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
 .improvePromptButton{
     background-color: #3498db;
     color: #ffffff;
