@@ -25,9 +25,11 @@
     bottom: 5px;
     display: flex;
     flex-direction:column;
-    gap: 9px; /* gap between icons */
+    gap: 15px; /* gap between icons */
     align-items: center;
-    top: 12px;
+    top: 0px;
+    height: 100%;
+    justify-content: center;
 }
 
 .questionInputSendButton {
@@ -59,37 +61,6 @@
     cursor: pointer;
     width: 27px;
     height: 30px;
-}
-
-.displaySuggestions{
-    position: absolute;
-    left: 60%;
-    bottom: 114%;
-    background-color: whitesmoke;
-    height: auto;
-    width: 40%;
-    border-radius: 10px;
-    text-align: center;
-  
-    opacity: 0; 
-    transition: opacity 0.2s ease-in-out;
-    visibility: hidden;
-}
-
-.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.listPrompt{
-    list-style-type: none;
-    padding: 0px;
-}
-
-.prompts{
-    padding: 15px;
-    font-size: 11px;
-    cursor: pointer;
 }
 
 .improvePromptButton{

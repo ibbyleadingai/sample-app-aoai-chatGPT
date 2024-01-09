@@ -17,18 +17,7 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
-    const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(false)
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
-
-    const getPrompt = (count:number) => {
-        const promptElements = [];
-        const shuffledPrompts = [...promptArr].sort(() => Math.random() - 0.5);
-
-        for (let i = 0; i < count; i++){
-            promptElements.push(<li className={styles.prompts} onClick={() => onPromptClick(shuffledPrompts[i])}>{shuffledPrompts[i]}</li>) //onclick?
-        }
-        return promptElements
-    }
 
     const handleImprovePrompt = async () => {
         try {
@@ -65,14 +54,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const onQuestionChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setQuestion(newValue || "");
-        setIsSuggestionShown(false);
     };
 
     const sendQuestionDisabled = disabled || !question.trim();
 
     const onPromptClick = (prompt: string) => {
         setQuestion(prompt);
-        setIsSuggestionShown(false);
       };
 
     return (
@@ -87,10 +74,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
             />
-
-            <div className={`${styles.displaySuggestions} ${isSuggestionShown ? styles.show : ""}`}>
-                <ul className={styles.listPrompt}>{getPrompt(3)}</ul>
-            </div>
 
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
@@ -110,13 +93,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
-                
-                <img title="Display prompt suggestions" src={Suggestions} 
-                className={styles.questionInputSendButton} 
-                onClick={(e) => {
-                    e.stopPropagation();//this onclick won't trigger the parent divs onclick
-                    setIsSuggestionShown(prevState => !prevState)}
-                }/>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
