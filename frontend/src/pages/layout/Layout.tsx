@@ -38,21 +38,6 @@ const Layout = () => {
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const appStateContext = useContext(AppStateContext)
-    const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(true);
-
-    useEffect(() => {
-        const fetchVisibilityConfig = async () => {
-          try {
-            const response = await fetch('/get-visibility-config');
-            const data = await response.json();
-            setIsHistoryVisible(data.azure_history_visible === 'true');
-          } catch (error) {
-            console.error('Error fetching visibility config:', error);
-          }
-        };
-    
-        fetchVisibilityConfig();
-      }, []);
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
