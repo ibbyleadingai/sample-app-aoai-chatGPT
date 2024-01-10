@@ -73,13 +73,13 @@ const Layout = () => {
                 // className={styles.headerContainer}
                 >
                     <Stack horizontal verticalAlign="center">
-                        {/* <img
+                        <img
                             src={LaiLogo}
                             className={styles.headerIcon}
                             aria-hidden="true"
-                        /> */}
+                        />
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>Leading AI</h1>
+                            <h1 className={styles.headerTitle}>FEA AI Assistant</h1>
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>

@@ -580,13 +580,13 @@ const Chat = () => {
                     <div className={styles.chatContainer}>
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
-                                <img
+                                {/* <img
                                     src={LaiLogo}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
-                                <h1 className={styles.chatEmptyStateTitle}>Start chatting</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>How can I help you today?</h2>
+                                <h1 className={styles.chatEmptyStateTitle}>Start chatting</h1> */}
+                                {/* <h2 className={styles.chatEmptyStateSubtitle}>How can I help you today?</h2> */}
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
