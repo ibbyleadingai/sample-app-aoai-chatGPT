@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
-// import Send from "../../assets/Send.svg";
-// import styles from "./QuestionInput.module.css";
+import Send from "../../assets/Send.svg";
+import styles from "./QuestionInput.module.css";
 
+interface Props {
+  onSend: (question: string, id?: string) => void;
+  disabled: boolean;
+  placeholder?: string;
+  clearOnSend?: boolean;
+  conversationId?: string;
+}
 
-const ProposalBuilderInput = ({ onSend, disabled, clearOnSend, conversationId }) => {
+const ProposalBuilderInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [proposalText, setProposalText] = useState("");
   
     const sendProposal = () => {
@@ -24,14 +31,14 @@ const ProposalBuilderInput = ({ onSend, disabled, clearOnSend, conversationId })
       }
     };
   
-    const onEnterPress = (ev) => {
+    const onEnterPress = (ev: React.KeyboardEvent<Element>) => {
       if (ev.key === "Enter" && !ev.shiftKey) {
         ev.preventDefault();
         sendProposal();
       }
     };
   
-    const onProposalTextChange = (_, newValue) => {
+    const onProposalTextChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
       setProposalText(newValue || "");
     };
   
