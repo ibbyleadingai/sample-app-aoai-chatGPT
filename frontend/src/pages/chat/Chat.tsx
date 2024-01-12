@@ -694,15 +694,35 @@ const Chat = () => {
                                 >
                                 </Dialog>
                             </Stack>
-                            <QuestionInput
+                            <div className={styles.QuestionInputComponentContainer}>
+                                <QuestionInput
                                 clearOnSend
-                                placeholder="Type a new question..."
+                                placeholder="Proposals..."
                                 disabled={isLoading}
                                 onSend={(question, id) => {
                                     appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)
                                 }}
                                 conversationId={appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined}
                             />
+                            <QuestionInput
+                                clearOnSend
+                                placeholder="Job adverts..."
+                                disabled={isLoading}
+                                onSend={(question, id) => {
+                                    appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)
+                                }}
+                                conversationId={appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined}
+                            />
+                            <QuestionInput
+                                clearOnSend
+                                placeholder="Candidate Search..."
+                                disabled={isLoading}
+                                onSend={(question, id) => {
+                                    appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)
+                                }}
+                                conversationId={appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined}
+                            />
+                            </div>
                         </Stack>
                     </div>
                     {/* Citation Panel */}
