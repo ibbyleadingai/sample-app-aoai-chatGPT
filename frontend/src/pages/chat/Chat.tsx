@@ -594,7 +594,7 @@ const Chat = () => {
                                             </div> : null
                                         )}
                                     </>
-                                ))
+                                ))}
                                 {showLoadingMessage && (
                                     <>
                                         <div className={styles.chatMessageGpt}>
@@ -706,7 +706,7 @@ const Chat = () => {
                 )}
                 {(appStateContext?.state.isChatHistoryOpen && appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && <ChatHistoryPanel/>}
                 </Stack>
-            )}
+            )
         </div>
     );
 };
