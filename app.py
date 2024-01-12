@@ -118,7 +118,6 @@ if AZURE_COSMOSDB_DATABASE and AZURE_COSMOSDB_ACCOUNT and AZURE_COSMOSDB_CONVERS
         logging.exception("Exception in CosmosDB initialization", e)
         cosmos_conversation_client = None
 
-
 def is_chat_model():
     if 'gpt-4' in AZURE_OPENAI_MODEL_NAME.lower() or AZURE_OPENAI_MODEL_NAME.lower() in ['gpt-35-turbo-4k', 'gpt-35-turbo-16k']:
         return True
@@ -444,6 +443,7 @@ def conversation_with_data(request_body):
     else:
         return Response(stream_with_data(body, headers, endpoint, history_metadata), mimetype='text/event-stream')
 
+
 def stream_without_data(response, history_metadata={}):
     responseText = ""
     for line in response:
@@ -469,6 +469,48 @@ def stream_without_data(response, history_metadata={}):
         }
         yield format_as_ndjson(response_obj)
 
+@app.route("/improve-prompt", methods=["POST"])
+def improve_prompt():
+    try:
+        # Extract the user input from the request
+        user_input = request.json.get("request_body", "")
+
+        # Call a function to interact with OpenAI and get a better prompt
+        improved_prompt = get_improved_prompt(user_input)
+
+        # Return the improved prompt as JSON
+        return jsonify({"improved_prompt": improved_prompt}), 200
+
+    except Exception as e:
+        # Handle exceptions
+        return jsonify({"error": str(e)}), 500
+
+def get_improved_prompt(request_body):
+    openai.api_type = "azure"
+    openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
+    openai.api_version = "2023-08-01-preview"
+    openai.api_key = AZURE_OPENAI_KEY
+
+    messages = [
+        {
+            "role": "system",
+            "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the prompt is already at its best, acknowledge a short message that further improvement may not be necessary. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context. #### user:'What is the policy for constant student absences? system:'What is the institution's policy regarding frequent student absences?'"
+        },
+        {
+            "role": "user",
+            "content": f"Improve this prompt: {request_body}. Give me up to 3 examples of an improved prompt"
+        }
+    ]
+
+    response = openai.ChatCompletion.create(
+        engine=AZURE_OPENAI_MODEL,
+        messages = messages,
+        max_tokens=int(AZURE_OPENAI_MAX_TOKENS),
+        top_p=float(AZURE_OPENAI_TOP_P),
+        stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
+    )
+
+    return response.choices[0].message.content
 
 def conversation_without_data(request_body):
     openai.api_type = "azure"

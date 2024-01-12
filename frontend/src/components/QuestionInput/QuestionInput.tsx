@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
 import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
+import { handleImprovePromptApi } from "../../api";
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -16,18 +17,18 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
-    const [isSuggestionShown, setIsSuggestionShown] = useState<boolean>(false)
+    const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
 
-    const getPrompt = (count:number) => {
-        const promptElements = [];
-        const shuffledPrompts = [...promptArr].sort(() => Math.random() - 0.5);
-
-        for (let i = 0; i < count; i++){
-            promptElements.push(<li className={styles.prompts} onClick={() => onPromptClick(shuffledPrompts[i])}>{shuffledPrompts[i]}</li>) //onclick?
+    const handleImprovePrompt = async () => {
+        try {
+          setIsLoadingImproved(true);
+          const improvedPrompt = await handleImprovePromptApi(question);
+          setQuestion(improvedPrompt);
+        } finally {
+          setIsLoadingImproved(false);
         }
-        return promptElements
-    }
-
+      };
+      
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
             return;
@@ -53,14 +54,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const onQuestionChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setQuestion(newValue || "");
-        setIsSuggestionShown(false);
     };
 
     const sendQuestionDisabled = disabled || !question.trim();
 
     const onPromptClick = (prompt: string) => {
         setQuestion(prompt);
-        setIsSuggestionShown(false);
       };
 
     return (
@@ -76,10 +75,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onKeyDown={onEnterPress}
             />
 
-            <div className={`${styles.displaySuggestions} ${isSuggestionShown ? styles.show : ""}`}>
-                <ul className={styles.listPrompt}>{getPrompt(3)}</ul>
-            </div>
-
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
                 tabIndex={0}
@@ -87,12 +82,17 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
-                <img title="Display prompt suggestions" src={Suggestions} 
-                className={styles.questionInputSendButton} 
-                onClick={(e) => {
-                    e.stopPropagation();//this onclick won't trigger the parent divs onclick
-                    setIsSuggestionShown(prevState => !prevState)}
-                }/>
+
+                <button
+                    title="Improve my prompt"
+                    className={styles.improvePromptButton}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleImprovePrompt()
+                    }}
+                    disabled={isLoadingImproved}
+                >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
+                </button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>

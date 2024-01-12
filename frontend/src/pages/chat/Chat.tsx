@@ -47,7 +47,7 @@ const Chat = () => {
     const [activeCitation, setActiveCitation] = useState<Citation>();
     const [isCitationPanelOpen, setIsCitationPanelOpen] = useState<boolean>(false);
     const abortFuncs = useRef([] as AbortController[]);
-    const [showAuthMessage, setShowAuthMessage] = useState<boolean>(true);
+    const [showAuthMessage, setShowAuthMessage] = useState<boolean>(false);
     const [messages, setMessages] = useState<ChatMessage[]>([])
     const [processMessages, setProcessMessages] = useState<messageStatus>(messageStatus.NotRunning);
     const [clearingChat, setClearingChat] = useState<boolean>(false);
@@ -93,13 +93,7 @@ const Chat = () => {
     }, [appStateContext?.state.chatHistoryLoadingState])
 
     const getUserInfoList = async () => {
-        const userInfoList = await getUserInfo();
-        if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-            setShowAuthMessage(true);
-        }
-        else {
-            setShowAuthMessage(false);
-        }
+        setShowAuthMessage(false);
     }
 
     let assistantMessage = {} as ChatMessage
