@@ -80,6 +80,7 @@
     border: none;
     height: 35px;
     width: 129px;
+    margin-right: 10px;
 }
 
 .improvePromptButton:hover {
