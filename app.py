@@ -1,3 +1,4 @@
+import azure.cognitiveservices.speech as speechsdk
 import json
 import os
 import logging
@@ -96,6 +97,86 @@ AZURE_COSMOSDB_DATABASE = os.environ.get("AZURE_COSMOSDB_DATABASE")
 AZURE_COSMOSDB_ACCOUNT = os.environ.get("AZURE_COSMOSDB_ACCOUNT")
 AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSATIONS_CONTAINER")
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
+
+#SPEECH TO TEXT
+# Set up Azure and OpenAI credentials
+openai.api_type = "azure"
+openai.api_version = "2023-08-01-preview"
+openai.api_base = "https://sandbox-leadingai.openai.azure.com/"
+openai.api_key = os.getenv("OPENAI_API_KEY")
+deployment_id = "sandbox-gpt4"
+
+# Azure Cognitive Search configuration
+search_endpoint = "https://evertyhingictsearchservice.search.windows.net"
+search_key = os.getenv("SEARCH_KEY")
+search_index_name = "everythingict-trustdocumentation"
+
+# Speech configuration
+speech_config = speechsdk.SpeechConfig(subscription=os.getenv("SPEECH_API_KEY"), region="uksouth")
+
+def setup_byod(deployment_id: str) -> None:
+    class BringYourOwnDataAdapter(requests.adapters.HTTPAdapter):
+        def send(self, request, **kwargs):
+            request.url = f"{openai.api_base}/openai/deployments/{deployment_id}/extensions/chat/completions?api-version={openai.api_version}"
+            return super().send(request, **kwargs)
+
+    session = requests.Session()
+    session.mount(
+        prefix=f"{openai.api_base}/openai/deployments/{deployment_id}",
+        adapter=BringYourOwnDataAdapter()
+    )
+
+    openai.requestssession = session
+
+setup_byod(deployment_id)
+
+@app.route('/perform-speech-recognition', methods=['POST'])
+def perform_speech_recognition():
+    try:
+        # Simulate user's speech
+        user_speech = request.json.get('userSpeech')
+
+        # Perform speech recognition
+        audio_config = speechsdk.audio.AudioConfig(use_default_microphone=True)
+        speech_config.speech_recognition_language = "en-GB"
+        speech_recognizer = speechsdk.SpeechRecognizer(speech_config, audio_config)
+        print("Say something...")
+        speech_result = speech_recognizer.recognize_once_async().get()
+
+        # Perform AI assistant logic using OpenAI
+        message_text = [{"role": "user", "content": speech_result.text}]
+        completion = openai.ChatCompletion.create(
+            messages=message_text,
+            deployment_id=deployment_id,
+            dataSources=[
+                {
+                    "type": "AzureCognitiveSearch",
+                    "parameters": {
+                        "endpoint": search_endpoint,
+                        "indexName": search_index_name,
+                        # ... other parameters ...
+                    }
+                }
+            ],
+            temperature=0,
+            top_p=1,
+            max_tokens=800,
+            stream=True
+        )
+
+        # Play the result on the computer's speaker
+        speech_config.speech_synthesis_voice_name = "en-GB-AbbiNeural"
+        speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config)
+        speech_synthesizer.speak_text(completion['choices'][0]['message']['content'])
+
+        return jsonify({"result": "Speech recognition and AI processing completed successfully"})
+
+    except Exception as e:
+        print(f"Error during speech recognition: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None

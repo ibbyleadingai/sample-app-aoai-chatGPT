@@ -15,6 +15,8 @@ interface Props {
     conversationId?: string;
 }
 
+interface SpeechRecognitionResponse { message: string; }
+
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
@@ -28,6 +30,36 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           setIsLoadingImproved(false);
         }
       };
+
+      const startSpeechRecognition = async () => {
+        try {
+          // Simulate user's speech recognition result
+          const userSpeech = "User's speech goes here";
+    
+          // Make an HTTP request to your backend endpoint
+          const response = await fetch('/perform-speech-recognition', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userSpeech }),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          // Parse the response as JSON
+          const data: SpeechRecognitionResponse = await response.json();
+    
+          // Handle the response from the backend
+          console.log(data);
+          // Depending on your use case, you might update the UI with the result
+        } catch (error) {
+          console.error('Error during HTTP request:', error);
+          // Handle errors appropriately
+        }
+    }
       
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -93,6 +125,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
+
+                <button onClick={startSpeechRecognition}>Start Speech Recognition</button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
