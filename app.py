@@ -4,6 +4,7 @@ import logging
 import requests
 import openai
 import copy
+import azure.cognitiveservices.speech as speechsdk
 from azure.identity import DefaultAzureCredential
 from flask import Flask, Response, request, jsonify, send_from_directory
 from dotenv import load_dotenv
