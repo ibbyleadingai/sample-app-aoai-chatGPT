@@ -57,6 +57,7 @@ AZURE_SEARCH_VECTOR_COLUMNS = os.environ.get("AZURE_SEARCH_VECTOR_COLUMNS")
 AZURE_SEARCH_QUERY_TYPE = os.environ.get("AZURE_SEARCH_QUERY_TYPE")
 AZURE_SEARCH_PERMITTED_GROUPS_COLUMN = os.environ.get("AZURE_SEARCH_PERMITTED_GROUPS_COLUMN")
 AZURE_SEARCH_STRICTNESS = os.environ.get("AZURE_SEARCH_STRICTNESS", SEARCH_STRICTNESS)
+AZURE_SPEECH_API_KEY = os.environ.get("AZURE_SPEECH_API_KEY")
 
 # AOAI Integration Settings
 AZURE_OPENAI_RESOURCE = os.environ.get("AZURE_OPENAI_RESOURCE")
@@ -98,21 +99,27 @@ AZURE_COSMOSDB_ACCOUNT = os.environ.get("AZURE_COSMOSDB_ACCOUNT")
 AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSATIONS_CONTAINER")
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 
+if __name__ == '__main__':
+    app.run(debug=True)
+
 #SPEECH TO TEXT
 # Set up Azure and OpenAI credentials
 openai.api_type = "azure"
+openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
 openai.api_version = "2023-08-01-preview"
-openai.api_base = "https://sandbox-leadingai.openai.azure.com/"
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = AZURE_OPENAI_KEY
 deployment_id = "sandbox-gpt4"
 
 # Azure Cognitive Search configuration
 search_endpoint = "https://evertyhingictsearchservice.search.windows.net"
-search_key = os.getenv("SEARCH_KEY")
 search_index_name = "everythingict-trustdocumentation"
 
 # Speech configuration
-speech_config = speechsdk.SpeechConfig(subscription=os.getenv("SPEECH_API_KEY"), region="uksouth")
+speech_config = speechsdk.SpeechConfig(subscription=AZURE_SPEECH_API_KEY, region="uksouth")
+# speech_config = speechsdk.SpeechConfig(
+#   subscription=os.getenv("AZURE_SPEECH_API_KEY"), 
+#   region="uksouth"
+# )
 
 def setup_byod(deployment_id: str) -> None:
     class BringYourOwnDataAdapter(requests.adapters.HTTPAdapter):
@@ -128,7 +135,7 @@ def setup_byod(deployment_id: str) -> None:
 
     openai.requestssession = session
 
-setup_byod(deployment_id)
+setup_byod(AZURE_OPENAI_MODEL)
 
 @app.route('/perform-speech-recognition', methods=['POST'])
 def perform_speech_recognition():
@@ -147,7 +154,7 @@ def perform_speech_recognition():
         message_text = [{"role": "user", "content": speech_result.text}]
         completion = openai.ChatCompletion.create(
             messages=message_text,
-            deployment_id=deployment_id,
+            deployment_id=AZURE_OPENAI_MODEL,
             dataSources=[
                 {
                     "type": "AzureCognitiveSearch",
@@ -174,9 +181,6 @@ def perform_speech_recognition():
     except Exception as e:
         print(f"Error during speech recognition: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
