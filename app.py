@@ -1,3 +1,4 @@
+import azure.cognitiveservices.speech as speechsdk
 import json
 import os
 import logging
