@@ -100,10 +100,10 @@
     cursor: pointer;
 }
 
-.citation:hover {
+/* .citation:hover {
     text-decoration: underline;
     cursor: pointer;
-}
+} */
 
 .accordionIcon {
     display: inline-flex;
