@@ -20,6 +20,7 @@ interface SpeechRecognitionResponse { message: string; }
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+    const [isRecording, setIsRecording] = useState<boolean>(false);
 
     const handleImprovePrompt = async () => {
         try {
@@ -66,10 +67,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           };
     
           mediaRecorder.start();
+          setIsRecording(true);
     
-          // Stop recording after a certain duration, or when a button is clicked
+          // Record for a certain duration
           setTimeout(() => {
             mediaRecorder.stop();
+            setIsRecording(false);
           }, 5000); // Adjust the duration as needed
         } catch (error) {
           console.error('Error accessing microphone:', error);
@@ -141,7 +144,9 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
 
-                <button onClick={handleRecordButtonClick}>Record Speech</button>
+                <button onClick={handleRecordButtonClick} disabled={isRecording}>
+                    {isRecording ? "Recording..." : "Record Speech"}
+                </button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
