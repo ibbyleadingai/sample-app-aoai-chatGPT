@@ -107,7 +107,6 @@ openai.api_type = "azure"
 openai.api_version = "2023-08-01-preview"
 openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
 openai.api_key = AZURE_OPENAI_KEY
-deployment_id = "sandbox-gpt4"
 
 search_endpoint = "https://evertyhingictsearchservice.search.windows.net"
 search_index_name = "everythingict-trustdocumentation"

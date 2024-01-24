@@ -37,42 +37,44 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
           const mediaRecorder = new MediaRecorder(mediaStream);
           const audioChunks: Blob[] = [];
-    
+      
           mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0) {
               audioChunks.push(event.data);
             }
           };
-    
-          mediaRecorder.onstop = async () => {
+      
+          const stopRecording = () => {
+            return new Promise<void>((resolve) => {
+              mediaRecorder.onstop = resolve;
+              mediaRecorder.stop();
+            });
+          };
+      
+          mediaRecorder.start();
+      
+          // Stop recording after a certain duration, or when a button is clicked
+          setTimeout(async () => {
+            await stopRecording();
             const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
             const formData = new FormData();
             formData.append('audio', audioBlob);
-    
+      
             try {
               const response = await fetch("/convert-speech-to-text", {
                 method: 'POST',
                 body: formData,
               });
-    
+      
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
               }
-    
+      
               const responseData = await response.json();
               setQuestion(responseData.text);
             } catch (error) {
               console.error('Error converting speech to text:', error);
             }
-          };
-    
-          mediaRecorder.start();
-          setIsRecording(true);
-    
-          // Record for a certain duration
-          setTimeout(() => {
-            mediaRecorder.stop();
-            setIsRecording(false);
           }, 5000); // Adjust the duration as needed
         } catch (error) {
           console.error('Error accessing microphone:', error);
