@@ -534,7 +534,7 @@ const Chat = () => {
 
     const onShowCitation = (citation: Citation) => {
         setActiveCitation(citation);
-        setIsCitationPanelOpen(true);
+        setIsCitationPanelOpen(false);
     };
 
     const onViewSource = (citation: Citation) => {
