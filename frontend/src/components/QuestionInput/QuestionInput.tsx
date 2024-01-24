@@ -47,7 +47,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             const formData = new FormData();
             formData.append("audio", audioBlob);
     
-            const response = await fetch("http://localhost:5000/api/recognizeSpeech", {
+            const response = await fetch("/recognizeSpeech", {
               method: "POST",
               body: formData,
             });
@@ -56,7 +56,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             setQuestion(result.text);
     
             // Call OpenAI chat completion API with the recognized text
-            const openaiResponse = await fetch("http://localhost:5000/api/chatCompletion", {
+            const openaiResponse = await fetch("/chatCompletion", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
