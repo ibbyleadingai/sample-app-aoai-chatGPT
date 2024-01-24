@@ -15,12 +15,9 @@ interface Props {
     conversationId?: string;
 }
 
-interface SpeechRecognitionResponse { message: string; }
-
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
-    const [isRecording, setIsRecording] = useState<boolean>(false);
 
     const handleImprovePrompt = async () => {
         try {
@@ -32,52 +29,51 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
       };
 
-      const handleRecordButtonClick = async () => {
+      const startRecognition = async () => {
         try {
-          const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          const mediaRecorder = new MediaRecorder(mediaStream);
-          const audioChunks: Blob[] = [];
-      
-          mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-              audioChunks.push(event.data);
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const mediaRecorder = new MediaRecorder(stream);
+    
+          let chunks: Blob[] = [];
+    
+          mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0) {
+              chunks.push(e.data);
             }
           };
-      
-          const stopRecording = () => {
-            return new Promise<void>((resolve) => {
-              mediaRecorder.onstop = resolve;
-              mediaRecorder.stop();
-            });
-          };
-      
-          mediaRecorder.start();
-      
-          // Stop recording after a certain duration, or when a button is clicked
-          setTimeout(async () => {
-            await stopRecording();
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    
+          mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(chunks, { type: "audio/wav" });
             const formData = new FormData();
-            formData.append('audio', audioBlob);
-      
-            try {
-              const response = await fetch("/convert-speech-to-text", {
-                method: 'POST',
-                body: formData,
-              });
-      
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-      
-              const responseData = await response.json();
-              setQuestion(responseData.text);
-            } catch (error) {
-              console.error('Error converting speech to text:', error);
-            }
-          }, 5000); // Adjust the duration as needed
+            formData.append("audio", audioBlob);
+    
+            const response = await fetch("http://localhost:5000/api/recognizeSpeech", {
+              method: "POST",
+              body: formData,
+            });
+    
+            const result = await response.json();
+            setQuestion(result.text);
+    
+            // Call OpenAI chat completion API with the recognized text
+            const openaiResponse = await fetch("http://localhost:5000/api/chatCompletion", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ speechText: result.text }),
+            });
+    
+            const openaiResult = await openaiResponse.json();
+            console.log(openaiResult);
+          };
+    
+          mediaRecorder.start();
+          setTimeout(() => {
+            mediaRecorder.stop();
+          }, 5000); // Record for 5 seconds (you can adjust as needed)
         } catch (error) {
-          console.error('Error accessing microphone:', error);
+          console.error("Error during recording:", error);
         }
       };
       
@@ -146,9 +142,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
 
-                <button onClick={handleRecordButtonClick} disabled={isRecording}>
-                    {isRecording ? "Recording..." : "Record Speech"}
-                </button>
+                <button onClick={startRecognition}>Start Recognition</button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>

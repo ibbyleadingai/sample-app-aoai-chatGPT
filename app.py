@@ -102,86 +102,52 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 if __name__ == '__main__':
     app.run(debug=True)
 
-#SPEECH TO TEXT
+#Speech
 openai.api_type = "azure"
-openai.api_version = "2023-08-01-preview"
 openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
+openai.api_version = "2023-07-01-preview"
 openai.api_key = AZURE_OPENAI_KEY
 
-search_endpoint = "https://evertyhingictsearchservice.search.windows.net"
-search_index_name = "everythingict-trustdocumentation"
+service_region = "uksouth"
 
-speech_config = speechsdk.SpeechConfig(
-    subscription=AZURE_SPEECH_API_KEY,
-    region="uksouth"
-)
+@app.route("/recognizeSpeech", methods=["POST"])
+def recognize_speech():
+    try:
+        audio_data = request.files["audio"].read()
+        recognized_text = recognize_audio(audio_data)
+        return jsonify({"text": recognized_text})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-def setup_byod(deployment_id: str) -> None:
-    class BringYourOwnDataAdapter(requests.adapters.HTTPAdapter):
-        def send(self, request, **kwargs):
-            request.url = f"{openai.api_base}/openai/deployments/{deployment_id}/extensions/chat/completions?api-version={openai.api_version}"
-            return super().send(request, **kwargs)
+@app.route("/chatCompletion", methods=["POST"])
+def chat_completion():
+    try:
+        speech_text = request.json["speechText"]
+        openai_response = complete_chat(speech_text)
+        return jsonify(openai_response)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    session = requests.Session()
-    session.mount(
-        prefix=f"{openai.api_base}/openai/deployments/{deployment_id}",
-        adapter=BringYourOwnDataAdapter()
-    )
-
-    openai.requestssession = session
-
-setup_byod(AZURE_OPENAI_MODEL)
-
-@app.route("/convert-speech-to-text", methods=["POST"])
-def convert_speech_to_text():
-    audio_data = request.data
-
+def recognize_audio(audio_data):
+    speech_config = speechsdk.SpeechConfig(subscription=AZURE_SPEECH_API_KEY, region=service_region)
     audio_config = speechsdk.audio.AudioConfig(stream=audio_data)
-    speech_recognizer = speechsdk.SpeechRecognizer(speech_config, audio_config)
-    speech_result = speech_recognizer.recognize_once_async().get()
+    recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
+    result = recognizer.recognize_once()
+    return result.text if result.reason == speechsdk.ResultReason.RecognizedSpeech else "Recognition failed"
 
-    message_text = [{"role": "user", "content": speech_result.text}]
-
+def complete_chat(speech_text):
+    message_text = [{"role": "user", "content": speech_text}]
     completion = openai.ChatCompletion.create(
+        engine=AZURE_OPENAI_MODEL,
         messages=message_text,
-        deployment_id=-AZURE_OPENAI_MODEL,
-        dataSources=[{
-            "type": "AzureCognitiveSearch",
-            "parameters": {
-                "endpoint": search_endpoint,
-                "indexName": search_index_name,
-                "semanticConfiguration": "default",
-                "queryType": "vectorSemanticHybrid",
-                "fieldsMapping": {
-                    "contentFieldsSeparator": "\n",
-                    "contentFields": ["content"],
-                    "filepathField": "filepath",
-                    "titleField": "title",
-                    "urlField": "url",
-                    "vectorFields": ["contentVector"]
-                },
-                "inScope": True,
-                "roleInformation": "You are an AI assistant that helps people find information.",
-                "filter": None,
-                "strictness": 1,
-                "topNDocuments": 20,
-                "key": AZURE_SEARCH_KEY,
-                "embeddingDeploymentName": "sandbox-vector-ada"
-            }
-        }],
-        enhancements=None,
-        temperature=0,
-        top_p=1,
-        max_tokens=800,
-        stop=None,
-        stream=True
+        temperature=0.7,
+        max_tokens=int(AZURE_OPENAI_MAX_TOKENS),
+        top_p=float(AZURE_OPENAI_TOP_P),
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None
     )
-
-    speech_config.speech_synthesis_voice_name = "en-GB-AbbiNeural"
-    speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config)
-    speech_synthesizer.speak_text(completion['choices'][0]['message']['content'])
-
-    return jsonify({"text": completion['choices'][0]['message']['content']})
+    return completion
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
