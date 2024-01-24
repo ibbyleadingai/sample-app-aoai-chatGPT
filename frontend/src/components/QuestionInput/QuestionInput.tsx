@@ -31,35 +31,50 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
       };
 
-      const startSpeechRecognition = async () => {
+      const handleRecordButtonClick = async () => {
         try {
-          // Simulate user's speech recognition result
-          const userSpeech = "User's speech goes here";
+          const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const mediaRecorder = new MediaRecorder(mediaStream);
+          const audioChunks: Blob[] = [];
     
-          // Make an HTTP request to your backend endpoint
-          const response = await fetch('/perform-speech-recognition', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userSpeech }),
-          });
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+            }
+          };
     
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
+          mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const formData = new FormData();
+            formData.append('audio', audioBlob);
     
-          // Parse the response as JSON
-          const data: SpeechRecognitionResponse = await response.json();
+            try {
+              const response = await fetch("/convert-speech-to-text", {
+                method: 'POST',
+                body: formData,
+              });
     
-          // Handle the response from the backend
-          console.log(data);
-          // Depending on your use case, you might update the UI with the result
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+    
+              const responseData = await response.json();
+              setQuestion(responseData.text);
+            } catch (error) {
+              console.error('Error converting speech to text:', error);
+            }
+          };
+    
+          mediaRecorder.start();
+    
+          // Stop recording after a certain duration, or when a button is clicked
+          setTimeout(() => {
+            mediaRecorder.stop();
+          }, 5000); // Adjust the duration as needed
         } catch (error) {
-          console.error('Error during HTTP request:', error);
-          // Handle errors appropriately
+          console.error('Error accessing microphone:', error);
         }
-    }
+      };
       
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -126,7 +141,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
 
-                <button onClick={startSpeechRecognition}>Start Speech Recognition</button>
+                <button onClick={handleRecordButtonClick}>Record Speech</button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>

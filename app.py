@@ -103,23 +103,19 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 #SPEECH TO TEXT
-# Set up Azure and OpenAI credentials
 openai.api_type = "azure"
-openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
 openai.api_version = "2023-08-01-preview"
+openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
 openai.api_key = AZURE_OPENAI_KEY
 deployment_id = "sandbox-gpt4"
 
-# Azure Cognitive Search configuration
 search_endpoint = "https://evertyhingictsearchservice.search.windows.net"
 search_index_name = "everythingict-trustdocumentation"
 
-# Speech configuration
-speech_config = speechsdk.SpeechConfig(subscription=AZURE_SPEECH_API_KEY, region="uksouth")
-# speech_config = speechsdk.SpeechConfig(
-#   subscription=os.getenv("AZURE_SPEECH_API_KEY"), 
-#   region="uksouth"
-# )
+speech_config = speechsdk.SpeechConfig(
+    subscription=AZURE_SPEECH_API_KEY,
+    region="uksouth"
+)
 
 def setup_byod(deployment_id: str) -> None:
     class BringYourOwnDataAdapter(requests.adapters.HTTPAdapter):
@@ -137,50 +133,56 @@ def setup_byod(deployment_id: str) -> None:
 
 setup_byod(AZURE_OPENAI_MODEL)
 
-@app.route('/perform-speech-recognition', methods=['POST'])
-def perform_speech_recognition():
-    try:
-        # Simulate user's speech
-        user_speech = request.json.get('userSpeech')
+@app.route("/convert-speech-to-text", methods=["POST"])
+def convert_speech_to_text():
+    audio_data = request.data
 
-        # Perform speech recognition
-        audio_config = speechsdk.audio.AudioConfig(use_default_microphone=True)
-        speech_config.speech_recognition_language = "en-GB"
-        speech_recognizer = speechsdk.SpeechRecognizer(speech_config, audio_config)
-        print("Say something...")
-        speech_result = speech_recognizer.recognize_once_async().get()
+    audio_config = speechsdk.audio.AudioConfig(stream=audio_data)
+    speech_recognizer = speechsdk.SpeechRecognizer(speech_config, audio_config)
+    speech_result = speech_recognizer.recognize_once_async().get()
 
-        # Perform AI assistant logic using OpenAI
-        message_text = [{"role": "user", "content": speech_result.text}]
-        completion = openai.ChatCompletion.create(
-            messages=message_text,
-            deployment_id=AZURE_OPENAI_MODEL,
-            dataSources=[
-                {
-                    "type": "AzureCognitiveSearch",
-                    "parameters": {
-                        "endpoint": search_endpoint,
-                        "indexName": search_index_name,
-                        # ... other parameters ...
-                    }
-                }
-            ],
-            temperature=0,
-            top_p=1,
-            max_tokens=800,
-            stream=True
-        )
+    message_text = [{"role": "user", "content": speech_result.text}]
 
-        # Play the result on the computer's speaker
-        speech_config.speech_synthesis_voice_name = "en-GB-AbbiNeural"
-        speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config)
-        speech_synthesizer.speak_text(completion['choices'][0]['message']['content'])
+    completion = openai.ChatCompletion.create(
+        messages=message_text,
+        deployment_id=-AZURE_OPENAI_MODEL,
+        dataSources=[{
+            "type": "AzureCognitiveSearch",
+            "parameters": {
+                "endpoint": search_endpoint,
+                "indexName": search_index_name,
+                "semanticConfiguration": "default",
+                "queryType": "vectorSemanticHybrid",
+                "fieldsMapping": {
+                    "contentFieldsSeparator": "\n",
+                    "contentFields": ["content"],
+                    "filepathField": "filepath",
+                    "titleField": "title",
+                    "urlField": "url",
+                    "vectorFields": ["contentVector"]
+                },
+                "inScope": True,
+                "roleInformation": "You are an AI assistant that helps people find information.",
+                "filter": None,
+                "strictness": 1,
+                "topNDocuments": 20,
+                "key": AZURE_SEARCH_KEY,
+                "embeddingDeploymentName": "sandbox-vector-ada"
+            }
+        }],
+        enhancements=None,
+        temperature=0,
+        top_p=1,
+        max_tokens=800,
+        stop=None,
+        stream=True
+    )
 
-        return jsonify({"result": "Speech recognition and AI processing completed successfully"})
+    speech_config.speech_synthesis_voice_name = "en-GB-AbbiNeural"
+    speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config)
+    speech_synthesizer.speak_text(completion['choices'][0]['message']['content'])
 
-    except Exception as e:
-        print(f"Error during speech recognition: {e}")
-        return jsonify({"error": "Internal Server Error"}), 500
+    return jsonify({"text": completion['choices'][0]['message']['content']})
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
