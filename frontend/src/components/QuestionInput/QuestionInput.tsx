@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
@@ -18,8 +18,9 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
-    const [transcription, setTranscription] = useState<string>('');
-
+    const [isRecording, setIsRecording] = useState<boolean>(false);
+    const recognitionRef = useRef<any>(null);
+  
     const startSpeechRecognition = () => {
         const recognition = new ((window as any).SpeechRecognition ||
           (window as any).webkitSpeechRecognition)();
@@ -27,8 +28,13 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         if (recognition) {
           recognition.onresult = (event: any) => {
             const transcript = event.results[0][0].transcript;
-            setQuestion(transcript);
+            setQuestion((prevQuestion) => prevQuestion + transcript + ' '); // Concatenate with a space separator);
             console.log("Transcribed Text:", transcript);
+          };
+    
+          recognition.onend = () => {
+            // Restart recognition when it ends (optional, depends on your use case)
+            recognition.start();
           };
     
           recognition.start();
@@ -112,7 +118,9 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
 
-                <button onClick={startSpeechRecognition}>Start Speech Recognition</button>
+                <button onClick={startSpeechRecognition}>
+                    {isRecording ? 'Stop Recording' : 'Start Speech Recognition'}
+                </button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
