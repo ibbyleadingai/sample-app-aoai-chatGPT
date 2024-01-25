@@ -6,6 +6,8 @@ import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
 import { handleImprovePromptApi } from "../../api";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -18,6 +20,17 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+    const [isListening, setIsListening] = useState<boolean>(false);
+    const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+    const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+
+    useEffect(() => {
+        console.log("Transcript:", transcript);
+      }, [transcript]);
+      
+      if (!browserSupportsSpeechRecognition) {
+          return <span>Browser doesn't support speech recognition.</span>;
+        }
 
     const handleImprovePrompt = async () => {
         try {
@@ -26,54 +39,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           setQuestion(improvedPrompt);
         } finally {
           setIsLoadingImproved(false);
-        }
-      };
-
-      const startRecognition = async () => {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          const mediaRecorder = new MediaRecorder(stream);
-    
-          let chunks: Blob[] = [];
-    
-          mediaRecorder.ondataavailable = (e) => {
-            if (e.data.size > 0) {
-              chunks.push(e.data);
-            }
-          };
-    
-          mediaRecorder.onstop = async () => {
-            const audioBlob = new Blob(chunks, { type: "audio/wav" });
-            const formData = new FormData();
-            formData.append("audio", audioBlob);
-    
-            const response = await fetch("/recognizeSpeech", {
-              method: "POST",
-              body: formData,
-            });
-    
-            const result = await response.json();
-            setQuestion(result.text);
-    
-            // Call OpenAI chat completion API with the recognized text
-            const openaiResponse = await fetch("/chatCompletion", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ speechText: result.text }),
-            });
-    
-            const openaiResult = await openaiResponse.json();
-            console.log(openaiResult);
-          };
-    
-          mediaRecorder.start();
-          setTimeout(() => {
-            mediaRecorder.stop();
-          }, 5000); // Record for 5 seconds (you can adjust as needed)
-        } catch (error) {
-          console.error("Error during recording:", error);
         }
       };
       
@@ -142,7 +107,29 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
 
-                <button onClick={startRecognition}>Start Recognition</button>
+                <button onClick={async () => {
+                    try {
+                        await SpeechRecognition.startListening();
+                        setIsListening(true);
+                        setFeedbackMessage("Listening...");
+                    } catch (error) {
+                        console.error("Error starting listening:", error);
+                        setFeedbackMessage("Error starting listening");
+                    }
+                    }}>Start</button>
+
+                <button onClick={async () => {
+                    try {
+                        await SpeechRecognition.stopListening();
+                        setIsListening(false);
+                        setFeedbackMessage("Stopped listening");
+                    } catch (error) {
+                        console.error("Error stopping listening:", error);
+                        setFeedbackMessage("Error stopping listening");
+                    }
+                }}>Stop</button>
+
+
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>

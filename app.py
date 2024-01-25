@@ -102,52 +102,6 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 if __name__ == '__main__':
     app.run(debug=True)
 
-#Speech
-openai.api_type = "azure"
-openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
-openai.api_version = "2023-07-01-preview"
-openai.api_key = AZURE_OPENAI_KEY
-
-service_region = "uksouth"
-
-@app.route("/recognizeSpeech", methods=["POST"])
-def recognize_speech():
-    try:
-        audio_data = request.files["audio"].read()
-        recognized_text = recognize_audio(audio_data)
-        return jsonify({"text": recognized_text})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route("/chatCompletion", methods=["POST"])
-def chat_completion():
-    try:
-        speech_text = request.json["speechText"]
-        openai_response = complete_chat(speech_text)
-        return jsonify(openai_response)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-def recognize_audio(audio_data):
-    speech_config = speechsdk.SpeechConfig(subscription=AZURE_SPEECH_API_KEY, region=service_region)
-    audio_config = speechsdk.audio.AudioConfig(stream=audio_data)
-    recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
-    result = recognizer.recognize_once()
-    return result.text if result.reason == speechsdk.ResultReason.RecognizedSpeech else "Recognition failed"
-
-def complete_chat(speech_text):
-    message_text = [{"role": "user", "content": speech_text}]
-    completion = openai.ChatCompletion.create(
-        engine=AZURE_OPENAI_MODEL,
-        messages=message_text,
-        temperature=0.7,
-        max_tokens=int(AZURE_OPENAI_MAX_TOKENS),
-        top_p=float(AZURE_OPENAI_TOP_P),
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None
-    )
-    return completion
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
