@@ -6,6 +6,7 @@ import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
 import { handleImprovePromptApi } from "../../api";
+import AudioRecorder from 'react-audio-voice-recorder';
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -62,6 +63,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         setQuestion(prompt);
       };
 
+      const onRecordingComplete = (audioBlob: Blob) => {
+        // Handle the recorded audio blob, and possibly send it to the backend
+        console.log('Recorded Audio Blob:', audioBlob);
+        // Additional logic to send the audio blob to the backend if needed
+    };
+
     return (
         <Stack horizontal className={styles.questionInputContainer}>
             <TextField
@@ -93,6 +100,15 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
+
+                <AudioRecorder
+                    title="Record Voice"
+                    audioURL={question}  // Set the audio URL to the recorded voice
+                    showDownload={false}  // You can customize this based on your needs
+                    handleAudioStop={onRecordingComplete}
+                    backgroundColor="#FF4081"
+                    style={{ margin: '0 10px' }}
+                />
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
