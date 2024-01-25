@@ -18,6 +18,24 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+    const [transcription, setTranscription] = useState<string>('');
+
+    const startSpeechRecognition = () => {
+        const recognition = new ((window as any).SpeechRecognition ||
+          (window as any).webkitSpeechRecognition)();
+    
+        if (recognition) {
+          recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            setQuestion(transcript);
+            console.log("Transcribed Text:", transcript);
+          };
+    
+          recognition.start();
+        } else {
+          console.error("SpeechRecognition is not supported in this browser");
+        }
+      };
 
     const handleImprovePrompt = async () => {
         try {
@@ -93,6 +111,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
+
+                <button onClick={startSpeechRecognition}>Start Speech Recognition</button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
