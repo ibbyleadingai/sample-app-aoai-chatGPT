@@ -18,59 +18,29 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
-    const [recognizedText, setRecognizedText] = useState<string>('');
-    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  
+    const recognitionRef = useRef(null);
+
     const startSpeechRecognition = () => {
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then((stream) => {
-          const mediaRecorder = new MediaRecorder(stream);
-  
-          mediaRecorder.ondataavailable = (e) => {
-            if (e.data.size > 0) {
-              const audioBlob = new Blob([e.data], { type: 'audio/wav' });
-              sendAudioToServer(audioBlob);
-            }
+        // @ts-ignore
+        const recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+      
+        recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            setQuestion(transcript);
           };
-  
-          mediaRecorder.onstop = () => {
-            stream.getTracks().forEach(track => track.stop());
-          };
-  
-          mediaRecorderRef.current = mediaRecorder;
-          mediaRecorder.start();
-        })
-        .catch((error) => {
-          console.error('Error accessing microphone:', error);
-        });
-    };
-  
-    const stopSpeechRecognition = () => {
-      if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.stop();
-      }
-    };
-  
-    const sendAudioToServer = async (audioBlob: Blob) => {
-      const formData = new FormData();
-      formData.append('audio', audioBlob);
-  
-      try {
-        const response = await fetch('/speech-recognition', {
-          method: 'POST',
-          body: formData,
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Server responded with ${response.status}`);
+      
+        recognitionRef.current = recognition;
+        recognition.start();
+      };
+    
+      const stopSpeechRecognition = () => {
+        if (recognitionRef.current) {
+          (recognitionRef.current as any).stop();
         }
-  
-        const responseData = await response.json();
-        setRecognizedText(responseData.result);
-      } catch (error) {
-        console.error('Error sending audio to server:', error);
-      }
-    };
+      };
 
     const handleImprovePrompt = async () => {
         try {
