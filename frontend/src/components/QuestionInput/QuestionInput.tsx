@@ -6,6 +6,7 @@ import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
 import { handleImprovePromptApi } from "../../api";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -18,6 +19,20 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+
+    const { transcript, listening, startListening, stopListening } = useSpeechRecognition({
+        onResult: (result: string) => {
+            setQuestion(result);
+        },
+    });
+
+    const onStartSpeechRecognition = () => {
+        startListening();
+    };
+
+    const onStopSpeechRecognition = () => {
+        stopListening();
+    };
 
     const handleImprovePrompt = async () => {
         try {
@@ -93,6 +108,24 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
+
+                {listening ? (
+                    <button
+                        title="Stop Speech Recognition"
+                        className={styles.speechRecognitionButton}
+                        onClick={onStopSpeechRecognition}
+                    >
+                        Stop Listening
+                    </button>
+                ) : (
+                    <button
+                        title="Start Speech Recognition"
+                        className={styles.speechRecognitionButton}
+                        onClick={onStartSpeechRecognition}
+                    >
+                        Start Listening
+                    </button>
+                )}
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
