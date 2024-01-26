@@ -102,8 +102,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 </button>
 
                 <p>Microphone: {listening ? 'on' : 'off'}</p>
-                <button onClick={SpeechRecognition.startListening}>Start</button>
-                <button onClick={SpeechRecognition.stopListening}>Stop</button>
+                <button onClick={() => SpeechRecognition.startListening}>Start</button>
+                <button onClick={() => SpeechRecognition.stopListening}>Stop</button>
                 <p>{transcript}</p>
 
                 { sendQuestionDisabled ? 
