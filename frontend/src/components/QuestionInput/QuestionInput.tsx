@@ -18,9 +18,11 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+    const [isRecording, setIsRecording] = useState<boolean>(false)
     const recognitionRef = useRef(null);
 
     const startSpeechRecognition = () => {
+        setIsRecording(true)
         // @ts-ignore
         const recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
         recognition.continuous = true;
@@ -37,6 +39,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       };
     
       const stopSpeechRecognition = () => {
+        setIsRecording(false)
         if (recognitionRef.current) {
           (recognitionRef.current as any).stop();
         }
@@ -117,13 +120,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
 
-                <button onClick={startSpeechRecognition} disabled={disabled}>
+                {!isRecording ? <button onClick={startSpeechRecognition} disabled={disabled}>
                     Start Speech Recognition
-                </button>
-
+                </button> :
                 <button onClick={stopSpeechRecognition} disabled={disabled}>
                     Stop Speech Recognition
-                </button>
+                </button>}
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
