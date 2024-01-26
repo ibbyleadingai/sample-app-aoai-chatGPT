@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
@@ -18,6 +18,59 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+    const [recognizedText, setRecognizedText] = useState<string>('');
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  
+    const startSpeechRecognition = () => {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then((stream) => {
+          const mediaRecorder = new MediaRecorder(stream);
+  
+          mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0) {
+              const audioBlob = new Blob([e.data], { type: 'audio/wav' });
+              sendAudioToServer(audioBlob);
+            }
+          };
+  
+          mediaRecorder.onstop = () => {
+            stream.getTracks().forEach(track => track.stop());
+          };
+  
+          mediaRecorderRef.current = mediaRecorder;
+          mediaRecorder.start();
+        })
+        .catch((error) => {
+          console.error('Error accessing microphone:', error);
+        });
+    };
+  
+    const stopSpeechRecognition = () => {
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+      }
+    };
+  
+    const sendAudioToServer = async (audioBlob: Blob) => {
+      const formData = new FormData();
+      formData.append('audio', audioBlob);
+  
+      try {
+        const response = await fetch('/api/speech-recognition', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
+  
+        const responseData = await response.json();
+        setRecognizedText(responseData.result);
+      } catch (error) {
+        console.error('Error sending audio to server:', error);
+      }
+    };
 
     const handleImprovePrompt = async () => {
         try {
@@ -92,6 +145,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     }}
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
+                </button>
+
+                <button onClick={startSpeechRecognition} disabled={disabled}>
+                    Start Speech Recognition
+                </button>
+
+                <button onClick={stopSpeechRecognition} disabled={disabled}>
+                    Stop Speech Recognition
                 </button>
 
                 { sendQuestionDisabled ? 

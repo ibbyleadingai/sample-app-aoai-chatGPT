@@ -1,4 +1,4 @@
-import azure.cognitiveservices.speech as speechsdk
+from azure.cognitiveservices.speech import SpeechConfig, SpeechRecognizer, ResultReason
 import json
 import os
 import logging
@@ -57,6 +57,7 @@ AZURE_SEARCH_VECTOR_COLUMNS = os.environ.get("AZURE_SEARCH_VECTOR_COLUMNS")
 AZURE_SEARCH_QUERY_TYPE = os.environ.get("AZURE_SEARCH_QUERY_TYPE")
 AZURE_SEARCH_PERMITTED_GROUPS_COLUMN = os.environ.get("AZURE_SEARCH_PERMITTED_GROUPS_COLUMN")
 AZURE_SEARCH_STRICTNESS = os.environ.get("AZURE_SEARCH_STRICTNESS", SEARCH_STRICTNESS)
+AZURE_SPEECH_API_KEY = os.environ.get("AZURE_SPEECH_API_KEY")
 
 # AOAI Integration Settings
 AZURE_OPENAI_RESOURCE = os.environ.get("AZURE_OPENAI_RESOURCE")
@@ -97,6 +98,28 @@ AZURE_COSMOSDB_DATABASE = os.environ.get("AZURE_COSMOSDB_DATABASE")
 AZURE_COSMOSDB_ACCOUNT = os.environ.get("AZURE_COSMOSDB_ACCOUNT")
 AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSATIONS_CONTAINER")
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
+
+# Configure Azure Cognitive Services Speech SDK
+speech_config = SpeechConfig(subscription=AZURE_SPEECH_API_KEY, region="uksouth")
+
+@app.route('/api/speech-recognition', methods=['POST'])
+def speech_recognition():
+    try:
+        audio_data = request.files['audio'].read()
+
+        # Assuming audio_data is the raw audio data from the client
+        result = recognize_audio(audio_data)
+
+        return jsonify({"result": result})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+def recognize_audio(audio_data):
+    recognizer = SpeechRecognizer(speech_config=speech_config, audio_config=None)
+    result = recognizer.recognize_once(audio_data)
+
+    return result.text if result.reason == ResultReason.RecognizedSpeech else "Recognition failed"
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
