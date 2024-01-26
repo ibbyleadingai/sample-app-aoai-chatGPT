@@ -7,6 +7,7 @@ import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
 import { handleImprovePromptApi } from "../../api";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import 'regenerator-runtime/runtime';
 
 interface Props {
     onSend: (question: string, id?: string) => void;
