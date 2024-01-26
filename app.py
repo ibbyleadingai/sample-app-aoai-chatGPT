@@ -102,17 +102,22 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 # Configure Azure Cognitive Services Speech SDK
 speech_config = SpeechConfig(subscription=AZURE_SPEECH_API_KEY, region="uksouth")
 
-@app.route('/api/speech-recognition', methods=['POST'])
+@app.route('/speech-recognition', methods=['POST'])
 def speech_recognition():
     try:
         audio_data = request.files['audio'].read()
 
+        # Log the length of the received audio data
+        app.logger.info(f"Received audio data length: {len(audio_data)}")
+
         # Assuming audio_data is the raw audio data from the client
         result = recognize_audio(audio_data)
 
-        return jsonify({"result": result})
+        # Send a simple response to the frontend
+        return jsonify({"message": "Audio file received successfully."})
 
     except Exception as e:
+        app.logger.error(f"Error processing audio: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 def recognize_audio(audio_data):

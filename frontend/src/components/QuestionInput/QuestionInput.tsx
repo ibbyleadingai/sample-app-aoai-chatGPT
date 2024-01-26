@@ -56,7 +56,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       formData.append('audio', audioBlob);
   
       try {
-        const response = await fetch('/api/speech-recognition', {
+        const response = await fetch('/speech-recognition', {
           method: 'POST',
           body: formData,
         });
