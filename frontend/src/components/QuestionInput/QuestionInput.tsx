@@ -18,22 +18,16 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
-    const [transcription, setTranscription] = useState<string>('');
+    const [transcription, setTranscription] = useState<string | null>(null);
 
-    const startSpeechRecognition = () => {
-        const recognition = new ((window as any).SpeechRecognition ||
-          (window as any).webkitSpeechRecognition)();
-    
-        if (recognition) {
-          recognition.onresult = (event: any) => {
-            const transcript = event.results[0][0].transcript;
-            setQuestion(transcript);
-            console.log("Transcribed Text:", transcript);
-          };
-    
-          recognition.start();
-        } else {
-          console.error("SpeechRecognition is not supported in this browser");
+    const startSpeechToText = async () => {
+        try {
+          const response = await fetch("/start-speech-to-text");
+          const data = await response.json();
+          setTranscription(data.transcription);
+          console.log(transcription)
+        } catch (error) {
+          console.error("Error in speech to text:", error);
         }
       };
 
@@ -112,7 +106,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
 
-                <button onClick={startSpeechRecognition}>Start Speech Recognition</button>
+                <button onClick={startSpeechToText}>Start Speech to Text</button>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>

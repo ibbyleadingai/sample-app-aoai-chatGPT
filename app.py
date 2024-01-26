@@ -57,6 +57,7 @@ AZURE_SEARCH_VECTOR_COLUMNS = os.environ.get("AZURE_SEARCH_VECTOR_COLUMNS")
 AZURE_SEARCH_QUERY_TYPE = os.environ.get("AZURE_SEARCH_QUERY_TYPE")
 AZURE_SEARCH_PERMITTED_GROUPS_COLUMN = os.environ.get("AZURE_SEARCH_PERMITTED_GROUPS_COLUMN")
 AZURE_SEARCH_STRICTNESS = os.environ.get("AZURE_SEARCH_STRICTNESS", SEARCH_STRICTNESS)
+AZURE_SPEECH_API_KEY = os.environ.get("AZURE_SPEECH_API_KEY")
 
 # AOAI Integration Settings
 AZURE_OPENAI_RESOURCE = os.environ.get("AZURE_OPENAI_RESOURCE")
@@ -97,6 +98,87 @@ AZURE_COSMOSDB_DATABASE = os.environ.get("AZURE_COSMOSDB_DATABASE")
 AZURE_COSMOSDB_ACCOUNT = os.environ.get("AZURE_COSMOSDB_ACCOUNT")
 AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSATIONS_CONTAINER")
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
+
+#Speech to text
+openai.api_type = "azure"
+openai.api_version = "2023-08-01-preview"
+openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
+openai.api_key = AZURE_OPENAI_KEY
+deployment_id = "sandbox-gpt4"
+
+speech_config = speechsdk.SpeechConfig(
+    subscription=AZURE_SPEECH_API_KEY,
+    region="uksouth"
+)
+
+
+def setup_byod(deployment_id: str) -> None:
+    class BringYourOwnDataAdapter(requests.adapters.HTTPAdapter):
+        def send(self, request, **kwargs):
+            request.url = f"{openai.api_base}/openai/deployments/{deployment_id}/extensions/chat/completions?api-version={openai.api_version}"
+            return super().send(request, **kwargs)
+
+    session = requests.Session()
+    session.mount(
+        prefix=f"{openai.api_base}/openai/deployments/{deployment_id}",
+        adapter=BringYourOwnDataAdapter()
+    )
+    openai.requestssession = session
+
+
+setup_byod(deployment_id)
+
+
+@app.route("/start-speech-to-text", methods=["POST"])
+def start_speech_to_text():
+    audio_config = speechsdk.audio.AudioConfig(use_default_microphone=True)
+    speech_config.speech_recognition_language = "en-GB"
+    speech_recognizer = speechsdk.SpeechRecognizer(speech_config, audio_config)
+
+    print("Say something...")
+    speech_result = speech_recognizer.recognize_once_async().get()
+
+    message_text = [{"role": "user", "content": speech_result.text}]
+
+    completion = openai.ChatCompletion.create(
+        messages=message_text,
+        deployment_id=deployment_id,
+        dataSources=[
+            {
+                "type": "AzureCognitiveSearch",
+                "parameters": {
+                    "endpoint": f"https://{AZURE_SEARCH_SERVICE}.search.windows.net",
+                    "indexName": AZURE_SEARCH_INDEX,
+                    "semanticConfiguration": "default",
+                    "queryType": "vectorSemanticHybrid",
+                    "fieldsMapping": {
+                        "contentFieldsSeparator": "\n",
+                        "contentFields": ["content"],
+                        "filepathField": "filepath",
+                        "titleField": "title",
+                        "urlField": "url",
+                        "vectorFields": ["contentVector"],
+                    },
+                    "inScope": True,
+                    "roleInformation": "You are an AI assistant that helps people find information.",
+                    "filter": None,
+                    "strictness": 1,
+                    "topNDocuments": 20,
+                    "key": AZURE_SEARCH_KEY,
+                    "embeddingDeploymentName": "sandbox-vector-ada",
+                },
+            }
+        ],
+        enhancements=None,
+        temperature=0,
+        top_p=1,
+        max_tokens=800,
+        stop=None,
+        stream=True
+    )
+
+    transcription = completion['choices'][0]['message']['content']
+    return jsonify({"transcription": transcription})
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
