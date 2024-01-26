@@ -20,19 +20,16 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
 
-    const { transcript, listening, startListening, stopListening } = useSpeechRecognition({
-        onResult: (result: string) => {
-            setQuestion(result);
-        },
-    });
-
-    const onStartSpeechRecognition = () => {
-        startListening();
-    };
-
-    const onStopSpeechRecognition = () => {
-        stopListening();
-    };
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+      } = useSpeechRecognition();
+    
+      if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+      }
 
     const handleImprovePrompt = async () => {
         try {
@@ -113,17 +110,17 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     <button
                         title="Stop Speech Recognition"
                         className={styles.speechRecognitionButton}
-                        onClick={onStopSpeechRecognition}
+                        onClick={() => SpeechRecognition.stopListening()}
                     >
-                        Stop Listening
+                    Stop Listening
                     </button>
                 ) : (
                     <button
                         title="Start Speech Recognition"
                         className={styles.speechRecognitionButton}
-                        onClick={onStartSpeechRecognition}
+                        onClick={() => SpeechRecognition.startListening()}
                     >
-                        Start Listening
+                    Start Listening
                     </button>
                 )}
 
