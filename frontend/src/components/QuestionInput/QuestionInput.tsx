@@ -6,6 +6,7 @@ import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
 import { handleImprovePromptApi } from "../../api";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -18,6 +19,12 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+
+    const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+
+    if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+    }
 
     const handleImprovePrompt = async () => {
         try {
@@ -93,6 +100,11 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
                 </button>
+
+                <p>Microphone: {listening ? 'on' : 'off'}</p>
+                <button onClick={SpeechRecognition.startListening}>Start</button>
+                <button onClick={SpeechRecognition.stopListening}>Stop</button>
+                <p>{transcript}</p>
 
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
