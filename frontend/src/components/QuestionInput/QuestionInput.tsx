@@ -22,14 +22,15 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const startSpeechToText = async () => {
         try {
-          const response = await fetch("/start-speech-to-text");
-          const data = await response.json();
-          setTranscription(data.transcription);
-          console.log(transcription)
+            const response = await fetch("/api/start-speech-to-text", {
+                method: "POST",
+            });
+            const data = await response.json();
+            setTranscription(data.transcription);
         } catch (error) {
-          console.error("Error in speech to text:", error);
+            console.error("Error in speech to text:", error);
         }
-      };
+    };
 
     const handleImprovePrompt = async () => {
         try {
