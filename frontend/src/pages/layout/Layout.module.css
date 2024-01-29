@@ -111,3 +111,10 @@
     align-items: center;
     color: #242424;
 }
+
+@media (max-width: 500px) {
+    .headerTitle {
+        padding: 5px 0px 5px 0px;
+        font-size: 18px;
+    }
+}
