@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'laisandbox'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_45D664F2EC6C48F6B19AAB1F47FFF146 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AD5D2186D36E40658158E6EFEEE3A439 }}
