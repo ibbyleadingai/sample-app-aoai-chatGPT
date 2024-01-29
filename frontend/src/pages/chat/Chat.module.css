@@ -331,3 +331,14 @@ a {
     text-decoration: underline;
     cursor: pointer;
 }
+
+@media (max-width: 500px) {
+    .chatInput {
+        width: 95%;
+    }
+    .chatMessageUserMessage {
+        width: auto;
+        max-width: 100%;
+    }
+  
+  }

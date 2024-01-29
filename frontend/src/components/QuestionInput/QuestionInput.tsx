@@ -84,14 +84,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             >
 
                 <button
-                    title="Improve my prompt"
+                    title="Improve prompt"
                     className={styles.improvePromptButton}
                     onClick={(e) => {
                         e.stopPropagation();
                         handleImprovePrompt()
                     }}
                     disabled={isLoadingImproved}
-                >{isLoadingImproved ? "Loading prompt..." : "Improve my prompt"}
+                >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}
                 </button>
 
                 { sendQuestionDisabled ? 
