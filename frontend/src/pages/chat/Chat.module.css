@@ -340,5 +340,8 @@ a {
         width: auto;
         max-width: 100%;
     }
+    .citationPanel {
+        max-width: 80%;
+    }
   
   }
