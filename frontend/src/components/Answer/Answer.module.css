@@ -179,4 +179,9 @@ sup {
         width: 135px;
         margin-bottom: 5px;
     }
+
+    .citationContainer {
+        font-size: 10px;
+        padding: 4px 3px;
+    }
 }
