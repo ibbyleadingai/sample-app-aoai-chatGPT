@@ -343,5 +343,8 @@ a {
     .citationPanel {
         max-width: 80%;
     }
+    .citationPanelContent {
+        width:20%;
+    } 
   
   }
