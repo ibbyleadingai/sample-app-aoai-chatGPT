@@ -169,3 +169,14 @@ sup {
     font-size: 10px;
     line-height: 10px;
 }
+
+@media (max-width: 500px) {
+    .answerContainer {
+        padding: 4px;
+    }
+
+    .answerDisclaimer {
+        width: 135px;
+        margin-bottom: 5px;
+    }
+}
