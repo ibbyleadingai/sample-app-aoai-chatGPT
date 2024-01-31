@@ -57,8 +57,6 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
         subText: 'The history of this chat session will permanently removed.',
     };
 
-    console.log("Item: " + item)
-
     const modalProps = {
         titleAriaId: 'labelId',
         subtitleAriaId: 'subTextId',
@@ -101,6 +99,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
         setEdit(true)
         setTextFieldFocused(true)
         setEditTitle(item?.title)
+        console.log("Item: " + item)
     };
 
     const handleSelectItem = () => {
