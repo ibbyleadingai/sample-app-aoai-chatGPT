@@ -47,6 +47,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
     const [errorRename, setErrorRename] = useState<string | undefined>(undefined);
     const [textFieldFocused, setTextFieldFocused] = useState(false);
     const textFieldRef = useRef<ITextField | null>(null);
+    const [displayedMessages, setDisplayedMessages] = useState<React.ReactNode[]>([]);
     
     const appStateContext = React.useContext(AppStateContext)
     const isSelected = item?.id === appStateContext?.state.currentChat?.id;
@@ -163,21 +164,23 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
         }
     }
 
-    // const handleDownload = async (item: Conversation) => {
-    //     try {
-    //       const conversationText = item.content || ''; // Replace 'text' with the correct property name
+    const handleDownload = async (item: Conversation) => {
+        try {
+          const messagesToDisplay = (item.messages || []).map(message => (
+            <p key={message.id}>{message.content}</p>
+          ));
     
-    //       // Create a PDF document
-    //       const pdf = new jsPDF();
-    //       pdf.text(conversationText, 10, 10); // Add conversation text to PDF
+          setDisplayedMessages(messagesToDisplay);
     
-    //       // Save the PDF
-    //       pdf.save(`conversation_${item.id}.pdf`);
-    //     } catch (error) {
-    //       console.error('Error downloading conversation:', error);
-    //       // Handle error, show a message, etc.
-    //     }
-    //   };
+          // Rest of your code...
+    
+          // For debugging purposes, you can log the messages as well
+          console.log(messagesToDisplay);
+        } catch (error) {
+          console.error('Error downloading conversation:', error);
+          // Handle error, show a message, etc.
+        }
+      };
 
     return (
         <Stack
@@ -244,6 +247,9 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
                     }}
                 >
                     Error: could not delete item
+                    <div>
+                     {displayedMessages}
+                    </div>
                 </Text>
             )}
             <Dialog
