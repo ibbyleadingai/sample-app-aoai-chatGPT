@@ -166,16 +166,21 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
 
     const handleDownload = async (item: Conversation) => {
         try {
-          const messagesToDisplay = (item.messages || []).map(message => (
-            <p key={message.id}>{message.content}</p>
-          ));
-    
-          setDisplayedMessages(messagesToDisplay);
-    
-          // Rest of your code...
-    
-          // For debugging purposes, you can log the messages as well
-          console.log(messagesToDisplay);
+          // Filter messages to exclude those with role 'tool'
+          const filteredMessages = (item.messages || []).filter(message => message.role === 'user' || message.role === 'assistant');
+      
+          // Create a formatted string with content, date, and role
+          const formattedText = filteredMessages.map(message => {
+            const { content, date, role } = message;
+            return `${role.toUpperCase()} [${date}]: ${content}`;
+          }).join('\n');
+      
+          // Create a PDF document
+          const pdf = new jsPDF();
+          pdf.text(formattedText, 10, 10);
+      
+          // Save the PDF
+          pdf.save(`conversation_${item.id}.pdf`);
         } catch (error) {
           console.error('Error downloading conversation:', error);
           // Handle error, show a message, etc.
@@ -234,6 +239,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
                 <Stack horizontal verticalAlign={'center'} style={{ width: '100%' }}>
                     <div className={styles.chatTitle}>{truncatedTitle}</div>
                     {(isSelected || isHovered) && <Stack horizontal horizontalAlign='end'>
+                        <IconButton className={styles.itemButton} iconProps={{ iconName: 'Download' }} title="Download" onClick={() => handleDownload(item)} onKeyDown={e => e.key === " " ? onEdit() : null}/>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Delete' }} title="Delete" onClick={toggleDeleteDialog} onKeyDown={e => e.key === " " ? toggleDeleteDialog() : null}/>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Edit' }} title="Edit" onClick={onEdit} onKeyDown={e => e.key === " " ? onEdit() : null}/>
                     </Stack>}
