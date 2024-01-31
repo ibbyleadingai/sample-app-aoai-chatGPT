@@ -57,6 +57,8 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
         subText: 'The history of this chat session will permanently removed.',
     };
 
+    console.log("Item: " + item)
+
     const modalProps = {
         titleAriaId: 'labelId',
         subtitleAriaId: 'subTextId',
@@ -103,7 +105,6 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
 
     const handleSelectItem = () => {
         onSelect(item)
-        console.log("Item: " + item)
         appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: item } )
     }
 
@@ -165,7 +166,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
 
     // const handleDownload = async (item: Conversation) => {
     //     try {
-    //       const conversationText = item.text || ''; // Assuming text is stored in 'text' property
+    //       const conversationText = item.content || ''; // Replace 'text' with the correct property name
     
     //       // Create a PDF document
     //       const pdf = new jsPDF();
