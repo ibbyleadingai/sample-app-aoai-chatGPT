@@ -100,7 +100,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
         setEdit(true)
         setTextFieldFocused(true)
         setEditTitle(item?.title)
-        console.log("Item: " + item.messages)
+        console.log("Item:", item.messages)
     };
 
     const handleSelectItem = () => {
