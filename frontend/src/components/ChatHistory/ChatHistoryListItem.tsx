@@ -9,6 +9,7 @@ import { useBoolean } from '@fluentui/react-hooks';
 import { Conversation } from '../../api/models';
 import { historyDelete, historyRename } from '../../api';
 import { useEffect, useRef, useState } from 'react';
+import { jsPDF } from "jspdf";
 
 interface ChatHistoryListItemCellProps {
   item?: Conversation;
@@ -102,6 +103,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
 
     const handleSelectItem = () => {
         onSelect(item)
+        console.log("Item: " + item)
         appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: item } )
     }
 
@@ -160,6 +162,22 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
             return
         }
     }
+
+    // const handleDownload = async (item: Conversation) => {
+    //     try {
+    //       const conversationText = item.text || ''; // Assuming text is stored in 'text' property
+    
+    //       // Create a PDF document
+    //       const pdf = new jsPDF();
+    //       pdf.text(conversationText, 10, 10); // Add conversation text to PDF
+    
+    //       // Save the PDF
+    //       pdf.save(`conversation_${item.id}.pdf`);
+    //     } catch (error) {
+    //       console.error('Error downloading conversation:', error);
+    //       // Handle error, show a message, etc.
+    //     }
+    //   };
 
     return (
         <Stack
