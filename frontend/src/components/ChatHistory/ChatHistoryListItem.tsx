@@ -177,7 +177,15 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
       
           // Create a PDF document
           const pdf = new jsPDF();
-          pdf.text(formattedText, 10, 10);
+      
+          // Set the width for text wrapping (adjust as needed)
+          const maxWidth = 180;
+      
+          // Split the formatted text into lines to fit the width
+          const lines = pdf.splitTextToSize(formattedText, maxWidth);
+      
+          // Add the wrapped text to the PDF
+          pdf.text(lines, 10, 10);
       
           // Save the PDF
           pdf.save(`conversation_${item.id}.pdf`);
