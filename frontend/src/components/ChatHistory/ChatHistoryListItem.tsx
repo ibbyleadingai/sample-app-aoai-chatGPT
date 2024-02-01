@@ -178,14 +178,27 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           // Create a PDF document
           const pdf = new jsPDF();
       
+          // Set the font size and type (adjust as needed)
+          const fontSize = 12;
+          const fontType = 'normal';
+      
+          pdf.setFontSize(fontSize);
+          pdf.setFont(fontType);
+      
           // Set the width for text wrapping (adjust as needed)
           const maxWidth = 180;
       
-          // Split the formatted text into lines to fit the width
-          const lines = pdf.splitTextToSize(formattedText, maxWidth);
+          // Set the margin to ensure text doesn't reach the edges
+          const margin = 10;
       
-          // Add the wrapped text to the PDF
-          pdf.text(lines, 10, 10);
+          // Calculate the available width for text
+          const availableWidth = pdf.internal.pageSize.width - 2 * margin;
+      
+          // Split the formatted text into lines to fit the available width
+          const lines = pdf.splitTextToSize(formattedText, availableWidth);
+      
+          // Add the wrapped text to the PDF with margins
+          pdf.text(lines, margin, margin);
       
           // Save the PDF
           pdf.save(`conversation_${item.id}.pdf`);
