@@ -198,11 +198,10 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           let availableHeight = pdf.internal.pageSize.height - 2 * marginY;
       
           // Split the formatted text into lines to fit the available width and height
-          const lines: string[] = pdf.splitTextToSize(formattedText, availableWidth);
+          const lines = pdf.splitTextToSize(formattedText, availableWidth);
       
           // Add the wrapped text to the PDF with margins
-          lines.forEach((line: string) => {
-            // Check if adding the line would exceed the maximum height
+          lines.forEach((line: string | string[]) => {
             if (availableHeight < fontSize) {
               // Add a new page if the remaining height is not enough for a single line
               pdf.addPage();
