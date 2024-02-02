@@ -83,6 +83,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
 
+                { sendQuestionDisabled ? 
+                    <SendRegular className={styles.questionInputSendButtonDisabled}/>
+                    :
+                    <img title="Send prompt" src={Send} className={styles.questionInputSendButton}/>
+                }
+
                 <button
                     title="Improve prompt"
                     className={styles.improvePromptButton}
@@ -93,12 +99,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}
                 </button>
-
-                { sendQuestionDisabled ? 
-                    <SendRegular className={styles.questionInputSendButtonDisabled}/>
-                    :
-                    <img title="Send prompt" src={Send} className={styles.questionInputSendButton}/>
-                }
             </div>
             <div className={styles.questionInputBottomBorder} />
         </Stack>
