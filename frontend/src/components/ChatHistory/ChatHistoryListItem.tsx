@@ -185,8 +185,8 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           pdf.setFontSize(fontSize);
           pdf.setFont(fontType);
       
-          // Set the width for text wrapping (adjust as needed)
-          const maxWidth = 180;
+          // Set line height to reduce spacing between lines
+          const lineHeight = 1.2; // Adjust as needed
       
           // Set the margin to ensure text doesn't reach the edges
           const margin = 10;
@@ -202,7 +202,6 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
       
           // Loop through lines and add to PDF, moving to a new page if needed
           lines.forEach(line => {
-            const lineHeight = pdf.getLineHeight();
             if (cursorY + lineHeight > availableHeight) {
               // Move to a new page
               pdf.addPage();
@@ -210,7 +209,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
             }
       
             pdf.text(line, margin, cursorY);
-            cursorY += lineHeight;
+            cursorY += fontSize * lineHeight;
           });
       
           // Save the PDF
