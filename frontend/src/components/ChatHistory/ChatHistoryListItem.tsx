@@ -169,11 +169,11 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           // Filter messages to exclude those with role 'tool'
           const filteredMessages = (item.messages || []).filter(message => message.role === 'user' || message.role === 'assistant');
       
-          // Create a formatted string with content, date, and role
+          // Create a formatted string with content, date, and role, adding a line of space after each message
           const formattedText = filteredMessages.map(message => {
             const { content, date, role } = message;
-            return `<b>${role.toUpperCase()}</b> [${date}]: ${content} \n`;
-          }).join('\n');
+            return `<b>${role.toUpperCase()}</b> [${date}]: ${content}\n\n`;
+          }).join('');
       
           // Create a PDF document
           const pdf = new jsPDF();
@@ -191,14 +191,27 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           // Set the margin to ensure text doesn't reach the edges
           const margin = 10;
       
-          // Calculate the available width for text
+          // Calculate the available width and height for text
           const availableWidth = pdf.internal.pageSize.width - 2 * margin;
+          const availableHeight = pdf.internal.pageSize.height - 2 * margin;
       
-          // Split the formatted text into lines to fit the available width
-          const lines = pdf.splitTextToSize(formattedText, availableWidth);
+          // Split the formatted text into lines to fit the available width and height
+          const lines: string[] = pdf.splitTextToSize(formattedText, availableWidth, { fontSize });
       
-          // Add the wrapped text to the PDF with margins
-          pdf.text(lines, margin, margin);
+          let cursorY = margin;
+      
+          // Loop through lines and add to PDF, moving to a new page if needed
+          lines.forEach(line => {
+            const lineHeight = pdf.getLineHeight();
+            if (cursorY + lineHeight > availableHeight) {
+              // Move to a new page
+              pdf.addPage();
+              cursorY = margin;
+            }
+      
+            pdf.text(line, margin, cursorY);
+            cursorY += lineHeight;
+          });
       
           // Save the PDF
           pdf.save(`conversation_${item.id}.pdf`);
