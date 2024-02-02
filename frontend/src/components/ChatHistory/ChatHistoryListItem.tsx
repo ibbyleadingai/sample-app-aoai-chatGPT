@@ -185,20 +185,33 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           pdf.setFontSize(fontSize);
           pdf.setFont(fontType);
       
-          // Set the width for text wrapping (adjust as needed)
+          // Set the margins to ensure text doesn't reach the edges
+          const marginX = 10;
+          const marginY = 10;
+      
+          // Set the width and height for text wrapping (adjust as needed)
           const maxWidth = 180;
+          const maxHeight = 250;
       
-          // Set the margin to ensure text doesn't reach the edges
-          const margin = 10;
+          // Calculate the available width and height for text
+          const availableWidth = pdf.internal.pageSize.width - 2 * marginX;
+          let availableHeight = pdf.internal.pageSize.height - 2 * marginY;
       
-          // Calculate the available width for text
-          const availableWidth = pdf.internal.pageSize.width - 2 * margin;
-      
-          // Split the formatted text into lines to fit the available width
-          const lines = pdf.splitTextToSize(formattedText, availableWidth);
+          // Split the formatted text into lines to fit the available width and height
+          const lines: string[] = pdf.splitTextToSize(formattedText, availableWidth);
       
           // Add the wrapped text to the PDF with margins
-          pdf.text(lines, margin, margin);
+          lines.forEach((line: string) => {
+            // Check if adding the line would exceed the maximum height
+            if (availableHeight < fontSize) {
+              // Add a new page if the remaining height is not enough for a single line
+              pdf.addPage();
+              availableHeight = pdf.internal.pageSize.height - 2 * marginY;
+            }
+      
+            pdf.text(line, marginX, marginY);
+            availableHeight -= fontSize;
+          });
       
           // Save the PDF
           pdf.save(`conversation_${item.id}.pdf`);
