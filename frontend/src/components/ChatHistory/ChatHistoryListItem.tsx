@@ -172,7 +172,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           // Create a formatted string with content, date, and role
           const formattedText = filteredMessages.map(message => {
             const { content, date, role } = message;
-            return `${role.toUpperCase()} [${date}]: ${content}`;
+            return `${role.toUpperCase()} [${date}]: ${content} \n\n`;
           }).join('\n');
       
           // Create a PDF document
