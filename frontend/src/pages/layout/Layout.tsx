@@ -66,6 +66,20 @@ const Layout = () => {
 
     useEffect(() => {}, [appStateContext?.state.isCosmosDBAvailable.status]);
 
+    useEffect(() => {
+        fetch("/config")
+            .then(response => response.json())
+            .then(data => {
+                // Use data to conditionally render frontend elements
+                console.log(data);
+                const azureHistoryVisible = data.AZURE_HISTORY_VISIBLE;
+                // Now you can use azureHistoryVisible in your component logic
+            })
+            .catch(error => {
+                console.error("Error fetching config:", error);
+            });
+    }, []);
+
     return (
         <div className={styles.layout}>
             <header className={styles.header} role={"banner"}>

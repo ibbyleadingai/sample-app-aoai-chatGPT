@@ -97,6 +97,19 @@ AZURE_COSMOSDB_ACCOUNT = os.environ.get("AZURE_COSMOSDB_ACCOUNT")
 AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSATIONS_CONTAINER")
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 
+#History button
+AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE")
+
+@app.route("/config", methods=["GET"])
+def get_config():
+    config_data = {
+        "AZURE_OPENAI_ENDPOINT": AZURE_OPENAI_ENDPOINT,
+        "AZURE_OPENAI_KEY": AZURE_OPENAI_KEY,
+        "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
+        # Add other configuration variables as needed
+    }
+    return jsonify(config_data)
+
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
 if AZURE_COSMOSDB_DATABASE and AZURE_COSMOSDB_ACCOUNT and AZURE_COSMOSDB_CONVERSATIONS_CONTAINER:
