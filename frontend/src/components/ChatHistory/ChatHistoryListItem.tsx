@@ -213,7 +213,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           });
       
           // Save the PDF
-          pdf.save(`conversation_${item.id}.pdf`);
+          pdf.save(`conversation_${item.title}.pdf`);
         } catch (error) {
           console.error('Error downloading conversation:', error);
           // Handle error, show a message, etc.
