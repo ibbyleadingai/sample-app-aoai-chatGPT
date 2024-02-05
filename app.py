@@ -98,7 +98,7 @@ AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSA
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 
 #History button
-AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE")
+AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
 
 @app.route("/config", methods=["GET"])
 def get_config():
