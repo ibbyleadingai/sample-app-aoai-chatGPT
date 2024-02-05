@@ -37,6 +37,7 @@ const Layout = () => {
     const [isSharePanelOpen, setIsSharePanelOpen] = useState<boolean>(false);
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
+    const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(true)
     const appStateContext = useContext(AppStateContext)
 
     const handleShareClick = () => {
@@ -73,6 +74,8 @@ const Layout = () => {
                 // Use data to conditionally render frontend elements
                 console.log(data);
                 const azureHistoryVisible = data.AZURE_HISTORY_VISIBLE;
+                setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
+                console.log("isHistoryVisible: ", isHistoryVisible)
                 // Now you can use azureHistoryVisible in your component logic
             })
             .catch(error => {
@@ -97,9 +100,9 @@ const Layout = () => {
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
-                            {/* {isHistoryVisible && 
+                            {isHistoryVisible && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
-                            } */}
+                            } 
                             {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             }
