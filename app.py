@@ -106,7 +106,6 @@ def get_config():
         "AZURE_OPENAI_ENDPOINT": AZURE_OPENAI_ENDPOINT,
         "AZURE_OPENAI_KEY": AZURE_OPENAI_KEY,
         "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
-        # Add other configuration variables as needed
     }
     return jsonify(config_data)
 

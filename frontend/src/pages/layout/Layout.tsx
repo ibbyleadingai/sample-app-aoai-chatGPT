@@ -71,12 +71,10 @@ const Layout = () => {
         fetch("/config")
             .then(response => response.json())
             .then(data => {
-                // Use data to conditionally render frontend elements
                 console.log(data);
                 const azureHistoryVisible = data.AZURE_HISTORY_VISIBLE;
                 setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
                 console.log("isHistoryVisible: ", isHistoryVisible)
-                // Now you can use azureHistoryVisible in your component logic
             })
             .catch(error => {
                 console.error("Error fetching config:", error);

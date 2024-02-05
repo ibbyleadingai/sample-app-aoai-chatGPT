@@ -186,7 +186,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
           pdf.setFont(fontType);
       
           // Set line height to reduce spacing between lines
-          const lineHeight = 0.5; // Adjust as needed
+          const lineHeight = 0.5; 
       
           // Set the margin to ensure text doesn't reach the edges
           const margin = 10;
