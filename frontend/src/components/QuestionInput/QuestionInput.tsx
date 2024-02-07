@@ -59,12 +59,28 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const sendQuestionDisabled = disabled || !question.trim();
     
-      const scrapeLink = async () => {
-        // Validate link (you may need to improve this validation)
-        if (!link || !link.startsWith('http')) {
-          alert('Please enter a valid link.');
-          return;
-        }}
+    const scrapeLink = async () => {
+        // Send link to server for scraping
+        try {
+          const response = await fetch('/scrape', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ link }),
+          });
+    
+          if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.error);
+          }
+    
+          const data = await response.json();
+          setQuestion(data.text);
+        } catch (error: any) {
+          alert('Error: ' + error.message);
+        }
+      };
         
 
     return (

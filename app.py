@@ -7,6 +7,7 @@ import copy
 from azure.identity import DefaultAzureCredential
 from flask import Flask, Response, request, jsonify, send_from_directory
 from dotenv import load_dotenv
+from bs4 import BeautifulSoup
 
 from backend.auth.auth_utils import get_authenticated_user_details
 from backend.history.cosmosdbservice import CosmosConversationClient
@@ -108,6 +109,35 @@ def get_config():
         "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
     }
     return jsonify(config_data)
+
+#Web scraping
+@app.route('/scrape', methods=['POST'])
+def scrape():
+    try:
+        link = request.json.get('link')
+
+        # Scrape the text
+        scraped_text = scrape_text(link)
+
+        return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a web page. Please do not respond.' + scraped_text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def is_valid_link(link):
+    # Temporary placeholder - always return True for now
+    return True
+
+def scrape_text(link):
+    try:
+        # Implement web scraping logic using BeautifulSoup or other libraries
+        response = requests.get(link)
+        response.raise_for_status()  # Raise an HTTPError for bad responses
+        soup = BeautifulSoup(response.text, 'html.parser')
+        # Extract relevant text from the HTML
+        text = soup.get_text()
+        return text
+    except Exception as e:
+        raise ValueError(f"Error scraping content: {str(e)}")
 
 # Initialize a CosmosDB client with AAD auth and containers for Chat History
 cosmos_conversation_client = None
