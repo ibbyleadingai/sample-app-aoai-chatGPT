@@ -228,3 +228,7 @@ trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
+
+### Libraries
+This project uses BeautifulSoup4. Thanks to Leonard Richardson..
+This project uses [JSPDF](https://github.com/parallax/jsPDF), a client-side JavaScript PDF generation library. Thanks to [James Hall]

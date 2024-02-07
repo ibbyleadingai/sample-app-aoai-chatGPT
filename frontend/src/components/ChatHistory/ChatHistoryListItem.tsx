@@ -9,7 +9,7 @@ import { useBoolean } from '@fluentui/react-hooks';
 import { Conversation } from '../../api/models';
 import { historyDelete, historyRename } from '../../api';
 import { useEffect, useRef, useState } from 'react';
-import { jsPDF } from "jspdf";
+import { jsPDF } from "jspdf"; //library for download pdf
 
 interface ChatHistoryListItemCellProps {
   item?: Conversation;

@@ -18,6 +18,7 @@ interface Props {
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
+    const [link, setLink] = useState<string>('');
 
     const handleImprovePrompt = async () => {
         try {
@@ -57,10 +58,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     };
 
     const sendQuestionDisabled = disabled || !question.trim();
-
-    const onPromptClick = (prompt: string) => {
-        setQuestion(prompt);
-      };
+    
+      const scrapeLink = async () => {
+        // Validate link (you may need to improve this validation)
+        if (!link || !link.startsWith('http')) {
+          alert('Please enter a valid link.');
+          return;
+        }}
+        
 
     return (
         <Stack horizontal className={styles.questionInputContainer}>
@@ -101,6 +106,17 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 </button>
             </div>
             <div className={styles.questionInputBottomBorder} />
+            
+            <div className={styles.webScrapeContainer}>
+            <input
+                type="text"
+                id="linkInput"
+                placeholder="Enter a valid link"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+            />
+            <button onClick={scrapeLink}>Web Scrape</button>
+            </div>
         </Stack>
     );
 };

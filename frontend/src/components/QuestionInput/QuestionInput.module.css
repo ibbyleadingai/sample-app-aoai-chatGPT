@@ -77,6 +77,11 @@
     color: #ffffff; 
 }
 
+.webScrapeContainer{
+    position: absolute;
+    top: 125px;
+}
+
 @media (max-width: 500px) {
     .questionInputContainer {
         height: 90px;
