@@ -68,17 +68,18 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ link }),
-          });
+          })
     
           if (!response.ok) {
-            const data = await response.json();
-            throw new Error(data.error);
+            const data = await response.json()
+            throw new Error(data.error)
           }
     
-          const data = await response.json();
-          setQuestion(data.text);
+          const data = await response.json()
+          setQuestion(data.text)
+          sendQuestion()
         } catch (error: any) {
-          alert('Error: ' + error.message);
+          alert('Error: ' + error.message)
         }
       };
         

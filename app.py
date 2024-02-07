@@ -134,7 +134,8 @@ def scrape_text(link):
         response.raise_for_status()  # Raise an HTTPError for bad responses
         soup = BeautifulSoup(response.text, 'html.parser')
         # Extract relevant text from the HTML
-        text = soup.get_text()
+        paragraphs = soup.find_all('p')
+        text = '\n'.join([paragraph.get_text() for paragraph in paragraphs])
         return text
     except Exception as e:
         raise ValueError(f"Error scraping content: {str(e)}")
