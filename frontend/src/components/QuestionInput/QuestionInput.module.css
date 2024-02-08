@@ -95,6 +95,7 @@
     margin-left: 4px;
     background-color: #3498db;
     color: #fff;
+    cursor: pointer;
 }
 
 @media (max-width: 500px) {
