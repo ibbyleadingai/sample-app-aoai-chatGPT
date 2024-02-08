@@ -82,6 +82,21 @@
     top: 125px;
 }
 
+.linkInput{
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+.linkBtn{
+    padding: 5px;
+    border-radius: 3px;
+    border: none;
+    margin-left: 4px;
+    background-color: #3498db;
+    color: #fff;
+}
+
 @media (max-width: 500px) {
     .questionInputContainer {
         height: 90px;

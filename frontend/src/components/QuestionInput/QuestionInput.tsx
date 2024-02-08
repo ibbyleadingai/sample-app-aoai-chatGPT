@@ -19,6 +19,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [question, setQuestion] = useState<string>("");
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [link, setLink] = useState<string>('');
+    const [isScraped, setIsScraped] = useState<boolean>(false)
 
     const handleImprovePrompt = async () => {
         try {
@@ -77,11 +78,19 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     
           const data = await response.json()
           setQuestion(data.text)
-          sendQuestion()
+          setIsScraped(true)
+        //   sendQuestion()
         } catch (error: any) {
           alert('Error: ' + error.message)
         }
       };
+
+      useEffect(() => {
+        if (isScraped){
+            setIsScraped(false)
+            sendQuestion()
+        }
+      }, [question, isScraped])
         
 
     return (
@@ -127,12 +136,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             <div className={styles.webScrapeContainer}>
             <input
                 type="text"
-                id="linkInput"
+                className={styles.linkInput}
                 placeholder="Enter a valid link"
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
             />
-            <button onClick={scrapeLink}>Web Scrape</button>
+            <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>
         </Stack>
     );
