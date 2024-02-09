@@ -81,7 +81,13 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           setIsScraped(true)
         //   sendQuestion()
         } catch (error: any) {
-          alert('Error: ' + error.message)
+            let errorMessage = "An error occurred while trying to scrape the content.";
+
+            if (error.message.includes("Name or service not known")) {
+                errorMessage = "The provided link could not be resolved. Please check the link and try again.";
+            }
+        
+            alert('Error: ' + errorMessage);
         }
       };
 
