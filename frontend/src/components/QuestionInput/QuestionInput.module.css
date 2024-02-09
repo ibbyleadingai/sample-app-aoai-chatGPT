@@ -98,6 +98,11 @@
     cursor: pointer;
 }
 
+.linkBtn:hover {
+    background-color: #2980b9;
+    color: #ffffff; 
+}
+
 @media (max-width: 500px) {
     .questionInputContainer {
         height: 90px;

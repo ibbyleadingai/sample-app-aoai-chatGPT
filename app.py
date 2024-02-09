@@ -119,7 +119,7 @@ def scrape():
         # Scrape the text
         scraped_text = scrape_text(link)
 
-        return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a web page. Please do not respond. \n\n' + scraped_text})
+        return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a web page. Please do not generate a response. Just remeber this information for further questions: \n\n' + scraped_text})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
