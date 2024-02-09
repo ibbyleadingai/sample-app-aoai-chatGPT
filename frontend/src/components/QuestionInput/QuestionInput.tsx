@@ -137,7 +137,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             <input
                 type="text"
                 className={styles.linkInput}
-                placeholder="Enter a valid link"
+                placeholder="Enter a valid link..."
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
             />
