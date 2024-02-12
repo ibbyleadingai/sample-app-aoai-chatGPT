@@ -125,7 +125,7 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 #History button
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
 
-@app.route("/config", methods=["GET"])
+@bp.route("/config", methods=["GET"])
 def get_config():
     config_data = {
         "AZURE_OPENAI_ENDPOINT": AZURE_OPENAI_ENDPOINT,
@@ -135,7 +135,7 @@ def get_config():
     return jsonify(config_data)
 
 #Web scraping
-@app.route('/scrape', methods=['POST'])
+@bp.route('/scrape', methods=['POST'])
 def scrape():
     try:
         link = request.json.get('link')
