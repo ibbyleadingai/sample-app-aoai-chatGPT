@@ -137,21 +137,21 @@ def get_config():
 
 #Web scraping
 @bp.route('/scrape', methods=['POST'])
-def scrape():
+async def scrape():
     try:
-        link = request.json.get('link')
+        link = (await request.get_json())['link']
 
         # Scrape the text
-        scraped_text = scrape_text(link)
+        scraped_text = await scrape_text(link)
 
         return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a web page. Please do not generate a response. Just remember this information for further questions: \n\n' + scraped_text})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-def scrape_text(link):
+async def scrape_text(link):
     try:
         # Implement web scraping logic using BeautifulSoup or other libraries
-        response = requests.get(link)
+        response = await request.get(link)
         response.raise_for_status()  # Raise an HTTPError for bad responses
         soup = BeautifulSoup(response.text, 'html.parser')
         # Extract relevant text from the HTML
@@ -161,7 +161,7 @@ def scrape_text(link):
     except Exception as e:
         raise ValueError(f"Error scraping content: {str(e)}")
     
-@app.route("/improve-prompt", methods=["POST"])
+@bp.route("/improve-prompt", methods=["POST"])
 def improve_prompt():
     try:
         # Extract the user input from the request
