@@ -5,7 +5,7 @@ import json
 import os
 import re
 import requests
-import openai
+from openai import AzureOpenAI
 import re
 import tempfile
 import time
@@ -34,7 +34,9 @@ FILE_FORMAT_DICT = {
         "shtml": "html",
         "htm": "html",
         "py": "python",
-        "pdf": "pdf"
+        "pdf": "pdf",
+        "docx": "docx",
+        "pptx": "pptx"
     }
 
 RETRY_COUNT = 5
@@ -621,18 +623,16 @@ def get_embedding(text, embedding_model_endpoint=None, embedding_model_key=None,
         base_url = endpoint_parts[0]
         deployment_id = endpoint_parts[1].split("/embeddings")[0]
 
-        openai.api_version = '2023-05-15'
-        openai.api_base = base_url
+        api_version = endpoint_parts[1].split("api-version=")[1].split("&")[0]
 
         if azure_credential is not None:
-            openai.api_key = azure_credential.get_token("https://cognitiveservices.azure.com/.default").token
-            openai.api_type = "azure_ad"
+            api_key = azure_credential.get_token("https://cognitiveservices.azure.com/.default").token
         else:
-            openai.api_type = 'azure'
-            openai.api_key = key
+            api_key = key
 
-        embeddings = openai.Embedding.create(deployment_id=deployment_id, input=text)
-        return embeddings['data'][0]["embedding"]
+        client = AzureOpenAI(api_version=api_version, azure_endpoint=base_url, azure_ad_token=api_key)
+        embeddings = client.embeddings.create(model=deployment_id, input=text)
+        return embeddings.dict()['data'][0]['embedding']
 
     except Exception as e:
         raise Exception(f"Error getting embeddings with endpoint={endpoint} with error={e}")
@@ -800,7 +800,7 @@ def chunk_file(
             raise UnsupportedFormatError(f"{file_name} is not supported")
 
     cracked_pdf = False
-    if file_format == "pdf":
+    if file_format in ["pdf", "docx", "pptx"]:
         if form_recognizer_client is None:
             raise UnsupportedFormatError("form_recognizer_client is required for pdf files")
         content = extract_pdf_content(file_path, form_recognizer_client, use_layout=use_layout)
@@ -1027,7 +1027,8 @@ class SingletonFormRecognizerClient:
             url = os.getenv("FORM_RECOGNIZER_ENDPOINT")
             key = os.getenv("FORM_RECOGNIZER_KEY")
             if url and key:
-                cls.instance = DocumentAnalysisClient(endpoint=url, credential=AzureKeyCredential(key))
+                cls.instance = DocumentAnalysisClient(
+                        endpoint=url, credential=AzureKeyCredential(key), headers={"x-ms-useragent": "sample-app-aoai-chatgpt/1.0.0"})
             else:
                 print("SingletonFormRecognizerClient: Skipping since credentials not provided. Assuming NO form recognizer extensions(like .pdf) in directory")
                 cls.instance = object() # dummy object
@@ -1038,4 +1039,4 @@ class SingletonFormRecognizerClient:
 
     def __setstate__(self, state):
         url, key = state
-        self.instance = DocumentAnalysisClient(endpoint=url, credential=AzureKeyCredential(key))
+        self.instance = DocumentAnalysisClient(endpoint=url, credential=AzureKeyCredential(key), headers={"x-ms-useragent": "sample-app-aoai-chatgpt/1.0.0"})
