@@ -78,9 +78,9 @@ const Layout = () => {
                             className={styles.headerIcon}
                             aria-hidden="true"
                         /> */}
-                        <Link to="/" className={styles.headerTitleContainer}>
+                        {/* <Link to="/" className={styles.headerTitleContainer}>
                             <h1 className={styles.headerTitle}>Leading AI</h1>
-                        </Link>
+                        </Link> */}
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
                             {/* {isHistoryVisible && 
