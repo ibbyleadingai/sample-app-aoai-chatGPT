@@ -97,14 +97,14 @@ AZURE_COSMOSDB_ACCOUNT = os.environ.get("AZURE_COSMOSDB_ACCOUNT")
 AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSATIONS_CONTAINER")
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 
-#History button
+#New Env variables
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
+AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
 
 @app.route("/config", methods=["GET"])
 def get_config():
     config_data = {
-        "AZURE_OPENAI_ENDPOINT": AZURE_OPENAI_ENDPOINT,
-        "AZURE_OPENAI_KEY": AZURE_OPENAI_KEY,
+        "AZURE_AUTH": AZURE_AUTH,
         "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
     }
     return jsonify(config_data)

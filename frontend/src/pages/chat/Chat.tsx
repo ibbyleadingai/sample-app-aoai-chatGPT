@@ -53,6 +53,7 @@ const Chat = () => {
     const [clearingChat, setClearingChat] = useState<boolean>(false);
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
+    const [isAuth, setIsAuth] = useState<boolean>(false)
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -92,13 +93,26 @@ const Chat = () => {
        setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
     }, [appStateContext?.state.chatHistoryLoadingState])
 
+    useEffect(() => {
+        fetch("/config")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setIsAuth(data.AZURE_AUTH)
+                console.log("isAuthVisible: ", isAuth)
+            })
+            .catch(error => {
+                console.error("Error fetching config:", error);
+            });
+    }, []);
+
     const getUserInfoList = async () => {
         const userInfoList = await getUserInfo();
         if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-            setShowAuthMessage(false);
+            setShowAuthMessage(isAuth);
         }
         else {
-            setShowAuthMessage(false);
+            setShowAuthMessage(isAuth);
         }
     }
 

@@ -72,9 +72,8 @@ const Layout = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                const azureHistoryVisible = data.AZURE_HISTORY_VISIBLE;
                 setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
-                console.log("isHistoryVisible: ", isHistoryVisible)
+                // console.log("isHistoryVisible: ", isHistoryVisible)
             })
             .catch(error => {
                 console.error("Error fetching config:", error);
