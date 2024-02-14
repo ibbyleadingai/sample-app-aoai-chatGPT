@@ -37,6 +37,7 @@ const Layout = () => {
     const [isSharePanelOpen, setIsSharePanelOpen] = useState<boolean>(false);
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
+    const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(true)
     const appStateContext = useContext(AppStateContext)
 
     const handleShareClick = () => {
@@ -66,6 +67,20 @@ const Layout = () => {
 
     useEffect(() => {}, [appStateContext?.state.isCosmosDBAvailable.status]);
 
+    useEffect(() => {
+        fetch("/config")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const azureHistoryVisible = data.AZURE_HISTORY_VISIBLE;
+                setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
+                console.log("isHistoryVisible: ", isHistoryVisible)
+            })
+            .catch(error => {
+                console.error("Error fetching config:", error);
+            });
+    }, []);
+
     return (
         <div className={styles.layout}>
             <header className={styles.header} role={"banner"}>
@@ -83,12 +98,12 @@ const Layout = () => {
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
-                            {/* {isHistoryVisible && 
+                            {isHistoryVisible && 
+                                <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
+                            } 
+                            {/* {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             } */}
-                            {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
-                                <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
-                            }
                             <ShareButton onClick={handleShareClick} />
                     </Stack>
 
