@@ -291,10 +291,10 @@
     margin-bottom: 12px;
 } 
 
-.citationPanelTitle:hover {
+/* .citationPanelTitle:hover {
     text-decoration: underline;
     cursor: pointer;
-}
+} */
 
 .citationPanelContent {
     font-style: normal;
@@ -318,7 +318,7 @@ a {
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
-    color: #115EA3;
+    color: #323130;
     flex-direction: row;
     align-items: center;
     padding: 4px 6px;
