@@ -62,7 +62,7 @@
     font-size: 12px;
     line-height: 16px;
 
-    color: #115EA3;
+    color: #323130;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -72,10 +72,10 @@
     border-radius: 4px;
 }
 
-.citationContainer:hover {
+/* .citationContainer:hover {
     text-decoration: underline;
     cursor: pointer;
-}
+} */
 
 .citation {
     box-sizing: border-box;
@@ -97,13 +97,12 @@
     line-height: 14px;
     text-align: center;
     color: #424242;
-    cursor: pointer;
 }
 
-.citation:hover {
+/* .citation:hover {
     text-decoration: underline;
     cursor: pointer;
-}
+} */
 
 .accordionIcon {
     display: inline-flex;
