@@ -38,6 +38,7 @@ const Layout = () => {
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(true)
+    const [companyName, setCompanyName] = useState<string>("")
     const appStateContext = useContext(AppStateContext)
 
     const handleShareClick = () => {
@@ -72,7 +73,9 @@ const Layout = () => {
             .then(response => response.json())
             .then(data => {
                 setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
+                setCompanyName(data.AZURE_COMPANY_NAME)
                 console.log("isHistoryVisible: ", isHistoryVisible)
+                console.log("companyName: ", companyName)
             })
             .catch(error => {
                 console.error("Error fetching config:", error);
@@ -92,7 +95,7 @@ const Layout = () => {
                             aria-hidden="true"
                         /> */}
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>Leading AI</h1>
+                            <h1 className={styles.headerTitle}>{companyName}</h1>
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>

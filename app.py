@@ -101,12 +101,14 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
 AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
 AZURE_IMPROVE_PROMPT_MESSAGE = os.environ.get("AZURE_IMPROVE_PROMPT_MESSAGE")
+AZURE_COMPANY_NAME = os.environ.get("AZURE_COMPANY_NAME")
 
 @app.route("/config", methods=["GET"])
 def get_config():
     config_data = {
         "AZURE_AUTH": AZURE_AUTH,
         "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
+        "AZURE_COMPANY_NAME": AZURE_COMPANY_NAME
     }
     return jsonify(config_data)
 
