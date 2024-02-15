@@ -100,6 +100,7 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 #New Env variables
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
 AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
+AZURE_IMPROVE_PROMPT_MESSAGE = os.environ.get("AZURE_IMPROVE_PROMPT_MESSAGE")
 
 @app.route("/config", methods=["GET"])
 def get_config():
@@ -506,11 +507,11 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the prompt is already at its best, acknowledge a short message that further improvement may not be necessary. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context. #### user:'What is the policy for constant student absences? system:'What is the institution's policy regarding frequent student absences?'"
+            "content": AZURE_IMPROVE_PROMPT_MESSAGE
         },
         {
             "role": "user",
-            "content": f"Improve this prompt: {request_body}. Give me one example of an improved prompt"
+            "content": f"Improve this prompt: {request_body}. Give me one example of an improved prompt. Do not introduce conversational elements. Just give the improved prompt."
         }
     ]
 
