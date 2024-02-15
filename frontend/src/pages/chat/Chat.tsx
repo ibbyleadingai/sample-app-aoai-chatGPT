@@ -97,9 +97,9 @@ const Chat = () => {
         fetch("/config")
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 setIsAuth(data.AZURE_AUTH)
-                console.log("isAuthVisible: ", isAuth)
+                // console.log("isAuthVisible: ", isAuth)
             })
             .catch(error => {
                 console.error("Error fetching config:", error);
@@ -114,6 +114,7 @@ const Chat = () => {
         else {
             setShowAuthMessage(isAuth);
         }
+        console.log("AUTH:", showAuthMessage)
     }
 
     let assistantMessage = {} as ChatMessage
