@@ -528,9 +528,9 @@ const Chat = () => {
         getUserInfoList();
     }, []);
 
-    useLayoutEffect(() => {
-        chatMessageStreamEnd.current?.scrollIntoView({ behavior: "smooth" })
-    }, [showLoadingMessage, processMessages]);
+    // useLayoutEffect(() => {
+    //     chatMessageStreamEnd.current?.scrollIntoView({ behavior: "smooth" })
+    // }, [showLoadingMessage, processMessages]);
 
     const onShowCitation = (citation: Citation) => {
         setActiveCitation(citation);
