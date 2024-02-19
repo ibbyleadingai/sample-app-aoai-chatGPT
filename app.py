@@ -100,36 +100,15 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 
 #History button
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
-AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
-AZURE_TITLE = os.environ.get("AZURE_TITLE") or "Leading AI"
 
-frontend_settings = { 
-    "AZURE_AUTH": AZURE_AUTH, 
-    "ui": {
-        "title": AZURE_TITLE,
-        "show_history_button": AZURE_HISTORY_VISIBLE,
-        # "chat_title": UI_CHAT_TITLE,
-        # "chat_description": UI_CHAT_DESCRIPTION,
-        # "show_share_button": UI_SHOW_SHARE_BUTTON
+@app.route("/config", methods=["GET"])
+def get_config():
+    config_data = {
+        "AZURE_OPENAI_ENDPOINT": AZURE_OPENAI_ENDPOINT,
+        "AZURE_OPENAI_KEY": AZURE_OPENAI_KEY,
+        "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
     }
-}
-
-# @app.route("/config", methods=["GET"])
-# def get_config():
-#     config_data = {
-#         "AZURE_OPENAI_ENDPOINT": AZURE_OPENAI_ENDPOINT,
-#         "AZURE_OPENAI_KEY": AZURE_OPENAI_KEY,
-#         "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
-#     }
-#     return jsonify(config_data)
-
-@app.route("/frontend_settings", methods=["GET"])  
-def get_frontend_settings():
-    try:
-        return jsonify(frontend_settings), 200
-    except Exception as e:
-        logging.exception("Exception in /frontend_settings")
-        return jsonify({"error": str(e)}), 500 
+    return jsonify(config_data)
 
 #Web scraping
 @app.route('/scrape', methods=['POST'])

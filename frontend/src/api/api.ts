@@ -16,20 +16,6 @@ export async function conversationApi(options: ConversationRequest, abortSignal:
     return response;
 }
 
-export const frontendSettings = async (): Promise<Response | null> => {
-    const response = await fetch("/frontend_settings", {
-        method: "GET",
-    }).then((res) => {
-        console.log(res.json())
-        return res.json()
-    }).catch((err) => {
-        console.error("There was an issue fetching your data.");
-        return null
-    })
-
-    return response
-}
-
 export async function getUserInfo(): Promise<UserInfo[]> {
     const response = await fetch('/.auth/me');
     if (!response.ok) {
