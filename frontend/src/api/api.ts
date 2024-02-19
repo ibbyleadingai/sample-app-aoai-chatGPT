@@ -20,6 +20,7 @@ export const frontendSettings = async (): Promise<Response | null> => {
     const response = await fetch("/frontend_settings", {
         method: "GET",
     }).then((res) => {
+        console.log(res)
         return res.json()
     }).catch((err) => {
         console.error("There was an issue fetching your data.");

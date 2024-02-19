@@ -42,6 +42,7 @@ const Layout = () => {
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
+        console.log(ui);
     };
 
     const handleSharePanelDismiss = () => {
