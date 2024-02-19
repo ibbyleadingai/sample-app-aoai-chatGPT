@@ -101,7 +101,7 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 #History button
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
 AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
-AZURE_TITLE = os.environ.get("UI_TITLE") or "Leading AI"
+AZURE_TITLE = os.environ.get("AZURE_TITLE") or "Leading AI"
 
 frontend_settings = { 
     "AZURE_AUTH": AZURE_AUTH, 
