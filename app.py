@@ -98,15 +98,23 @@ AZURE_COSMOSDB_ACCOUNT = os.environ.get("AZURE_COSMOSDB_ACCOUNT")
 AZURE_COSMOSDB_CONVERSATIONS_CONTAINER = os.environ.get("AZURE_COSMOSDB_CONVERSATIONS_CONTAINER")
 AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 
-#History button
+#CUSTOMIZATION ENV VARIABLES
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
+AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
+AZURE_TITLE = os.environ.get("AZURE_TITLE") or "Leading AI"
+AZURE_CHAT_TITLE = os.environ.get("AZURE_CHAT_TITLE") or "Start chatting"
+AZURE_CHAT_DESCRIPTION = os.environ.get("AZURE_CHAT_DESCRIPTION") or "How can I help you today?"
+AZURE_SHARE_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "true").lower() == "true"
+AZURE_LOGO_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "true").lower() == "true"
 
 @app.route("/config", methods=["GET"])
 def get_config():
     config_data = {
-        "AZURE_OPENAI_ENDPOINT": AZURE_OPENAI_ENDPOINT,
-        "AZURE_OPENAI_KEY": AZURE_OPENAI_KEY,
+        "AZURE_CHAT_TITLE": AZURE_CHAT_TITLE,
+        "AZURE_CHAT_DESCRIPTION": AZURE_CHAT_DESCRIPTION,
         "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
+        "AZURE_SHARE_VISIBLE": AZURE_SHARE_VISIBLE,
+        "AZURE_LOGO_VISIBLE": AZURE_LOGO_VISIBLE
     }
     return jsonify(config_data)
 

@@ -53,6 +53,9 @@ const Chat = () => {
     const [clearingChat, setClearingChat] = useState<boolean>(false);
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
+    const [chatTitle, setChatTitle] = useState<string>("")
+    const [chatDescription, setChatDescription] = useState<string>("")
+    const [isLogoVisible, setIsLogoVisible] = useState<boolean>(false)
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -560,6 +563,21 @@ const Chat = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
 
+    useEffect(() => {
+        fetch("/config")
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                setChatTitle(data.AZURE_CHAT_TITLE)
+                setChatDescription(data.AZURE_CHAT_DESCRIPTION)
+                setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
+                // console.log("isHistoryVisible: ", isHistoryVisible)
+            })
+            .catch(error => {
+                console.error("Error fetching config:", error);
+            });
+    }, []);
+
     return (
         <div className={styles.container} role="main">
             {showAuthMessage ? (
@@ -580,13 +598,13 @@ const Chat = () => {
                     <div className={styles.chatContainer}>
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
-                                <img
+                                {isLogoVisible && <img
                                     src={LaiLogo}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
-                                />
-                                <h1 className={styles.chatEmptyStateTitle}>Start chatting</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>How can I help you today?</h2>
+                                />}
+                                <h1 className={styles.chatEmptyStateTitle}>{chatTitle}</h1>
+                                <h2 className={styles.chatEmptyStateSubtitle}>{chatDescription}</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">

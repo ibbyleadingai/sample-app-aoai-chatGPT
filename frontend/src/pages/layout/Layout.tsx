@@ -38,11 +38,11 @@ const Layout = () => {
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(true)
+    const [isShareVisible, setIsShareVisible] = useState<boolean>(true)
     const appStateContext = useContext(AppStateContext)
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
-        console.log(ui);
     };
 
     const handleSharePanelDismiss = () => {
@@ -73,8 +73,8 @@ const Layout = () => {
             .then(response => response.json())
             .then(data => {
                 // console.log(data);
-                const azureHistoryVisible = data.AZURE_HISTORY_VISIBLE;
                 setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
+                setIsShareVisible(data.AZURE_SHARE_VISIBLE)
                 // console.log("isHistoryVisible: ", isHistoryVisible)
             })
             .catch(error => {
