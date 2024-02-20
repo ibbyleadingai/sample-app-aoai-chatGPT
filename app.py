@@ -115,7 +115,8 @@ def get_config():
         "AZURE_HISTORY_VISIBLE": AZURE_HISTORY_VISIBLE,
         "AZURE_SHARE_VISIBLE": AZURE_SHARE_VISIBLE,
         "AZURE_LOGO_VISIBLE": AZURE_LOGO_VISIBLE,
-        "AZURE_AUTH": AZURE_AUTH
+        "AZURE_AUTH": AZURE_AUTH,
+        "AZURE_TITLE": AZURE_TITLE
     }
     return jsonify(config_data)
 
