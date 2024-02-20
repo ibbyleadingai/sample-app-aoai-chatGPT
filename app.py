@@ -104,8 +104,8 @@ AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
 AZURE_TITLE = os.environ.get("AZURE_TITLE") or "Leading AI"
 AZURE_CHAT_TITLE = os.environ.get("AZURE_CHAT_TITLE") or "Start chatting"
 AZURE_CHAT_DESCRIPTION = os.environ.get("AZURE_CHAT_DESCRIPTION") or "How can I help you today?"
-AZURE_SHARE_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "true").lower() == "true"
-AZURE_LOGO_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "true").lower() == "true"
+AZURE_SHARE_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "false").lower() == "true"
+AZURE_LOGO_VISIBLE = os.environ.get("AZURE_LOGO_VISIBLE", "false").lower() == "true"
 
 @app.route("/config", methods=["GET"])
 def get_config():
