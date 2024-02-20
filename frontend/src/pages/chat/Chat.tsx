@@ -55,7 +55,7 @@ const Chat = () => {
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
     const [chatTitle, setChatTitle] = useState<string>("")
     const [chatDescription, setChatDescription] = useState<string>("")
-    const [isLogoVisible, setIsLogoVisible] = useState<boolean>(false)
+    const [isLogoVisible, setIsLogoVisible] = useState<boolean>(true)
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -571,7 +571,7 @@ const Chat = () => {
                 setChatTitle(data.AZURE_CHAT_TITLE)
                 setChatDescription(data.AZURE_CHAT_DESCRIPTION)
                 setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
-                // console.log("isHistoryVisible: ", isHistoryVisible)
+                console.log("isLogoVisible: ", isLogoVisible)
             })
             .catch(error => {
                 console.error("Error fetching config:", error);
