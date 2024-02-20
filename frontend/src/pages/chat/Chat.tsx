@@ -96,28 +96,13 @@ const Chat = () => {
        setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
     }, [appStateContext?.state.chatHistoryLoadingState])
 
-    // const getUserInfoList = async () => {
-    //     const userInfoList = await getUserInfo();
-    //     if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-    //         setShowAuthMessage(false);
-    //     }
-    //     else {
-    //         setShowAuthMessage(false);
-    //     }
-    // }
-
     const getUserInfoList = async () => {
-        console.log("AUTH", isAuth)
-        if (!isAuth) {
-            setShowAuthMessage(false);
-            return;
-        }
         const userInfoList = await getUserInfo();
         if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-            setShowAuthMessage(true);
+            setShowAuthMessage(isAuth);
         }
         else {
-            setShowAuthMessage(false);
+            setShowAuthMessage(isAuth);
         }
     }
 
