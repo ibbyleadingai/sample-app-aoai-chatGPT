@@ -56,6 +56,7 @@ const Chat = () => {
     const [chatTitle, setChatTitle] = useState<string>("")
     const [chatDescription, setChatDescription] = useState<string>("")
     const [isLogoVisible, setIsLogoVisible] = useState<boolean>(true)
+    const [isAuth, setIsAuth] = useState<boolean>(true)
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -95,14 +96,18 @@ const Chat = () => {
        setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
     }, [appStateContext?.state.chatHistoryLoadingState])
 
+    // const getUserInfoList = async () => {
+    //     const userInfoList = await getUserInfo();
+    //     if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
+    //         setShowAuthMessage(false);
+    //     }
+    //     else {
+    //         setShowAuthMessage(false);
+    //     }
+    // }
+
     const getUserInfoList = async () => {
-        const userInfoList = await getUserInfo();
-        if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-            setShowAuthMessage(false);
-        }
-        else {
-            setShowAuthMessage(false);
-        }
+        setShowAuthMessage(isAuth);
     }
 
     let assistantMessage = {} as ChatMessage
@@ -571,6 +576,7 @@ const Chat = () => {
                 setChatTitle(data.AZURE_CHAT_TITLE)
                 setChatDescription(data.AZURE_CHAT_DESCRIPTION)
                 setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
+                setIsAuth(data.AZURE_AUTH)
                 console.log("isLogoVisible: ", isLogoVisible)
             })
             .catch(error => {
