@@ -70,14 +70,16 @@ const Layout = () => {
     useEffect(() => {}, [appStateContext?.state.isCosmosDBAvailable.status]);
 
     useEffect(() => {
-        const environmentVariables = async () => {
+        const fetchData = async () => {
             try {
-                const data = await environmentVariablesApi;
-                console.log(data)
-              } catch (error) {
-                  console.error("Error fetching env variables:", error);
-                }
+                const data = await environmentVariablesApi();
+                console.log(data);
+            } catch (error) {
+                console.error("Error fetching env variables:", error);
+            }
         };
+    
+        fetchData();
     }, []);
 
     return (

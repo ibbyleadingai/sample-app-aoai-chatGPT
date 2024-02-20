@@ -28,16 +28,15 @@ export async function getUserInfo(): Promise<UserInfo[]> {
 }
 
 export const environmentVariablesApi = async () => {
-    fetch("/config")
-        .then(response => response.json())
-        .then(data => {
-            // console.log(data);
-            return data
-        })
-        .catch(error => {
-            console.error("Error fetching config:", error);
-        });
-}
+    try {
+        const response = await fetch("/config");
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching config:", error);
+        throw error; // Rethrow the error to be caught in the calling code
+    }
+};
 
 export const handleImprovePromptApi = async (question: string): Promise<string> => {
     try {
