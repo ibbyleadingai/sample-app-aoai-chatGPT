@@ -40,6 +40,8 @@ const Layout = () => {
     const [copyText, setCopyText] = useState<string>("Copy URL");
     const [isHistoryVisible, setIsHistoryVisible] = useState<boolean>(true)
     const [isShareVisible, setIsShareVisible] = useState<boolean>(true)
+    // const [chatTitle, setChatTitle] = useState<string>("")
+    const [title, setTitle] = useState<string>("")
     const appStateContext = useContext(AppStateContext)
 
     const handleShareClick = () => {
@@ -73,6 +75,9 @@ const Layout = () => {
         const fetchData = async () => {
             try {
                 const data = await environmentVariablesApi();
+                setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
+                setIsShareVisible(data.AZURE_SHARE_VISIBLE)
+                setTitle(data.AZURE_TITLE)
                 console.log(data);
             } catch (error) {
                 console.error("Error fetching env variables:", error);
@@ -95,7 +100,7 @@ const Layout = () => {
                             aria-hidden="true"
                         /> */}
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>Leading AI</h1>
+                            <h1 className={styles.headerTitle}>{title}</h1>
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
@@ -105,7 +110,9 @@ const Layout = () => {
                             {/* {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             } */}
-                            <ShareButton onClick={handleShareClick} />
+                            {isShareVisible &&
+                                <ShareButton onClick={handleShareClick} />
+                            }
                     </Stack>
 
                 </Stack>

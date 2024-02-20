@@ -10,6 +10,7 @@ import { isEmpty } from "lodash-es";
 
 import styles from "./Chat.module.css";
 import LaiLogo from "../../assets/lai-logo.svg";
+import { environmentVariablesApi } from "../../api";
 
 import {
     ChatMessage,
@@ -579,6 +580,22 @@ const Chat = () => {
             .catch(error => {
                 console.error("Error fetching config:", error);
             });
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await environmentVariablesApi();
+                setChatTitle(data.AZURE_CHAT_TITLE)
+                setChatDescription(data.AZURE_CHAT_DESCRIPTION)
+                setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
+                setIsAuth(data.AZURE_AUTH)
+            } catch (error) {
+                console.error("Error fetching env variables:", error);
+            }
+        };
+    
+        fetchData();
     }, []);
 
     return (
