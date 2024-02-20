@@ -107,6 +107,7 @@ const Chat = () => {
     // }
 
     const getUserInfoList = async () => {
+        console.log(isAuth)
         setShowAuthMessage(isAuth);
     }
 
