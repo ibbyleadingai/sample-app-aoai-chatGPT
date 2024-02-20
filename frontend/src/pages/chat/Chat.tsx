@@ -57,7 +57,7 @@ const Chat = () => {
     const [chatTitle, setChatTitle] = useState<string>("")
     const [chatDescription, setChatDescription] = useState<string>("")
     const [isLogoVisible, setIsLogoVisible] = useState<boolean>(true)
-    const [isAuth, setIsAuth] = useState<boolean>(true)
+    const [isAuth, setIsAuth] = useState<boolean>(false)
 
     const errorDialogContentProps = {
         type: DialogType.close,
