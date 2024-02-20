@@ -27,6 +27,18 @@ export async function getUserInfo(): Promise<UserInfo[]> {
     return payload;
 }
 
+export const environmentVariablesApi = async () => {
+    fetch("/config")
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data);
+            return data
+        })
+        .catch(error => {
+            console.error("Error fetching config:", error);
+        });
+}
+
 export const handleImprovePromptApi = async (question: string): Promise<string> => {
     try {
       const response = await fetch("/improve-prompt", {

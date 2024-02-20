@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { HistoryButton, ShareButton } from "../../components/common/Button";
 import { AppStateContext } from "../../state/AppProvider";
 import { CosmosDBStatus } from "../../api";
+import { environmentVariablesApi } from "../../api";
 
 const shareButtonStyles: ICommandBarStyles & IButtonStyles = {
     root: {
@@ -69,17 +70,14 @@ const Layout = () => {
     useEffect(() => {}, [appStateContext?.state.isCosmosDBAvailable.status]);
 
     useEffect(() => {
-        fetch("/config")
-            .then(response => response.json())
-            .then(data => {
-                // console.log(data);
-                setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
-                setIsShareVisible(data.AZURE_SHARE_VISIBLE)
-                // console.log("isHistoryVisible: ", isHistoryVisible)
-            })
-            .catch(error => {
-                console.error("Error fetching config:", error);
-            });
+        const environmentVariables = async () => {
+            try {
+                const data = await environmentVariablesApi;
+                console.log(data)
+              } catch (error) {
+                  console.error("Error fetching env variables:", error);
+                }
+        };
     }, []);
 
     return (

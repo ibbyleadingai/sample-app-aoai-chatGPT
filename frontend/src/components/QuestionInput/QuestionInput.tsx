@@ -20,6 +20,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [link, setLink] = useState<string>('');
     const [isScraped, setIsScraped] = useState<boolean>(false)
+    const [isWebScrapeVisible, setIsWebScrapeVisible] = useState<boolean>(true)
 
     const handleImprovePrompt = async () => {
         try {
