@@ -106,6 +106,7 @@ AZURE_CHAT_TITLE = os.environ.get("AZURE_CHAT_TITLE") or "Start chatting"
 AZURE_CHAT_DESCRIPTION = os.environ.get("AZURE_CHAT_DESCRIPTION") or "How can I help you today?"
 AZURE_SHARE_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "false").lower() == "true"
 AZURE_LOGO_VISIBLE = os.environ.get("AZURE_LOGO_VISIBLE", "false").lower() == "true"
+AZURE_WEB_SCRAPE_VISIBLE = os.environ.get("AZURE_WEB_SCRAPE_VISIBLE", "false").lower() == "true"
 
 @app.route("/config", methods=["GET"])
 def get_config():
@@ -116,7 +117,8 @@ def get_config():
         "AZURE_SHARE_VISIBLE": AZURE_SHARE_VISIBLE,
         "AZURE_LOGO_VISIBLE": AZURE_LOGO_VISIBLE,
         "AZURE_AUTH": AZURE_AUTH,
-        "AZURE_TITLE": AZURE_TITLE
+        "AZURE_TITLE": AZURE_TITLE,
+        "AZURE_WEB_SCRAPE_VISIBLE": AZURE_WEB_SCRAPE_VISIBLE
     }
     return jsonify(config_data)
 

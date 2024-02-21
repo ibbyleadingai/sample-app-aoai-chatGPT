@@ -6,8 +6,7 @@ import { CommandBarButton, Dialog, Stack, TextField, ICommandBarStyles, IButtonS
 import { useContext, useEffect, useState } from "react";
 import { HistoryButton, ShareButton } from "../../components/common/Button";
 import { AppStateContext } from "../../state/AppProvider";
-import { CosmosDBStatus } from "../../api";
-import { environmentVariablesApi } from "../../api";
+import { CosmosDBStatus, environmentVariablesApi } from "../../api";
 
 const shareButtonStyles: ICommandBarStyles & IButtonStyles = {
     root: {
@@ -78,7 +77,7 @@ const Layout = () => {
                 setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
                 setIsShareVisible(data.AZURE_SHARE_VISIBLE)
                 setTitle(data.AZURE_TITLE)
-                console.log(data);
+                // console.log(data);
             } catch (error) {
                 console.error("Error fetching env variables:", error);
             }

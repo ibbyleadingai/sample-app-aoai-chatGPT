@@ -5,7 +5,7 @@ import Send from "../../assets/Send.svg";
 import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import promptArr from "./promptData"
-import { handleImprovePromptApi } from "../../api";
+import { handleImprovePromptApi, environmentVariablesApi } from "../../api";
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -100,7 +100,20 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             sendQuestion()
         }
       }, [question, isScraped])
-        
+
+      useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await environmentVariablesApi();
+                setIsWebScrapeVisible(data.AZURE_WEB_SCRAPE_VISIBLE)
+                // console.log(data);
+            } catch (error) {
+                console.error("Error fetching env variables:", error);
+            }
+        };
+    
+        fetchData();
+    }, []);
 
     return (
         <Stack horizontal className={styles.questionInputContainer}>
@@ -142,7 +155,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             </div>
             <div className={styles.questionInputBottomBorder} />
             
-            <div className={styles.webScrapeContainer}>
+            {isWebScrapeVisible && <div className={styles.webScrapeContainer}>
             <input
                 type="text"
                 className={styles.linkInput}
@@ -151,7 +164,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={(e) => setLink(e.target.value)}
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
-            </div>
+            </div>}
         </Stack>
     );
 };
