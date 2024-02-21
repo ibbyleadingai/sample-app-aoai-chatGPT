@@ -41,6 +41,7 @@ const Layout = () => {
     const [isShareVisible, setIsShareVisible] = useState<boolean>(true)
     // const [chatTitle, setChatTitle] = useState<string>("")
     const [title, setTitle] = useState<string>("")
+    const [headerColor, setHeaderColor] = useState<string>("")
     const appStateContext = useContext(AppStateContext)
 
     const handleShareClick = () => {
@@ -77,6 +78,7 @@ const Layout = () => {
                 setIsHistoryVisible(data.AZURE_HISTORY_VISIBLE)
                 setIsShareVisible(data.AZURE_SHARE_VISIBLE)
                 setTitle(data.AZURE_TITLE)
+                setHeaderColor(data.AZURE_HEADER_COLOR)
                 // console.log(data);
             } catch (error) {
                 console.error("Error fetching env variables:", error);
@@ -88,7 +90,7 @@ const Layout = () => {
 
     return (
         <div className={styles.layout}>
-            <header className={styles.header} role={"banner"}>
+            <header className={styles.header} style={{backgroundColor: headerColor}} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between"
                 // className={styles.headerContainer}
                 >
