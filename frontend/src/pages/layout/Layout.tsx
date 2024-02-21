@@ -88,6 +88,11 @@ const Layout = () => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        // Update the background color of the html element
+        document.documentElement.style.backgroundColor = headerColor;
+      }, [headerColor]);
+
     return (
         <div className={styles.layout}>
             <header className={styles.header} style={{backgroundColor: headerColor}} role={"banner"}>
