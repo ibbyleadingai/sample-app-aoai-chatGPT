@@ -605,14 +605,14 @@ const Chat = () => {
                 <Stack horizontal className={styles.chatRoot}>
                     <div className={styles.chatContainer} style={{backgroundColor: chatContainerColor}}>
                         {!messages || messages.length < 1 ? (
-                            <Stack className={styles.chatEmptyState} style={{color: chatTextColor}}>
+                            <Stack className={styles.chatEmptyState}>
                                 {isLogoVisible && <img
                                     src={LaiLogo}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />}
-                                <h1 className={styles.chatEmptyStateTitle}>{chatTitle}</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>{chatDescription}</h2>
+                                <h1 className={styles.chatEmptyStateTitle} style={{color: chatTextColor}}>{chatTitle}</h1>
+                                <h2 className={styles.chatEmptyStateSubtitle} style={{color: chatTextColor}}>{chatDescription}</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
