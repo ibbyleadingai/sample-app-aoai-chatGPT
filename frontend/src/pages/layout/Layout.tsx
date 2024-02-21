@@ -42,6 +42,7 @@ const Layout = () => {
     // const [chatTitle, setChatTitle] = useState<string>("")
     const [title, setTitle] = useState<string>("")
     const [headerColor, setHeaderColor] = useState<string>("")
+    const [chatTextColor, setChatTextColor] = useState<string>("")
     const appStateContext = useContext(AppStateContext)
 
     const handleShareClick = () => {
@@ -79,6 +80,7 @@ const Layout = () => {
                 setIsShareVisible(data.AZURE_SHARE_VISIBLE)
                 setTitle(data.AZURE_TITLE)
                 setHeaderColor(data.AZURE_HEADER_COLOR)
+                setChatTextColor(data.AZURE_CHAT_TEXT_COLOR)
                 // console.log(data);
             } catch (error) {
                 console.error("Error fetching env variables:", error);
@@ -106,7 +108,7 @@ const Layout = () => {
                             aria-hidden="true"
                         /> */}
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>{title}</h1>
+                            <h1 className={styles.headerTitle} style={{color: chatTextColor}}>{title}</h1>
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>

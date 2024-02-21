@@ -109,6 +109,7 @@ AZURE_LOGO_VISIBLE = os.environ.get("AZURE_LOGO_VISIBLE", "false").lower() == "t
 AZURE_WEB_SCRAPE_VISIBLE = os.environ.get("AZURE_WEB_SCRAPE_VISIBLE", "false").lower() == "true"
 AZURE_HEADER_COLOR = os.environ.get("AZURE_HEADER_COLOR") or "#1A1B21"
 AZURE_CHAT_CONTAINER_COLOR = os.environ.get("AZURE_CHAT_CONTAINER_COLOR") or "#23252c"
+AZURE_CHAT_TEXT_COLOR = os.environ.get("AZURE_CHAT_TEXT_COLOR") or "whitesmoke"
 
 @app.route("/config", methods=["GET"])
 def get_config():
@@ -122,7 +123,8 @@ def get_config():
         "AZURE_TITLE": AZURE_TITLE,
         "AZURE_WEB_SCRAPE_VISIBLE": AZURE_WEB_SCRAPE_VISIBLE,
         "AZURE_HEADER_COLOR": AZURE_HEADER_COLOR,
-        "AZURE_CHAT_CONTAINER_COLOR": AZURE_CHAT_CONTAINER_COLOR
+        "AZURE_CHAT_CONTAINER_COLOR": AZURE_CHAT_CONTAINER_COLOR,
+        "AZURE_CHAT_TEXT_COLOR": AZURE_CHAT_TEXT_COLOR
     }
     return jsonify(config_data)
 
@@ -553,7 +555,7 @@ def get_improved_prompt(request_body):
         },
         {
             "role": "user",
-            "content": f"Improve this prompt: {request_body}. Give me just one example of an improved prompt. Dont say anything else, just give the improved prompt."
+            "content": f"Improve this prompt: '{request_body}'. Give me just one example of an improved prompt."
         }
     ]
 

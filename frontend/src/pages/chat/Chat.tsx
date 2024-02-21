@@ -59,6 +59,7 @@ const Chat = () => {
     const [isLogoVisible, setIsLogoVisible] = useState<boolean>(true)
     const [isAuth, setIsAuth] = useState<boolean>(false)
     const [chatContainerColor, setChatContainerColor] = useState<string>("")
+    const [chatTextColor, setChatTextColor] = useState<string>("")
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -568,22 +569,6 @@ const Chat = () => {
     }
 
     useEffect(() => {
-        fetch("/config")
-            .then(response => response.json())
-            .then(data => {
-                // console.log(data);
-                setChatTitle(data.AZURE_CHAT_TITLE)
-                setChatDescription(data.AZURE_CHAT_DESCRIPTION)
-                setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
-                setIsAuth(data.AZURE_AUTH)
-                setChatContainerColor(data.AZURE_CHAT_CONTAINER_COLOR)
-            })
-            .catch(error => {
-                console.error("Error fetching config:", error);
-            });
-    }, []);
-
-    useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await environmentVariablesApi();
@@ -591,6 +576,8 @@ const Chat = () => {
                 setChatDescription(data.AZURE_CHAT_DESCRIPTION)
                 setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
                 setIsAuth(data.AZURE_AUTH)
+                setChatContainerColor(data.AZURE_CHAT_CONTAINER_COLOR)
+                setChatTextColor(data.AZURE_CHAT_TEXT_COLOR)
             } catch (error) {
                 console.error("Error fetching env variables:", error);
             }
@@ -618,7 +605,7 @@ const Chat = () => {
                 <Stack horizontal className={styles.chatRoot}>
                     <div className={styles.chatContainer} style={{backgroundColor: chatContainerColor}}>
                         {!messages || messages.length < 1 ? (
-                            <Stack className={styles.chatEmptyState}>
+                            <Stack className={styles.chatEmptyState} style={{color: chatTextColor}}>
                                 {isLogoVisible && <img
                                     src={LaiLogo}
                                     className={styles.chatIcon}
