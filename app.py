@@ -108,6 +108,7 @@ AZURE_SHARE_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "false").lower() == 
 AZURE_LOGO_VISIBLE = os.environ.get("AZURE_LOGO_VISIBLE", "false").lower() == "true"
 AZURE_WEB_SCRAPE_VISIBLE = os.environ.get("AZURE_WEB_SCRAPE_VISIBLE", "false").lower() == "true"
 AZURE_HEADER_COLOR = os.environ.get("AZURE_HEADER_COLOR") or "#1A1B21"
+AZURE_CHAT_CONTAINER_COLOR = os.environ.get("AZURE_CHAT_CONTAINER_COLOR") or "#23252c"
 
 @app.route("/config", methods=["GET"])
 def get_config():
@@ -120,7 +121,8 @@ def get_config():
         "AZURE_AUTH": AZURE_AUTH,
         "AZURE_TITLE": AZURE_TITLE,
         "AZURE_WEB_SCRAPE_VISIBLE": AZURE_WEB_SCRAPE_VISIBLE,
-        "AZURE_HEADER_COLOR": AZURE_HEADER_COLOR
+        "AZURE_HEADER_COLOR": AZURE_HEADER_COLOR,
+        "AZURE_CHAT_CONTAINER_COLOR": AZURE_CHAT_CONTAINER_COLOR
     }
     return jsonify(config_data)
 

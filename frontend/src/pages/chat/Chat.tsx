@@ -58,6 +58,7 @@ const Chat = () => {
     const [chatDescription, setChatDescription] = useState<string>("")
     const [isLogoVisible, setIsLogoVisible] = useState<boolean>(true)
     const [isAuth, setIsAuth] = useState<boolean>(false)
+    const [chatContainerColor, setChatContainerColor] = useState<string>("")
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -575,7 +576,7 @@ const Chat = () => {
                 setChatDescription(data.AZURE_CHAT_DESCRIPTION)
                 setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
                 setIsAuth(data.AZURE_AUTH)
-                console.log("isLogoVisible: ", isLogoVisible)
+                setChatContainerColor(data.AZURE_CHAT_CONTAINER_COLOR)
             })
             .catch(error => {
                 console.error("Error fetching config:", error);
@@ -615,7 +616,7 @@ const Chat = () => {
                 </Stack>
             ) : (
                 <Stack horizontal className={styles.chatRoot}>
-                    <div className={styles.chatContainer}>
+                    <div className={styles.chatContainer} style={{backgroundColor: chatContainerColor}}>
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
                                 {isLogoVisible && <img
