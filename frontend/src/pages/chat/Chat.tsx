@@ -99,16 +99,23 @@ const Chat = () => {
        setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
     }, [appStateContext?.state.chatHistoryLoadingState])
 
+    // const getUserInfoList = async () => {
+    //     console.log(isAuth)
+    //     const userInfoList = await getUserInfo();
+    //     if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
+    //         setShowAuthMessage(isAuth);
+    //     }
+    //     else {
+    //         setShowAuthMessage(isAuth);
+    //     }
+    // }
+
     const getUserInfoList = async () => {
-        console.log(isAuth)
+        console.log("isAuth:", isAuth);
         const userInfoList = await getUserInfo();
-        if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-            setShowAuthMessage(isAuth);
-        }
-        else {
-            setShowAuthMessage(isAuth);
-        }
-    }
+        console.log("userInfoList:", userInfoList);
+        setShowAuthMessage(isAuth);
+    };
 
     let assistantMessage = {} as ChatMessage
     let toolMessage = {} as ChatMessage
