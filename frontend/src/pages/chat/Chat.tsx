@@ -575,11 +575,11 @@ const Chat = () => {
                 setChatTitle(data.AZURE_CHAT_TITLE)
                 setChatDescription(data.AZURE_CHAT_DESCRIPTION)
                 setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
-                console.log("AZURE_AUTH from environment variable:", data.AZURE_AUTH);
                 setIsAuth(data.AZURE_AUTH === "true");
                 console.log("isAuth after conversion:", isAuth);
                 setChatContainerColor(data.AZURE_CHAT_CONTAINER_COLOR)
                 setChatTextColor(data.AZURE_CHAT_TEXT_COLOR)
+                getUserInfoList();
             } catch (error) {
                 console.error("Error fetching env variables:", error);
             }
