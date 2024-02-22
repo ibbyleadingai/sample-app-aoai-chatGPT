@@ -99,23 +99,16 @@ const Chat = () => {
        setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
     }, [appStateContext?.state.chatHistoryLoadingState])
 
-    // const getUserInfoList = async () => {
-    //     console.log(isAuth)
-    //     const userInfoList = await getUserInfo();
-    //     if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
-    //         setShowAuthMessage(isAuth);
-    //     }
-    //     else {
-    //         setShowAuthMessage(isAuth);
-    //     }
-    // }
-
     const getUserInfoList = async () => {
-        console.log("isAuth:", isAuth);
+        console.log(isAuth)
         const userInfoList = await getUserInfo();
-        console.log("userInfoList:", userInfoList);
-        setShowAuthMessage(isAuth);
-    };
+        if (userInfoList.length === 0 && window.location.hostname !== "127.0.0.1") {
+            setShowAuthMessage(isAuth);
+        }
+        else {
+            setShowAuthMessage(isAuth);
+        }
+    }
 
     let assistantMessage = {} as ChatMessage
     let toolMessage = {} as ChatMessage
@@ -582,7 +575,9 @@ const Chat = () => {
                 setChatTitle(data.AZURE_CHAT_TITLE)
                 setChatDescription(data.AZURE_CHAT_DESCRIPTION)
                 setIsLogoVisible(data.AZURE_LOGO_VISIBLE)
-                setIsAuth(data.AZURE_AUTH)
+                console.log("AZURE_AUTH from environment variable:", data.AZURE_AUTH);
+                setIsAuth(data.AZURE_AUTH === "true");
+                console.log("isAuth after conversion:", isAuth);
                 setChatContainerColor(data.AZURE_CHAT_CONTAINER_COLOR)
                 setChatTextColor(data.AZURE_CHAT_TEXT_COLOR)
             } catch (error) {
