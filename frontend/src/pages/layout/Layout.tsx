@@ -114,15 +114,15 @@ const Layout = () => {
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
+                            {isShareVisible &&
+                                <ShareButton onClick={handleShareClick} />
+                            }
                             {isHistoryVisible && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             } 
                             {/* {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             } */}
-                            {isShareVisible &&
-                                <ShareButton onClick={handleShareClick} />
-                            }
                     </Stack>
 
                 </Stack>

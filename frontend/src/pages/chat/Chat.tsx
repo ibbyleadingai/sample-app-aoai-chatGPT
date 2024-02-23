@@ -692,7 +692,6 @@ const Chat = () => {
                                 <Stack 
                                     horizontal
                                     className={styles.stopGeneratingContainer}
-                                    style={{color: chatTextColor}}
                                     role="button"
                                     aria-label="Stop generating"
                                     tabIndex={0}
@@ -700,7 +699,7 @@ const Chat = () => {
                                     onKeyDown={e => e.key === "Enter" || e.key === " " ? stopGenerating() : null}
                                     >
                                         <SquareRegular className={styles.stopGeneratingIcon} aria-hidden="true"/>
-                                        <span className={styles.stopGeneratingText} aria-hidden="true">Stop generating</span>
+                                        <span className={styles.stopGeneratingText} style={{color: chatTextColor}} aria-hidden="true">Stop generating</span>
                                 </Stack>
                             )}
                             <Stack>
