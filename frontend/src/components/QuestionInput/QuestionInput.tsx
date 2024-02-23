@@ -21,6 +21,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [link, setLink] = useState<string>('');
     const [isScraped, setIsScraped] = useState<boolean>(false)
     const [isWebScrapeVisible, setIsWebScrapeVisible] = useState<boolean>(true)
+    const [improvePromptButtonColor, setImprovePromptButtonColor] = useState<string>("")
 
     const handleImprovePrompt = async () => {
         try {
@@ -106,6 +107,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             try {
                 const data = await environmentVariablesApi();
                 setIsWebScrapeVisible(data.AZURE_WEB_SCRAPE_VISIBLE)
+                setImprovePromptButtonColor(data.AZURE_IMPROVE_PROMPT_BUTTON_COLOR)
                 // console.log(data);
             } catch (error) {
                 console.error("Error fetching env variables:", error);
@@ -145,6 +147,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 <button
                     title="Improve prompt"
                     className={styles.improvePromptButton}
+                    style={{backgroundColor: improvePromptButtonColor}}
                     onClick={(e) => {
                         e.stopPropagation();
                         handleImprovePrompt()

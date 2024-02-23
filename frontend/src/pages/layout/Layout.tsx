@@ -83,7 +83,7 @@ const Layout = () => {
                 setHeaderColor(data.AZURE_HEADER_COLOR)
                 setChatTextColor(data.AZURE_CHAT_TEXT_COLOR)
                 setTitleTextColor(data.AZURE_TITLE_TEXT_COLOR)
-                console.log(data);
+                // console.log(data);
             } catch (error) {
                 console.error("Error fetching env variables:", error);
             }
