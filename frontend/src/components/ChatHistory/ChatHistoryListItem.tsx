@@ -7,7 +7,7 @@ import { GroupedChatHistory } from './ChatHistoryList';
 import styles from "./ChatHistoryPanel.module.css"
 import { useBoolean } from '@fluentui/react-hooks';
 import { Conversation } from '../../api/models';
-import { historyDelete, historyRename } from '../../api';
+import { historyDelete, historyRename, environmentVariablesApi } from '../../api';
 import { useEffect, useRef, useState } from 'react';
 import { jsPDF } from "jspdf"; //library for download pdf
 
@@ -48,6 +48,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
     const [textFieldFocused, setTextFieldFocused] = useState(false);
     const textFieldRef = useRef<ITextField | null>(null);
     const [displayedMessages, setDisplayedMessages] = useState<React.ReactNode[]>([]);
+    const [itemCellColor, setItemCellColor] = useState<string>("")
     
     const appStateContext = React.useContext(AppStateContext)
     const isSelected = item?.id === appStateContext?.state.currentChat?.id;
@@ -220,12 +221,27 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
         }
       };
 
+      useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await environmentVariablesApi();
+                setItemCellColor(data.AZURE_HEADER_COLOR)
+                // console.log(data);
+            } catch (error) {
+                console.error("Error fetching env variables:", error);
+            }
+        };
+    
+        fetchData();
+    }, []);
+
     return (
         <Stack
             key={item.id}
             tabIndex={0}
             aria-label='chat history item'
             className={styles.itemCell}
+            style={{backgroundColor: itemCellColor}}
             onClick={() => handleSelectItem()}
             onKeyDown={e => e.key === "Enter" || e.key === " " ? handleSelectItem() : null}
             verticalAlign='center'
