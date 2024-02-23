@@ -110,6 +110,7 @@ AZURE_WEB_SCRAPE_VISIBLE = os.environ.get("AZURE_WEB_SCRAPE_VISIBLE", "false").l
 AZURE_HEADER_COLOR = os.environ.get("AZURE_HEADER_COLOR") or "#1A1B21"
 AZURE_CHAT_CONTAINER_COLOR = os.environ.get("AZURE_CHAT_CONTAINER_COLOR") or "#23252c"
 AZURE_CHAT_TEXT_COLOR = os.environ.get("AZURE_CHAT_TEXT_COLOR") or "whitesmoke"
+AZURE_LOGO_NAME = os.environ.get("AZURE_LOGO_NAME") or "leadingai"
 
 @app.route("/config", methods=["GET"])
 def get_config():
@@ -124,7 +125,8 @@ def get_config():
         "AZURE_WEB_SCRAPE_VISIBLE": AZURE_WEB_SCRAPE_VISIBLE,
         "AZURE_HEADER_COLOR": AZURE_HEADER_COLOR,
         "AZURE_CHAT_CONTAINER_COLOR": AZURE_CHAT_CONTAINER_COLOR,
-        "AZURE_CHAT_TEXT_COLOR": AZURE_CHAT_TEXT_COLOR
+        "AZURE_CHAT_TEXT_COLOR": AZURE_CHAT_TEXT_COLOR,
+        "AZURE_LOGO_NAME": AZURE_LOGO_NAME
     }
     return jsonify(config_data)
 

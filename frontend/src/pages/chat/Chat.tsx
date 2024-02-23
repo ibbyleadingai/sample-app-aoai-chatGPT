@@ -9,7 +9,7 @@ import uuid from 'react-uuid';
 import { isEmpty } from "lodash-es";
 
 import styles from "./Chat.module.css";
-import LaiLogo from "../../assets/lai-logo.svg";
+import leadingai from "../../assets/leadingai.svg";
 import { environmentVariablesApi } from "../../api";
 
 import {
@@ -60,6 +60,8 @@ const Chat = () => {
     const [isAuth, setIsAuth] = useState<boolean>(false)
     const [chatContainerColor, setChatContainerColor] = useState<string>("")
     const [chatTextColor, setChatTextColor] = useState<string>("")
+    const [logo, setLogo] = useState<string | null>(null);
+    const [logoName, setLogoName] = useState<string | null>(null);
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -584,6 +586,7 @@ const Chat = () => {
                 console.log("isAuth after conversion:", isAuth);
                 setChatContainerColor(data.AZURE_CHAT_CONTAINER_COLOR)
                 setChatTextColor(data.AZURE_CHAT_TEXT_COLOR)
+                setLogoName(data.AZURE_LOGO_NAME);
                 getUserInfoList();
             } catch (error) {
                 console.error("Error fetching env variables:", error);
@@ -592,6 +595,22 @@ const Chat = () => {
     
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const loadLogo = async () => {
+          if (logoName) {
+            try {
+              const logoModule = await import(`../../assets/${logoName}.svg`);
+              setLogo(logoModule.default);
+            } catch (error) {
+              console.error("Error loading logo:", error);
+              setLogo(null); // Set logo to null in case of an error
+            }
+          }
+        };
+    
+        loadLogo();
+      }, [logoName]);
 
     return (
         <div className={styles.container} role="main">
@@ -613,11 +632,14 @@ const Chat = () => {
                     <div className={styles.chatContainer} style={{backgroundColor: chatContainerColor}}>
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
-                                {isLogoVisible && <img
-                                    src={LaiLogo}
+                                {isLogoVisible && logo !== null && (
+                                    <img
+                                    src={logo}
                                     className={styles.chatIcon}
+                                    alt="Logo"
                                     aria-hidden="true"
-                                />}
+                                    />
+                                )}
                                 <h1 className={styles.chatEmptyStateTitle} style={{color: chatTextColor}}>{chatTitle}</h1>
                                 <h2 className={styles.chatEmptyStateSubtitle} style={{color: chatTextColor}}>{chatDescription}</h2>
                             </Stack>
