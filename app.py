@@ -102,6 +102,7 @@ AZURE_COSMOSDB_ACCOUNT_KEY = os.environ.get("AZURE_COSMOSDB_ACCOUNT_KEY")
 AZURE_HISTORY_VISIBLE = os.environ.get("AZURE_HISTORY_VISIBLE", "false").lower() == "true"
 AZURE_AUTH = os.environ.get("AZURE_AUTH", "false").lower() == "true"
 AZURE_TITLE = os.environ.get("AZURE_TITLE") or "Leading AI"
+AZURE_TITLE_TEXT_COLOR = os.environ.get("AZURE_TITLE_TEXT_COLOR") or "whitesmoke"
 AZURE_CHAT_TITLE = os.environ.get("AZURE_CHAT_TITLE") or "Start chatting"
 AZURE_CHAT_DESCRIPTION = os.environ.get("AZURE_CHAT_DESCRIPTION") or "How can I help you today?"
 AZURE_SHARE_VISIBLE = os.environ.get("AZURE_SHARE_VISIBLE", "false").lower() == "true"
@@ -126,7 +127,8 @@ def get_config():
         "AZURE_HEADER_COLOR": AZURE_HEADER_COLOR,
         "AZURE_CHAT_CONTAINER_COLOR": AZURE_CHAT_CONTAINER_COLOR,
         "AZURE_CHAT_TEXT_COLOR": AZURE_CHAT_TEXT_COLOR,
-        "AZURE_LOGO_NAME": AZURE_LOGO_NAME
+        "AZURE_LOGO_NAME": AZURE_LOGO_NAME,
+        "AZURE_TITLE_TEXT_COLOR": AZURE_TITLE_TEXT_COLOR
     }
     return jsonify(config_data)
 
