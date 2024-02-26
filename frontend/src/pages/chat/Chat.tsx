@@ -62,6 +62,7 @@ const Chat = () => {
     const [chatTextColor, setChatTextColor] = useState<string>("")
     const [logo, setLogo] = useState<string | null>(null);
     const [logoName, setLogoName] = useState<string | null>(null);
+    const [logoBorderRadius, setLogoBorderRadius] = useState<string>("")
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -586,7 +587,8 @@ const Chat = () => {
                 console.log("isAuth after conversion:", isAuth);
                 setChatContainerColor(data.AZURE_CHAT_CONTAINER_COLOR)
                 setChatTextColor(data.AZURE_CHAT_TEXT_COLOR)
-                setLogoName(data.AZURE_LOGO_NAME);
+                setLogoName(data.AZURE_LOGO_NAME)
+                setLogoBorderRadius(data.AZURE_LOGO_BORDER_RADIUS)
                 getUserInfoList();
             } catch (error) {
                 console.error("Error fetching env variables:", error);
@@ -636,6 +638,7 @@ const Chat = () => {
                                     <img
                                     src={logo}
                                     className={styles.chatIcon}
+                                    style={{borderRadius: logoBorderRadius + "%"}}
                                     alt="Logo"
                                     aria-hidden="true"
                                     />
