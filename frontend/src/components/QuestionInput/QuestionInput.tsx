@@ -81,6 +81,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           const data = await response.json()
           setQuestion(data.text)
           setIsScraped(true)
+          setLink("")
+
         //   sendQuestion()
         } catch (error: any) {
             let errorMessage
