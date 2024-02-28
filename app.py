@@ -183,6 +183,46 @@ frontend_settings = {
     }
 }
 
+@bp.route("/improve-prompt", methods=["POST"])
+async def improve_prompt():
+    try:
+        authenticated_user = get_authenticated_user_details(request_headers=request.headers)
+        user_id = authenticated_user['user_principal_id']
+
+        # Extract the user input from the request
+        user_input = request.json.get("request_body", "")
+
+        # Initialize your AsyncAzureOpenAI client
+        azure_openai_client = init_openai_client(use_data=SHOULD_USE_DATA)
+
+        # Call a function to interact with AsyncAzureOpenAI and get a better prompt
+        improved_prompt = get_improved_prompt(azure_openai_client, user_input, user_id)
+
+        # Return the improved prompt as JSON
+        return jsonify({"improved_prompt": improved_prompt}), 200
+
+    except Exception as e:
+        # Handle exceptions
+        return jsonify({"error": str(e)}), 500
+
+def get_improved_prompt(azure_openai_client, user_input, user_id):
+    try:
+        # Adjust the rest of your code accordingly based on how you use AsyncAzureOpenAI
+        messages = [
+            {"role": "system", "content": "You help improve the phrasing of sentences in a non-conversational way."},
+            {"role": "user", "content": f"Improve this prompt: '{user_input}'."}
+        ]
+
+        # Use your AsyncAzureOpenAI client to get the improved prompt
+        # (Replace the next line with the actual method you use)
+        response = azure_openai_client.get_improved_prompt(messages)
+
+        return response  # Adjust this based on the actual response format
+
+    except Exception as e:
+        # Handle exceptions
+        raise e  # Adjust this based on your error-handling approach
+
 def should_use_data():
     global DATASOURCE_TYPE
     if AZURE_SEARCH_SERVICE and AZURE_SEARCH_INDEX:
