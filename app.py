@@ -184,6 +184,49 @@ frontend_settings = {
 
 message_uuid = ""
 
+@bp.route("/improve-prompt", methods=["POST"])
+def improve_prompt():
+    try:
+        # Extract the user input from the request
+        user_input = request.json.get("request_body", "")
+
+        # Call a function to interact with OpenAI and get a better prompt
+        improved_prompt = get_improved_prompt(user_input)
+
+        # Return the improved prompt as JSON
+        return jsonify({"improved_prompt": improved_prompt}), 200
+
+    except Exception as e:
+        # Handle exceptions
+        return jsonify({"error": str(e)}), 500
+
+def get_improved_prompt(request_body):
+    openai.api_type = "azure"
+    openai.api_base = AZURE_OPENAI_ENDPOINT if AZURE_OPENAI_ENDPOINT else f"https://{AZURE_OPENAI_RESOURCE}.openai.azure.com/"
+    openai.api_version = "2023-08-01-preview"
+    openai.api_key = AZURE_OPENAI_KEY
+
+    messages = [
+        {
+            "role": "system",
+            "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context. #### User:'What is the policy for constant student absences? System response:'What is the institution's policy regarding frequent student absences?'"
+        },
+        {
+            "role": "user",
+            "content": f"Improve this prompt: '{request_body}'."
+        }
+    ]
+
+    response = openai.ChatCompletion.create(
+        engine=AZURE_OPENAI_MODEL,
+        messages = messages,
+        max_tokens=int(AZURE_OPENAI_MAX_TOKENS),
+        top_p=float(AZURE_OPENAI_TOP_P),
+        stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
+    )
+
+    return response.choices[0].message.content
+
 def should_use_data():
     global DATASOURCE_TYPE
     if AZURE_SEARCH_SERVICE and AZURE_SEARCH_INDEX:
