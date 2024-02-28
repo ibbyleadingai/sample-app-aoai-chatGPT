@@ -64,6 +64,7 @@
 .chatIcon {
     height: 62px;
     width: auto;
+    border-radius: 15%;
 }
 
 .chatMessageStream {
@@ -225,7 +226,7 @@
     line-height: 20px;
     display: flex;
     align-items: center;
-    color: #242424;
+    color: whitesmoke;
     flex: none;
     order: 0;
     flex-grow: 0;
