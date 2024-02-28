@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'planningregsv2'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7BCF6788BAED46C79A5271BF99F276A9 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0DFC162DDE3646B1A0927C8948AA7FFD }}
