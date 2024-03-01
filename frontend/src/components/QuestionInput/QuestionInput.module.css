@@ -55,6 +55,32 @@
     height: 30px;
 }
 
+.webScrapeContainer{
+    position: absolute;
+    top: 125px;
+}
+
+.linkInput{
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+.linkBtn{
+    padding: 5px;
+    border-radius: 3px;
+    border: none;
+    margin-left: 4px;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+}
+
+.linkBtn:hover {
+    background-color: #2980b9;
+    color: #ffffff; 
+}
+
 
 @media (max-width: 480px) {
     .questionInputContainer {

@@ -3,7 +3,9 @@ import json
 import os
 import logging
 import uuid
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+import httpx
 
 from quart import (
     Blueprint,
@@ -182,6 +184,38 @@ frontend_settings = {
         "show_share_button": UI_SHOW_SHARE_BUTTON
     }
 }
+
+#Web scraping
+@bp.route('/scrape', methods=['POST'])
+async def scrape():
+    try:
+        data = await request.get_json()
+        link = data.get('link')
+
+        # Scrape the text
+        scraped_text = await scrape_text(link)
+
+        return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a web page. Please do not generate a response. Just remember this information for further questions: \n\n' + scraped_text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+async def scrape_text(link):
+    try:
+        # Implement web scraping logic using libraries compatible with async (e.g., aiohttp, httpx)
+        async with httpx.AsyncClient() as client:
+            response = await client.get(link)
+            response.raise_for_status()  # Raise an HTTPError for bad responses
+
+            # Use BeautifulSoup for HTML parsing
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            # Extract specific text (modify this based on your HTML structure)
+            paragraphs = soup.find_all('p')
+            text = '\n'.join([paragraph.get_text() for paragraph in paragraphs])
+
+            return text
+    except Exception as e:
+        raise ValueError(f"Error scraping content: {str(e)}")
 
 def should_use_data():
     global DATASOURCE_TYPE
