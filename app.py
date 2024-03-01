@@ -201,7 +201,7 @@ async def scrape():
 
 async def scrape_text(link):
     try:
-        # Implement web scraping logic using libraries compatible with async (e.g., aiohttp, httpx)
+        # Use httpx to make an asynchronous HTTP request to the provided link
         async with httpx.AsyncClient() as client:
             response = await client.get(link)
             response.raise_for_status()  # Raise an HTTPError for bad responses
