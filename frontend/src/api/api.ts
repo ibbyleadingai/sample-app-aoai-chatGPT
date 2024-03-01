@@ -16,6 +16,29 @@ export async function conversationApi(options: ConversationRequest, abortSignal:
     return response;
 }
 
+export const handleImprovePromptApi = async (question: string): Promise<string> => {
+    try {
+      const response = await fetch("/improve-prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ request_body: question }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return data.improved_prompt;
+      } else {
+        console.error("Error improving prompt:", response.status, response.statusText);
+        return "Failed to improve prompt";
+      }
+    } catch (error) {
+      console.error("Error improving prompt:", error);
+      return "Failed to improve prompt";
+    }
+  };
+
 export async function getUserInfo(): Promise<UserInfo[]> {
     const response = await fetch('/.auth/me');
     if (!response.ok) {

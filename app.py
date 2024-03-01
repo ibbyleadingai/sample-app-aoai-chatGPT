@@ -185,6 +185,51 @@ frontend_settings = {
     }
 }
 
+#Improve my prompt
+@bp.route("/improve-prompt", methods=["POST"])
+async def improve_prompt():
+    try:
+        # Extract the user input from the request
+        user_input = (await request.get_json()).get("request_body", "")
+
+        # Call a function to interact with AsyncAzureOpenAI and get a better prompt
+        improved_prompt = await get_improved_prompt(user_input)
+
+        # Return the improved prompt as JSON
+        return jsonify({"improved_prompt": improved_prompt}), 200
+
+    except Exception as e:
+        # Handle exceptions
+        return jsonify({"error": str(e)}), 500
+
+async def get_improved_prompt(request_body):
+    async with AsyncAzureOpenAI(
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        api_version="2023-12-01-preview",
+        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
+    ) as openai_client:
+
+        messages = [
+            {
+                "role": "system",
+                "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context. #### User:'What is the policy for constant student absences? System response:'What is the institution's policy regarding frequent student absences?'"
+            },
+            {
+                "role": "user",
+                "content": f"Improve this prompt: '{request_body}'."
+            }
+        ]
+
+        response = await openai_client.chat.completions.create(
+            model=AZURE_OPENAI_MODEL,
+            messages=messages,
+            max_tokens=int(os.getenv("AZURE_OPENAI_MAX_TOKENS")),
+            top_p=float(os.getenv("AZURE_OPENAI_TOP_P")),
+            stop=os.getenv("AZURE_OPENAI_STOP_SEQUENCE").split("|") if os.getenv("AZURE_OPENAI_STOP_SEQUENCE") else None,
+        )
+
+        return response.choices[0].message.content
+
 #Web scraping
 @bp.route('/scrape', methods=['POST'])
 async def scrape():

@@ -3,6 +3,7 @@ import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
 import styles from "./QuestionInput.module.css";
+import { handleImprovePromptApi } from "../../api";
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -13,9 +14,20 @@ interface Props {
 }
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
-    const [question, setQuestion] = useState<string>("");
-    const [link, setLink] = useState<string>('');
+    const [question, setQuestion] = useState<string>("")
+    const [link, setLink] = useState<string>('')
+    const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
+
+    const handleImprovePrompt = async () => {
+        try {
+          setIsLoadingImproved(true);
+          const improvedPrompt = await handleImprovePromptApi(question);
+          setQuestion(improvedPrompt);
+        } finally {
+          setIsLoadingImproved(false);
+        }
+    };
 
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -112,6 +124,16 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     :
                     <img src={Send} className={styles.questionInputSendButton}/>
                 }
+                <button
+                    title="Improve prompt"
+                    className={styles.improvePromptButton}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleImprovePrompt()
+                    }}
+                    disabled={isLoadingImproved}
+                >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}
+                </button>
             </div>
             <div className={styles.questionInputBottomBorder} />
             <div className={styles.webScrapeContainer}>
