@@ -79,10 +79,10 @@ const Layout = () => {
                             aria-hidden="true"
                         /> */}
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>Leading AI</h1>
+                            <h1 className={styles.headerTitle}>Eco Plan Advisor</h1>
                         </Link>
                     </Stack>
-                    <Stack horizontal tokens={{ childrenGap: 4 }}>
+                    <Stack className={styles.buttonContainer} horizontal tokens={{ childrenGap: 4 }}>
                             {/* {isHistoryVisible && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             } */}
