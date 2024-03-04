@@ -112,6 +112,7 @@ export type UI = {
     show_web_scrape?: boolean;
     header_color?: string;
     chat_color?: string;
+    chat_text_color?: string;
 }
 
 export type FrontendSettings = {
