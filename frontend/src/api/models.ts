@@ -110,6 +110,7 @@ export type UI = {
     chat_logo?: string;
     show_share_button?: boolean;
     show_web_scrape?: boolean;
+    header_color?: string;
 }
 
 export type FrontendSettings = {

@@ -64,9 +64,14 @@ const Layout = () => {
         return () => window.removeEventListener('resize', handleResize);
       }, []);
 
+      useEffect(() => {
+        // Update the background color of the html element
+        document.documentElement.style.backgroundColor = ui?.header_color || '';
+      }, [ui?.header_color]);
+
     return (
         <div className={styles.layout}>
-            <header className={styles.header} role={"banner"}>
+            <header className={styles.header} style={{backgroundColor: ui?.header_color}} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
                         {/* <img
