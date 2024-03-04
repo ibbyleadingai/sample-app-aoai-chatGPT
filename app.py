@@ -34,6 +34,7 @@ UI_CHAT_TITLE = os.environ.get("UI_CHAT_TITLE") or "Start chatting"
 UI_CHAT_DESCRIPTION = os.environ.get("UI_CHAT_DESCRIPTION") or "How can I help you today?"
 UI_FAVICON = os.environ.get("UI_FAVICON") or "/favicon.ico"
 UI_SHOW_SHARE_BUTTON = os.environ.get("UI_SHOW_SHARE_BUTTON", "true").lower() == "true"
+UI_SHOW_WEB_SCRAPE = os.environ.get("UI_SHOW_WEB_SCRAPE", "true").lower() == "true"
 
 def create_app():
     app = Quart(__name__)
@@ -181,7 +182,8 @@ frontend_settings = {
         "chat_logo": UI_CHAT_LOGO or UI_LOGO,
         "chat_title": UI_CHAT_TITLE,
         "chat_description": UI_CHAT_DESCRIPTION,
-        "show_share_button": UI_SHOW_SHARE_BUTTON
+        "show_share_button": UI_SHOW_SHARE_BUTTON,
+        "show_web_scrape": UI_SHOW_WEB_SCRAPE
     }
 }
 

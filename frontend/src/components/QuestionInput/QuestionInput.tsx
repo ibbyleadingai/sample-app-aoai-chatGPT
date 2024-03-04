@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
 import styles from "./QuestionInput.module.css";
 import { handleImprovePromptApi } from "../../api";
+import { AppStateContext } from "../../state/AppProvider";
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
+    const appStateContext = useContext(AppStateContext)
+    const ui = appStateContext?.state.frontendSettings?.ui;
     const [question, setQuestion] = useState<string>("")
     const [link, setLink] = useState<string>('')
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
