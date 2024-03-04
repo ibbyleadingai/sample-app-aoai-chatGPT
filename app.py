@@ -36,6 +36,7 @@ UI_FAVICON = os.environ.get("UI_FAVICON") or "/favicon.ico"
 UI_SHOW_SHARE_BUTTON = os.environ.get("UI_SHOW_SHARE_BUTTON", "true").lower() == "true"
 UI_SHOW_WEB_SCRAPE = os.environ.get("UI_SHOW_WEB_SCRAPE", "true").lower() == "true"
 UI_HEADER_COLOR = os.environ.get("UI_HEADER_COLOR") or "#1a1b21"
+UI_CHAT_COLOR = os.environ.get("UI_HEADER_COLOR") or "#23252c"
 
 def create_app():
     app = Quart(__name__)
@@ -185,7 +186,8 @@ frontend_settings = {
         "chat_description": UI_CHAT_DESCRIPTION,
         "show_share_button": UI_SHOW_SHARE_BUTTON,
         "show_web_scrape": UI_SHOW_WEB_SCRAPE,
-        "header_color": UI_HEADER_COLOR
+        "header_color": UI_HEADER_COLOR,
+        "chat_color": UI_CHAT_COLOR
     }
 }
 

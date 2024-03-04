@@ -111,6 +111,7 @@ export type UI = {
     show_share_button?: boolean;
     show_web_scrape?: boolean;
     header_color?: string;
+    chat_color?: string;
 }
 
 export type FrontendSettings = {
