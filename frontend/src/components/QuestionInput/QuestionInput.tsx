@@ -139,7 +139,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 </button>
             </div>
             <div className={styles.questionInputBottomBorder} />
-            <div className={styles.webScrapeContainer}>
+            {ui?.show_web_scrape && <div className={styles.webScrapeContainer}>
             <input
                 type="text"
                 className={styles.linkInput}
@@ -148,7 +148,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={(e) => setLink(e.target.value)}
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
-            </div>
+            </div>}
         </Stack>
     );
 };
