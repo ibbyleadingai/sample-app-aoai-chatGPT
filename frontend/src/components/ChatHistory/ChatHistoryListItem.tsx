@@ -9,6 +9,7 @@ import { useBoolean } from '@fluentui/react-hooks';
 import { Conversation } from '../../api/models';
 import { historyDelete, historyRename, historyList } from '../../api';
 import { useEffect, useRef, useState, useContext } from 'react';
+import { jsPDF } from "jspdf"; //library for download pdf
 
 interface ChatHistoryListItemCellProps {
   item?: Conversation;
@@ -161,6 +162,62 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
         }
     }
 
+    const handleDownload = async (item: Conversation) => {
+        try {
+          // Filter messages to exclude those with role 'tool'
+          const filteredMessages = (item.messages || []).filter(message => message.role === 'user' || message.role === 'assistant');
+      
+          // Create a formatted string with content, date, and role, adding a line of space after each message
+          const formattedText = filteredMessages.map(message => {
+            const { content, date, role } = message;
+            return `${role.toUpperCase()} [${date}]: ${content}\n\n`;
+          }).join('');
+      
+          // Create a PDF document
+          const pdf = new jsPDF();
+      
+          // Set the font size and type (adjust as needed)
+          const fontSize = 12;
+          const fontType = 'normal';
+      
+          pdf.setFontSize(fontSize);
+          pdf.setFont(fontType);
+      
+          // Set line height to reduce spacing between lines
+          const lineHeight = 0.5; 
+      
+          // Set the margin to ensure text doesn't reach the edges
+          const margin = 10;
+      
+          // Calculate the available width and height for text
+          const availableWidth = pdf.internal.pageSize.width - 2 * margin;
+          const availableHeight = pdf.internal.pageSize.height - 2 * margin;
+      
+          // Split the formatted text into lines to fit the available width and height
+          const lines: string[] = pdf.splitTextToSize(formattedText, availableWidth, { fontSize });
+      
+          let cursorY = margin;
+      
+          // Loop through lines and add to PDF, moving to a new page if needed
+          lines.forEach(line => {
+            if (cursorY + lineHeight > availableHeight) {
+              // Move to a new page
+              pdf.addPage();
+              cursorY = margin;
+            }
+      
+            pdf.text(line, margin, cursorY);
+            cursorY += fontSize * lineHeight;
+          });
+      
+          // Save the PDF
+          pdf.save(`conversation_${item.title}.pdf`);
+        } catch (error) {
+          console.error('Error downloading conversation:', error);
+          // Handle error, show a message, etc.
+        }
+      };
+
     return (
         <Stack
             key={item.id}
@@ -213,6 +270,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
                 <Stack horizontal verticalAlign={'center'} style={{ width: '100%' }}>
                     <div className={styles.chatTitle}>{truncatedTitle}</div>
                     {(isSelected || isHovered) && <Stack horizontal horizontalAlign='end'>
+                    <IconButton className={styles.itemButton} iconProps={{ iconName: 'Download' }} title="Download" onClick={() => handleDownload(item)} onKeyDown={e => e.key === " " ? onEdit() : null}/>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Delete' }} title="Delete" onClick={toggleDeleteDialog} onKeyDown={e => e.key === " " ? toggleDeleteDialog() : null}/>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Edit' }} title="Edit" onClick={onEdit} onKeyDown={e => e.key === " " ? onEdit() : null}/>
                     </Stack>}
