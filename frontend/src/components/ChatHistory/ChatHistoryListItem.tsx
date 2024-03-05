@@ -270,7 +270,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
                 <Stack horizontal verticalAlign={'center'} style={{ width: '100%' }}>
                     <div className={styles.chatTitle}>{truncatedTitle}</div>
                     {(isSelected || isHovered) && <Stack horizontal horizontalAlign='end'>
-                    <IconButton className={styles.itemButton} iconProps={{ iconName: 'Download' }} title="Download" onClick={() => handleDownload(item)} onKeyDown={e => e.key === " " ? onEdit() : null}/>
+                        <IconButton className={styles.itemButton} iconProps={{ iconName: 'Download' }} title="Download" onClick={() => handleDownload(item)} onKeyDown={e => e.key === " " ? onEdit() : null}/>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Delete' }} title="Delete" onClick={toggleDeleteDialog} onKeyDown={e => e.key === " " ? toggleDeleteDialog() : null}/>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Edit' }} title="Edit" onClick={onEdit} onKeyDown={e => e.key === " " ? onEdit() : null}/>
                     </Stack>}
