@@ -624,6 +624,9 @@ const Chat = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
 
+    const logoPath = ui?.chat_logo ? `../../assets/${ui.chat_logo}` : fea;
+    console.log("Resolved Logo Path:", logoPath);
+
     return (
         <div className={styles.container} role="main">
             {showAuthMessage ? (
@@ -643,7 +646,7 @@ const Chat = () => {
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
                                 <img
-                                    src={ui?.chat_logo ? ui.chat_logo : fea}
+                                    src={logoPath}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
