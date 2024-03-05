@@ -113,6 +113,7 @@ export type UI = {
     header_color?: string;
     chat_color?: string;
     chat_text_color?: string;
+    title_text_color?: string;
 }
 
 export type FrontendSettings = {
