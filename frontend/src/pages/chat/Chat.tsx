@@ -59,7 +59,6 @@ const Chat = () => {
     const [clearingChat, setClearingChat] = useState<boolean>(false);
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
-    const [logo, setLogo] = useState<string>("");
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -625,21 +624,7 @@ const Chat = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
 
-    useEffect(() => {
-        const loadLogo = async () => {
-          if (ui?.chat_logo) {
-            try {
-              const logoModule = await import(`../../assets/${ui?.chat_logo}`);
-              setLogo(logoModule.default);
-            } catch (error) {
-              console.error("Error loading logo:", error);
-              setLogo(""); // Set logo to null in case of an error
-            }
-          }
-        };
-    
-        loadLogo();
-      }, [ui?.chat_logo]);
+    const logoPath = ui?.chat_logo ? `../../assets/${ui.chat_logo}` : fea;
 
     return (
         <div className={styles.container} role="main">
@@ -660,7 +645,7 @@ const Chat = () => {
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
                                 <img
-                                    src={logo}
+                                    src={logoPath}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
