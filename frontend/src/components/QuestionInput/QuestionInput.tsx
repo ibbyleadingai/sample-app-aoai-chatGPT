@@ -130,6 +130,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 <button
                     title="Improve prompt"
                     className={styles.improvePromptButton}
+                    style={{color: ui?.improve_button_color}}
                     onClick={(e) => {
                         e.stopPropagation();
                         handleImprovePrompt()

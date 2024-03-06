@@ -48,6 +48,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
     const [textFieldFocused, setTextFieldFocused] = useState(false);
     const textFieldRef = useRef<ITextField | null>(null);
     
+    
     const appStateContext = React.useContext(AppStateContext)
     const isSelected = item?.id === appStateContext?.state.currentChat?.id;
     const dialogContentProps = {
