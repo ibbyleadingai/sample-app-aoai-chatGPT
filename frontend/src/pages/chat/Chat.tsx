@@ -37,6 +37,15 @@ import { ChatHistoryPanel } from "../../components/ChatHistory/ChatHistoryPanel"
 import { AppStateContext } from "../../state/AppProvider";
 import { useBoolean } from "@fluentui/react-hooks";
 
+type ImageImports = {
+    [key: string]: string;
+  };
+
+  const imageImports: ImageImports = {
+    leadingai: leadingai,
+    // Add more entries as needed for other images
+  };
+
 const enum messageStatus {
     NotRunning = "Not Running",
     Processing = "Processing",
@@ -624,8 +633,9 @@ const Chat = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
 
-    // const logoPath = ui?.chat_logo ? `../../assets/${ui.chat_logo}` : fea;
-    // console.log("Resolved Logo Path:", logoPath);
+    const dynamicImage = ui?.chat_logo
+    ? imageImports[ui.chat_logo] || leadingai
+    : leadingai;
 
     return (
         <div className={styles.container} role="main">
@@ -646,7 +656,7 @@ const Chat = () => {
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
                                 <img
-                                    src={ui?.chat_logo ? ui.chat_logo : fea}
+                                    src={dynamicImage}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
