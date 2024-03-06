@@ -21,9 +21,9 @@
     display: flex;
 }
 
-.itemCell:hover {
+/* .itemCell:hover {
     background: #23252c;
-}
+} */
 
 .itemButton {
     display: flex;
