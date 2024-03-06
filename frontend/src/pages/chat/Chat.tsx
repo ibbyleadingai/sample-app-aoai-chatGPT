@@ -646,7 +646,7 @@ const Chat = () => {
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
                                 <img
-                                    src='../../assets/leadingai.svg'
+                                    src={ui?.chat_logo ? ui.chat_logo : fea}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
