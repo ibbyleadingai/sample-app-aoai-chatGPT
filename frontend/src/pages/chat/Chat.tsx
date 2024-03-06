@@ -43,6 +43,7 @@ type ImageImports = {
 
   const imageImports: ImageImports = {
     leadingai: leadingai,
+    fea: fea
     // Add more entries as needed for other images
   };
 
