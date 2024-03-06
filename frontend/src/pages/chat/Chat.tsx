@@ -12,7 +12,7 @@ import DOMPurify from 'dompurify';
 import styles from "./Chat.module.css";
 // import Contoso from "../../assets/Contoso.svg";
 import leadingai from "../../assets/leadingai.svg"
-import mcgill from "../../assets/mcgill.svg"
+import mcgill from "../../assets/mcgill&partners.svg"
 import fea from "../../assets/fea.svg"
 import { XSSAllowTags } from "../../constants/xssAllowTags";
 
