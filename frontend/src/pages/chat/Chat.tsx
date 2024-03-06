@@ -12,6 +12,7 @@ import DOMPurify from 'dompurify';
 import styles from "./Chat.module.css";
 // import Contoso from "../../assets/Contoso.svg";
 import leadingai from "../../assets/leadingai.svg"
+import mcgill from "../../assets/mcgill.svg"
 import fea from "../../assets/fea.svg"
 import { XSSAllowTags } from "../../constants/xssAllowTags";
 
@@ -43,7 +44,8 @@ type ImageImports = {
 
   const imageImports: ImageImports = {
     leadingai: leadingai,
-    fea: fea
+    fea: fea,
+    mcgill: mcgill
     // Add more entries as needed for other images
   };
 

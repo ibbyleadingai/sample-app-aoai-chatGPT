@@ -39,6 +39,7 @@ UI_HEADER_COLOR = os.environ.get("UI_HEADER_COLOR") or "#1a1b21"
 UI_CHAT_COLOR = os.environ.get("UI_CHAT_COLOR") or "#23252c"
 UI_CHAT_TEXT_COLOR = os.environ.get("UI_CHAT_TEXT_COLOR") or "whitesmoke"
 UI_TITLE_TEXT_COLOR = os.environ.get("UI_TITLE_TEXT_COLOR") or "whitesmoke"
+UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "#3498db"
 
 def create_app():
     app = Quart(__name__)
@@ -191,7 +192,8 @@ frontend_settings = {
         "header_color": UI_HEADER_COLOR,
         "chat_color": UI_CHAT_COLOR,
         "chat_text_color": UI_CHAT_TEXT_COLOR,
-        "title_text_color": UI_TITLE_TEXT_COLOR
+        "title_text_color": UI_TITLE_TEXT_COLOR,
+        "improve_button_color": UI_IMPROVE_BUTTON_COLOR
     }
 }
 
