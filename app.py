@@ -42,7 +42,7 @@ UI_TITLE_TEXT_COLOR = os.environ.get("UI_TITLE_TEXT_COLOR") or "whitesmoke"
 UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "#3498db"
 UI_STOP_GENERATING_COLOR = os.environ.get("UI_STOP_GENERATING_COLOR") or "white"
 UI_CONTACT_US_BUTTON_LINK = os.environ.get("UI_CONTACT_US_BUTTON_LINK")
-UI_CONTACT_US_BUTTON_COLOR = os.environ.get("UI_CONTACT_US_BUTTON_COLOR")
+UI_CONTACT_US_BUTTON_COLOR = os.environ.get("UI_CONTACT_US_BUTTON_COLOR") or "black"
 
 def create_app():
     app = Quart(__name__)
@@ -683,6 +683,25 @@ async def conversation_internal(request_body):
         else:
             return jsonify({"error": str(ex)}), 500
 
+@bp.route("/conversation_teams", methods=["POST"])
+async def conversation_teams():
+    if not request.is_json:
+        return jsonify({"error": "request must be json"}), 415
+    request_json = await request.get_json()
+
+    try:
+        # Use the same request handling logic, but for Teams, don't stream the response
+        if SHOULD_STREAM:  # there might be cases you want streaming
+            result = await complete_chat_request(request_json)  # Use non-streaming for Teams
+        else:
+            result = await complete_chat_request(request_json)
+        return jsonify(result)
+    except Exception as ex:
+        logging.exception(ex)
+        if hasattr(ex, "status_code"):
+            return jsonify({"error": str(ex)}), ex.status_code
+        else:
+            return jsonify({"error": str(ex)}), 500
 
 @bp.route("/conversation", methods=["POST"])
 async def conversation():
