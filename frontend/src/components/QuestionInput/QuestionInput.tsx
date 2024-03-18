@@ -151,7 +151,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>}
 
-            <a className={styles.contactUsButton} href={ui?.contact_us_button_link} style={{backgroundColor: ui?.contact_us_button_color}}>Contact us</a>
+            <a className={styles.contactUsButton} href={`mailto:${ui?.contact_us_button_link}`} style={{backgroundColor: ui?.contact_us_button_color}}>Contact us</a>
         </Stack>
     );
 };
