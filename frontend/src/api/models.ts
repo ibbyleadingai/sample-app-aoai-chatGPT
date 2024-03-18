@@ -117,6 +117,7 @@ export type UI = {
     improve_button_color?: string;
     stop_generating_color?: string;
     contact_us_button_link?: string;
+    contact_us_button_color?: string;
 }
 
 export type FrontendSettings = {

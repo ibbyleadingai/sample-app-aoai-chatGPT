@@ -104,11 +104,11 @@
 
 .contactUsButton{
     padding: 8px 25px;
-    background-color: black;
+    /* background-color: black; */
     color: white;
     text-decoration: none;
     position: absolute;
-    top: 106px;
+    top: 104px;
     left: 40%;
     border-radius: 3px;
     cursor: pointer;
