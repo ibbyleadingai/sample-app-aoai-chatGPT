@@ -116,6 +116,7 @@ export type UI = {
     title_text_color?: string;
     improve_button_color?: string;
     stop_generating_color?: string;
+    show_chat_logo?: boolean;
 }
 
 export type FrontendSettings = {

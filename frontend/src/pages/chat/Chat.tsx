@@ -658,11 +658,12 @@ const Chat = () => {
                     <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color}}>
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
+                                {ui?.show_chat_logo && 
                                 <img
                                     src={dynamicImage}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
-                                />
+                                />}
                                 <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>{ui?.chat_title}</h1>
                                 <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>{ui?.chat_description}</h2>
                             </Stack>
