@@ -150,6 +150,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>}
+
+            <a className={styles.contactUsButton} href={ui?.contact_us_button_link}>Contact us</a>
         </Stack>
     );
 };
