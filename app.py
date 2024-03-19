@@ -686,16 +686,14 @@ async def conversation_internal(request_body):
 @bp.route("/conversation_teams", methods=["POST"])
 async def conversation_teams():
     if not request.is_json:
-        return jsonify({"error": "request must be json"}), 415
+        return jsonify({"error": "Request must be JSON"}), 415
+    
     request_json = await request.get_json()
-
+    
+    # Use the non-streaming logic to handle the conversation
     try:
-        # Use the same request handling logic, but for Teams, don't stream the response
-        if SHOULD_STREAM:  # there might be cases you want streaming
-            result = await complete_chat_request(request_json)  # Use non-streaming for Teams
-        else:
-            result = await complete_chat_request(request_json)
-        return jsonify(result)
+        result = await complete_chat_request(request_json)  # Non-streaming request handling
+        return jsonify(result)  # Format and return the response
     except Exception as ex:
         logging.exception(ex)
         if hasattr(ex, "status_code"):
