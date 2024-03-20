@@ -6,6 +6,8 @@ import uuid
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import httpx
+import pdfplumber
+import aiofiles
 
 from quart import (
     Blueprint,
@@ -200,6 +202,32 @@ frontend_settings = {
         "show_chat_logo": UI_SHOW_CHAT_LOGO
     }
 }
+
+@bp.route('/upload-pdf', methods=['POST'])
+async def upload_pdf():
+    files = await request.files
+    file = files['file'] if 'file' in files else None
+
+    if file:
+        filepath = os.path.join('temporary', file.filename)
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        text = ''
+        try:
+            async with aiofiles.open(filepath, 'wb') as out_file:
+                content = file.read()
+                await out_file.write(content)
+
+            with pdfplumber.open(filepath) as pdf:
+                pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
+                text = ' '.join(pages)
+
+            os.remove(filepath)
+            return jsonify({'text': text})
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return jsonify({'error': 'An internal server error occurred'}), 500
+    else:
+        return jsonify({'error': 'No file uploaded'}), 400
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])

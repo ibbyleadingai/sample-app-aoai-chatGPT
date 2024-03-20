@@ -21,6 +21,43 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [link, setLink] = useState<string>('')
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files ? event.target.files[0] : null;
+        setSelectedFile(file);
+      };
+
+      const handleUpload = async () => {
+        if (selectedFile) {
+            console.log("selected file", selectedFile)
+            const formData = new FormData();
+            formData.append('file', selectedFile);  // 'file' is the key your backend expects
+
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+    
+            try {
+                const response = await fetch('/upload-pdf', {
+                    method: 'POST',
+                    body: formData,  // Ensure this is correct
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}`);
+                }
+    
+                const data = await response.json();
+                setQuestion(data.text);  // Update your state or UI as needed
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        } else {
+            console.error('No file selected');
+        }
+    };
 
     const handleImprovePrompt = async () => {
         try {
@@ -150,6 +187,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>}
+            <input style={{position: "absolute"}} type="file" accept="application/pdf" onChange={handleFileChange} />
+            <button style={{position: "absolute", left: "90px"}} onClick={handleUpload}>{isLoading ? 'Uploading...' : 'Upload PDF'}</button>
         </Stack>
     );
 };
