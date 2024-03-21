@@ -222,7 +222,7 @@ async def upload_pdf():
                 text = ' '.join(pages)
 
             os.remove(filepath)
-            return jsonify({'text': text})
+            return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
         except Exception as e:
             print(f"An error occurred: {e}")
             return jsonify({'error': 'An internal server error occurred'}), 500

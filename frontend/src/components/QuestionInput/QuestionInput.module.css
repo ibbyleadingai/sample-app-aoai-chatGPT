@@ -102,6 +102,14 @@
     color: #ffffff; 
 }
 
+.documentUploadContainer{
+    display: block;
+}
+
+.innerdocumentUploadContainer{
+    position: absolute;
+    top: 106px;
+}
 
 @media (max-width: 480px) {
     .questionInputContainer {

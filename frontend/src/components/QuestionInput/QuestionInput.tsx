@@ -38,19 +38,16 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
             }
-    
             try {
                 const response = await fetch('/upload-pdf', {
                     method: 'POST',
-                    body: formData,  // Ensure this is correct
+                    body: formData,  
                 });
-    
                 if (!response.ok) {
                     throw new Error(`Server responded with ${response.status}`);
                 }
-    
                 const data = await response.json();
-                setQuestion(data.text);  // Update your state or UI as needed
+                setQuestion(data.text);
             } catch (error) {
                 console.error('Error uploading file:', error);
             }
@@ -187,8 +184,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>}
-            <input style={{position: "absolute"}} type="file" accept="application/pdf" onChange={handleFileChange} />
-            <button style={{position: "absolute", left: "90px"}} onClick={handleUpload}>{isLoading ? 'Uploading...' : 'Upload PDF'}</button>
+            <div className={styles.documentUploadContainer}>
+                <div className={styles.innerdocumentUploadContainer}>
+                    <input type="file" accept="application/pdf" onChange={handleFileChange} />
+                    <button style={{position: "absolute", left: "150px"}} onClick={handleUpload}>{isLoading ? 'Uploading...' : 'Upload PDF'}</button>
+                </div>
+            </div>
         </Stack>
     );
 };
