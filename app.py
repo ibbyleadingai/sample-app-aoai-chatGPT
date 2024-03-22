@@ -683,30 +683,17 @@ async def conversation_internal(request_body):
         else:
             return jsonify({"error": str(ex)}), 500
 
-@bp.route('/conversation_teams', methods=['POST'])
+@bp.route("/conversation_teams", methods=["POST"])
 async def conversation_teams():
-    # Parse the incoming JSON to extract the message
-    incoming_msg = await request.get_json()
-    text = incoming_msg.get('text', '')  # Ensure there's a default in case 'text' is not provided
+    if not request.is_json:
+        return jsonify({"error": "request must be json"}), 415
+    request_json = await request.get_json()
 
-    # Prepare the request for your AI model in the expected format
-    request_body = {
-        "messages": [{"role": "user", "content": text}],
-    }
+    # Set SHOULD_STREAM to False for Teams integration
+    global SHOULD_STREAM
+    SHOULD_STREAM = False
 
-    # Attempt to send the request and format the response
-    try:
-        response = await complete_chat_request(request_body)  # This function should handle non-streaming requests
-        # Assume response is a dict that contains a 'messages' key
-        ai_messages = response.get('messages', [])
-        if ai_messages:  # Check if there are messages to send back
-            teams_response = {"type": "message", "text": ai_messages[0].get('content', 'Sorry, something went wrong.')}
-            return jsonify(teams_response)
-        else:
-            return jsonify({"type": "message", "text": "Sorry, I didn't understand that."})
-    except Exception as e:
-        logging.exception("Error handling Teams message")
-        return jsonify({"error": "Internal Server Error"}), 500
+    return await conversation_internal(request_json)
 
 @bp.route("/conversation", methods=["POST"])
 async def conversation():
