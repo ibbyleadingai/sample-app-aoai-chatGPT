@@ -683,23 +683,30 @@ async def conversation_internal(request_body):
         else:
             return jsonify({"error": str(ex)}), 500
 
-@bp.route("/conversation_teams", methods=["POST"])
+@bp.route('/conversation_teams', methods=['POST'])
 async def conversation_teams():
-    if not request.is_json:
-        return jsonify({"error": "Request must be JSON"}), 415
-    
-    request_json = await request.get_json()
-    
-    # Use the non-streaming logic to handle the conversation
+    # Parse the incoming JSON to extract the message from Teams
+    incoming_msg = await request.get_json()
+    text = incoming_msg['text']  # Adjust this according to the actual structure of Teams messages
+
+    # Prepare the request for your AI model
+    request_body = {
+        "messages": [{"role": "user", "content": text}],
+        # Set additional properties as needed
+    }
+
+    # Send the request to your AI model without streaming
     try:
-        result = await complete_chat_request(request_json)  # Non-streaming request handling
-        return jsonify(result)  # Format and return the response
-    except Exception as ex:
-        logging.exception(ex)
-        if hasattr(ex, "status_code"):
-            return jsonify({"error": str(ex)}), ex.status_code
-        else:
-            return jsonify({"error": str(ex)}), 500
+        response = await complete_chat_request(request_body)  # Reuse your existing function for non-streaming requests
+        # Format the response for Teams
+        teams_response = {
+            "type": "message",
+            "text": response['message']  # Adjust according to how your response is structured
+        }
+        return jsonify(teams_response)
+    except Exception as e:
+        logging.exception("Error handling Teams message")
+        return jsonify({"error": "Internal Server Error"}), 500
 
 @bp.route("/conversation", methods=["POST"])
 async def conversation():
