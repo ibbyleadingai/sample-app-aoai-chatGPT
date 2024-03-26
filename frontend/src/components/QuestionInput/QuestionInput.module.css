@@ -108,8 +108,32 @@
 
 .innerdocumentUploadContainer{
     position: absolute;
-    top: 106px;
+    top: -31px;
+    left: 0;
+    display: flex;
+    gap: 5px;
+    align-items: center
 }
+
+/* Hides the original file input visually but remains accessible */
+.hiddenUploadInput {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  
+  .customUploadButton {
+    padding: 5px 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
 
 @media (max-width: 480px) {
     .questionInputContainer {

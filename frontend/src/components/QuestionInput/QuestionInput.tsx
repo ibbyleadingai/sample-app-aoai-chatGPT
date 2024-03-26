@@ -21,20 +21,21 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [link, setLink] = useState<string>('')
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFile, setSelectedFile] = useState<string | undefined>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
-        setSelectedFile(file);
-      };
-
-      const handleUpload = async () => {
-        if (selectedFile) {
-            console.log("selected file", selectedFile)
+        handleUpload(file);  // Call handleUpload directly with the file
+        setSelectedFile(file?.name)
+    };
+    
+    const handleUpload = async (file: File | null) => {
+        if (file) {  // Use the file parameter that is passed to the function
+            console.log("selected file", file);
             const formData = new FormData();
-            formData.append('file', selectedFile);  // 'file' is the key your backend expects
-
+            formData.append('file', file);  // Use the file parameter
+    
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
             }
@@ -47,7 +48,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     throw new Error(`Server responded with ${response.status}`);
                 }
                 const data = await response.json();
-                setQuestion(data.text);
+                setQuestion(data.text);  // Assuming setQuestion updates the state with the extracted text
             } catch (error) {
                 console.error('Error uploading file:', error);
             }
@@ -186,8 +187,21 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             </div>}
             <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer}>
-                    <input type="file" accept="application/pdf" onChange={handleFileChange} />
-                    <button style={{position: "absolute", left: "150px"}} onClick={handleUpload}>{isLoading ? 'Uploading...' : 'Upload PDF'}</button>
+                    <label htmlFor="upload-btn" className={styles.customUploadButton}>
+                        Choose PDF File
+                    </label>
+                    <input
+                    id="upload-btn"
+                    className={styles.hiddenUploadInput}
+                    type="file"
+                    accept="application/pdf"
+                    onChange={handleFileChange}
+                    />
+                    {selectedFile && <div style={{ 
+                        color: '#fff', 
+                        fontSize: '14px',
+                        // Add more styles as needed
+                    }}>{selectedFile}</div>}
                 </div>
             </div>
         </Stack>
