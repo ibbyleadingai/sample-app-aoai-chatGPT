@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import styles from "./Layout.module.css";
 import Contoso from "../../assets/Contoso.svg";
+import ambition from "../../assets/ambition.png"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";
@@ -74,11 +75,11 @@ const Layout = () => {
             <header className={styles.header} style={{backgroundColor: ui?.header_color}} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
-                        {/* <img
+                        {ui?.show_logo && <img
                             src={ui?.logo ? ui.logo : Contoso}
                             className={styles.headerIcon}
                             aria-hidden="true"
-                        /> */}
+                        />}
                         <Link to="/" className={styles.headerTitleContainer}>
                             <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>
                         </Link>

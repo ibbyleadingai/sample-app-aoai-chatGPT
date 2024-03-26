@@ -42,6 +42,7 @@ UI_TITLE_TEXT_COLOR = os.environ.get("UI_TITLE_TEXT_COLOR") or "whitesmoke"
 UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "#3498db"
 UI_STOP_GENERATING_COLOR = os.environ.get("UI_STOP_GENERATING_COLOR") or "white"
 UI_SHOW_CHAT_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "true").lower() == "true"
+UI_SHOW_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "false").lower() == "true"
 
 def create_app():
     app = Quart(__name__)
@@ -197,7 +198,8 @@ frontend_settings = {
         "title_text_color": UI_TITLE_TEXT_COLOR,
         "improve_button_color": UI_IMPROVE_BUTTON_COLOR,
         "stop_generating_color": UI_STOP_GENERATING_COLOR,
-        "show_chat_logo": UI_SHOW_CHAT_LOGO
+        "show_chat_logo": UI_SHOW_CHAT_LOGO,
+        "show_logo": UI_SHOW_LOGO
     }
 }
 
