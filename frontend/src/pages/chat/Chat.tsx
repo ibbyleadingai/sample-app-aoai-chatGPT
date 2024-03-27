@@ -639,8 +639,8 @@ const Chat = () => {
     }
 
     const dynamicImage = ui?.chat_logo
-    ? imageImports[ui.chat_logo] || leadingai
-    : leadingai;
+    ? imageImports[ui.chat_logo] || ""
+    : "";
 
     return (
         <div className={styles.container} role="main">
