@@ -81,8 +81,8 @@ const Layout = () => {
         document.documentElement.style.backgroundColor = ui?.header_color || '';
       }, [ui?.header_color]);
 
-      const dynamicImage = ui?.chat_logo
-    ? imageImports[ui.chat_logo] || ""
+      const dynamicImage = ui?.logo
+    ? imageImports[ui.logo] || ""
     : "";
 
     return (
