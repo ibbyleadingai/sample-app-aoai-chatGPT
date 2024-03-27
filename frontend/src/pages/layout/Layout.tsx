@@ -82,8 +82,8 @@ const Layout = () => {
       }, [ui?.header_color]);
 
       const dynamicImage = ui?.chat_logo
-    ? imageImports[ui.chat_logo] || leadingai
-    : leadingai;
+    ? imageImports[ui.chat_logo] || ""
+    : "";
 
     return (
         <div className={styles.layout}>
