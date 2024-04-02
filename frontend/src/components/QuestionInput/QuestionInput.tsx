@@ -22,7 +22,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
     const [selectedFile, setSelectedFile] = useState<string | undefined>("");
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
@@ -32,13 +32,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     
     const handleUpload = async (file: File | null) => {
         if (file) {  // Use the file parameter that is passed to the function
-            console.log("selected file", file);
+            // console.log("selected file", file);
+            setIsLoadingDocument(true)
             const formData = new FormData();
             formData.append('file', file);  // Use the file parameter
     
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
-            }
+            // for (let [key, value] of formData.entries()) {
+            //     console.log(`${key}: ${value}`);
+            // }
             try {
                 const response = await fetch('/upload-pdf', {
                     method: 'POST',
@@ -48,7 +49,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     throw new Error(`Server responded with ${response.status}`);
                 }
                 const data = await response.json();
-                setQuestion(data.text);  // Assuming setQuestion updates the state with the extracted text
+                setQuestion(data.text);  
+                setIsLoadingDocument(false)
             } catch (error) {
                 console.error('Error uploading file:', error);
             }
@@ -185,10 +187,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>}
-            <div className={styles.documentUploadContainer}>
+            {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer}>
                     <label htmlFor="upload-btn" className={styles.customUploadButton}>
-                        Choose PDF File
+                        {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
                     </label>
                     <input
                     id="upload-btn"
@@ -203,7 +205,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         // Add more styles as needed
                     }}>{selectedFile}</div>}
                 </div>
-            </div>
+            </div>}
         </Stack>
     );
 };

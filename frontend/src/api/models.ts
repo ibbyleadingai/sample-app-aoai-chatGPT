@@ -117,6 +117,7 @@ export type UI = {
     improve_button_color?: string;
     stop_generating_color?: string;
     show_chat_logo?: boolean;
+    show_upload_button?: boolean;
 }
 
 export type FrontendSettings = {
