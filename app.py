@@ -6,6 +6,8 @@ import uuid
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import httpx
+import pdfplumber
+import aiofiles
 
 from quart import (
     Blueprint,
@@ -43,6 +45,7 @@ UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "#3498db"
 UI_STOP_GENERATING_COLOR = os.environ.get("UI_STOP_GENERATING_COLOR") or "white"
 UI_SHOW_CHAT_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "true").lower() == "true"
 UI_SHOW_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "false").lower() == "true"
+UI_SHOW_UPLOAD_BUTTON = os.environ.get("UI_SHOW_UPLOAD_BUTTON", "false").lower() == "true"
 
 def create_app():
     app = Quart(__name__)
@@ -199,9 +202,36 @@ frontend_settings = {
         "improve_button_color": UI_IMPROVE_BUTTON_COLOR,
         "stop_generating_color": UI_STOP_GENERATING_COLOR,
         "show_chat_logo": UI_SHOW_CHAT_LOGO,
-        "show_logo": UI_SHOW_LOGO
+        "show_logo": UI_SHOW_LOGO,
+        "show_upload_button": UI_SHOW_UPLOAD_BUTTON
     }
 }
+
+@bp.route('/upload-pdf', methods=['POST'])
+async def upload_pdf():
+    files = await request.files
+    file = files['file'] if 'file' in files else None
+
+    if file:
+        filepath = os.path.join('temporary', file.filename)
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        text = ''
+        try:
+            async with aiofiles.open(filepath, 'wb') as out_file:
+                content = file.read()
+                await out_file.write(content)
+
+            with pdfplumber.open(filepath) as pdf:
+                pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
+                text = ' '.join(pages)
+
+            os.remove(filepath)
+            return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return jsonify({'error': 'An internal server error occurred'}), 500
+    else:
+        return jsonify({'error': 'No file uploaded'}), 400
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])
