@@ -1,6 +1,8 @@
 import { Outlet, Link } from "react-router-dom";
 import styles from "./Layout.module.css";
 import Contoso from "../../assets/Contoso.svg";
+import ambition from "../../assets/ambition.png"
+import leadingai from "../../assets/leadingai.svg"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";
@@ -17,6 +19,16 @@ const Layout = () => {
     const [showHistoryLabel, setShowHistoryLabel] = useState<string>("Show chat history");
     const appStateContext = useContext(AppStateContext)
     const ui = appStateContext?.state.frontendSettings?.ui;
+
+    type ImageImports = {
+        [key: string]: string;
+      };
+    
+      const imageImports: ImageImports = {
+        leadingai: leadingai,
+        ambition: ambition
+        // Add more entries as needed for other images
+      };
 
     const handleShareClick = () => {
         setIsSharePanelOpen(true);
@@ -69,16 +81,20 @@ const Layout = () => {
         document.documentElement.style.backgroundColor = ui?.header_color || '';
       }, [ui?.header_color]);
 
+      const dynamicImage = ui?.logo
+    ? imageImports[ui.logo] || ""
+    : "";
+
     return (
         <div className={styles.layout}>
             <header className={styles.header} style={{backgroundColor: ui?.header_color}} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
-                        {/* <img
-                            src={ui?.logo ? ui.logo : Contoso}
+                        <img
+                            src={dynamicImage}
                             className={styles.headerIcon}
                             aria-hidden="true"
-                        /> */}
+                        />
                         <Link to="/" className={styles.headerTitleContainer}>
                             <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>
                         </Link>

@@ -29,7 +29,7 @@ from backend.utils import format_as_ndjson, format_stream_response, generateFilt
 bp = Blueprint("routes", __name__, static_folder="static", template_folder="static")
 
 # UI configuration (optional)
-UI_TITLE = os.environ.get("UI_TITLE") or "Leading AI"
+UI_TITLE = os.environ.get("UI_TITLE")
 UI_LOGO = os.environ.get("UI_LOGO")
 UI_CHAT_LOGO = os.environ.get("UI_CHAT_LOGO")
 UI_CHAT_TITLE = os.environ.get("UI_CHAT_TITLE") or "Start chatting"
@@ -44,6 +44,7 @@ UI_TITLE_TEXT_COLOR = os.environ.get("UI_TITLE_TEXT_COLOR") or "whitesmoke"
 UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "#3498db"
 UI_STOP_GENERATING_COLOR = os.environ.get("UI_STOP_GENERATING_COLOR") or "white"
 UI_SHOW_CHAT_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "true").lower() == "true"
+UI_SHOW_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "false").lower() == "true"
 UI_SHOW_UPLOAD_BUTTON = os.environ.get("UI_SHOW_UPLOAD_BUTTON", "false").lower() == "true"
 
 def create_app():
@@ -201,6 +202,7 @@ frontend_settings = {
         "improve_button_color": UI_IMPROVE_BUTTON_COLOR,
         "stop_generating_color": UI_STOP_GENERATING_COLOR,
         "show_chat_logo": UI_SHOW_CHAT_LOGO,
+        "show_logo": UI_SHOW_LOGO,
         "show_upload_button": UI_SHOW_UPLOAD_BUTTON
     }
 }

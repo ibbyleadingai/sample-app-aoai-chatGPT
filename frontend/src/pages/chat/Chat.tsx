@@ -14,6 +14,7 @@ import styles from "./Chat.module.css";
 import leadingai from "../../assets/leadingai.svg"
 import mcgill from "../../assets/mcgill&partners.svg"
 import fea from "../../assets/fea.svg"
+import ambition from "../../assets/ambition.png"
 import { XSSAllowTags } from "../../constants/xssAllowTags";
 
 import {
@@ -45,7 +46,8 @@ type ImageImports = {
   const imageImports: ImageImports = {
     leadingai: leadingai,
     fea: fea,
-    mcgill: mcgill
+    mcgill: mcgill,
+    ambition: ambition
     // Add more entries as needed for other images
   };
 
@@ -637,8 +639,8 @@ const Chat = () => {
     }
 
     const dynamicImage = ui?.chat_logo
-    ? imageImports[ui.chat_logo] || leadingai
-    : leadingai;
+    ? imageImports[ui.chat_logo] || ""
+    : "";
 
     return (
         <div className={styles.container} role="main">
