@@ -53,6 +53,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 setIsLoadingDocument(false)
             } catch (error) {
                 console.error('Error uploading file:', error);
+                setIsLoadingDocument(false)
+                alert("Error uploading file. Please ensure the file type is a PDF.")
             }
         } else {
             console.error('No file selected');
