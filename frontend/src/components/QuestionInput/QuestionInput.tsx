@@ -32,16 +32,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     
     const handleUpload = async (file: File | null) => {
         if (file) {  // Use the file parameter that is passed to the function
-            // console.log("selected file", file);
             setIsLoadingDocument(true)
             const formData = new FormData();
             formData.append('file', file);  // Use the file parameter
     
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(`${key}: ${value}`);
-            // }
             try {
-                const response = await fetch('/upload-pdf', {
+                const response = await fetch('/upload-csv', {
                     method: 'POST',
                     body: formData,  
                 });
@@ -49,12 +45,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     throw new Error(`Server responded with ${response.status}`);
                 }
                 const data = await response.json();
-                setQuestion(data.text);  
+                console.log(data)
                 setIsLoadingDocument(false)
             } catch (error) {
                 console.error('Error uploading file:', error);
                 setIsLoadingDocument(false)
-                alert("Error uploading file. Please ensure the file type is a PDF.")
+                alert("Error uploading file. Please ensure the file type is a CSV.")
             }
         } else {
             console.error('No file selected');
