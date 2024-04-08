@@ -136,11 +136,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       };
 
       useEffect(() => {
-        if (isScraped){
+        if (isScraped || isLoadingDocument){
             setIsScraped(false)
+            setIsLoadingImproved(false)
             sendQuestion()
         }
-      }, [question, isScraped])
+      }, [question, isScraped, isLoadingDocument])
 
     return (
         <Stack horizontal className={styles.questionInputContainer}>
