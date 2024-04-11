@@ -9,7 +9,6 @@ from io import BytesIO
 import httpx
 import pdfplumber
 import aiofiles
-import pandas as pd
 
 from quart import (
     Blueprint,
@@ -208,31 +207,6 @@ frontend_settings = {
         "show_upload_button": UI_SHOW_UPLOAD_BUTTON
     }
 }
-
-@bp.route('/upload-csv', methods=['POST'])
-async def upload_and_process_csv():
-    files = await request.files
-    file = files.get('file', None)
-    
-    if file and allowed_file(file.filename):
-        # Read the CSV file directly into a pandas DataFrame
-        content = file.read()  # Read the file content
-        df = pd.read_csv(BytesIO(content))  # Use BytesIO to read from memory
-        
-        # At this point, `df` contains your CSV data and can be processed right away
-        # For example, let's say you want to count the rows or perform some analysis:
-        row_count = len(df)
-        
-        # Instead of saving, process the data as needed and prepare a response
-        # Here's a placeholder response that returns the row count
-        return jsonify({"message": "CSV data processed successfully", "row_count": row_count}), 200
-    else:
-        return jsonify({"message": "No CSV file provided or file type not allowed"}), 400
-
-def allowed_file(filename):
-    """Check if the file's extension is allowed."""
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'csv'
-
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])

@@ -21,36 +21,47 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [link, setLink] = useState<string>('')
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
-    const [selectedFile, setSelectedFile] = useState<string | undefined>("");
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
-        handleUpload(file);  // Call handleUpload directly with the file
-        setSelectedFile(file?.name)
+        setSelectedFile(file); // Store the File object directly
+    };
+
+    const submitQuestionAndFile = async () => {
+        if (!selectedFile || !question.trim()) {
+            alert("Please select a file and enter a question.");
+            return;
+        }
+        // Now call handleUpload with both the file and the question
+        await handleUpload(selectedFile, question);
     };
     
-    const handleUpload = async (file: File | null) => {
-        if (file) {  // Use the file parameter that is passed to the function
+    const handleUpload = async (file: File | null, question: string) => {
+        if (file) {
             setIsLoadingDocument(true)
             const formData = new FormData();
-            formData.append('file', file);  // Use the file parameter
+            formData.append('file', file);  // Append the File object
+            formData.append('question', question);  // Append the question text
     
             try {
-                const response = await fetch('/upload-csv', {
+                const response = await fetch('/conversation', {  // Make sure this endpoint matches your backend
                     method: 'POST',
-                    body: formData,  
+                    body: formData,  // Send the formData object
                 });
                 if (!response.ok) {
                     throw new Error(`Server responded with ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data)
+                console.log(data);
                 setIsLoadingDocument(false)
+                // Process the response data here
+                // E.g., display the AI's response to the user
             } catch (error) {
-                console.error('Error uploading file:', error);
+                console.error('Error uploading file and sending question:', error);
                 setIsLoadingDocument(false)
-                alert("Error uploading file. Please ensure the file type is a CSV.")
+                alert("Error uploading file or sending question. Please try again.")
             }
         } else {
             console.error('No file selected');
@@ -154,8 +165,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 role="button" 
                 tabIndex={0}
                 aria-label="Ask question button"
-                onClick={sendQuestion}
-                onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
+                onClick={submitQuestionAndFile}
+                onKeyDown={e => e.key === "Enter" || e.key === " " ? submitQuestionAndFile() : null}
             >
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
@@ -188,20 +199,18 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer}>
                     <label htmlFor="upload-btn" className={styles.customUploadButton}>
-                        {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
+                        {isLoadingDocument ? "Loading document..." : "Choose CSV File"}
                     </label>
                     <input
-                    id="upload-btn"
-                    className={styles.hiddenUploadInput}
-                    type="file"
-                    accept="application/pdf"
-                    onChange={handleFileChange}
+                        id="upload-btn"
+                        className={styles.hiddenUploadInput}
+                        type="file"
+                        accept=".csv"
+                        onChange={handleFileChange}
                     />
-                    {selectedFile && <div style={{ 
-                        color: '#fff', 
-                        fontSize: '14px',
-                        // Add more styles as needed
-                    }}>{selectedFile}</div>}
+                    {selectedFile && <div style={{ color: '#fff', fontSize: '14px' }}>
+                    {selectedFile.name} {/* Access the name property of the File object */}
+                    </div>}
                 </div>
             </div>}
         </Stack>
