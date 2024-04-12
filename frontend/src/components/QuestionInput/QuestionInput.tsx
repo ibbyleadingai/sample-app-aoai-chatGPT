@@ -23,6 +23,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [isScraped, setIsScraped] = useState<boolean>(false)
     const [selectedFile, setSelectedFile] = useState<string | undefined>("");
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
+    const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
@@ -50,6 +51,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 }
                 const data = await response.json();
                 setQuestion(data.text);  
+                setTextFromDocument(true);
                 setIsLoadingDocument(false)
             } catch (error) {
                 console.error('Error uploading file:', error);
@@ -136,12 +138,18 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       };
 
       useEffect(() => {
-        if (isScraped || isLoadingDocument){
+        if (isScraped){
             setIsScraped(false)
-            setIsLoadingImproved(false)
             sendQuestion()
         }
-      }, [question, isScraped, isLoadingDocument])
+      }, [question, isScraped])
+
+      useEffect(() => {
+        if (question && textFromDocument) {
+            sendQuestion();
+            setTextFromDocument(false); // Reset the flag after sending
+        }
+    }, [question, textFromDocument]);
 
     return (
         <Stack horizontal className={styles.questionInputContainer}>
