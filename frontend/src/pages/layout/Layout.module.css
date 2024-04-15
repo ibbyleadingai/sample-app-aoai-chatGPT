@@ -116,9 +116,9 @@
 }
 
 @media (max-width: 480px) {
-    .headerTitleContainer {
+    /* .headerTitleContainer {
         margin-left: 4px;
-    }
+    } */
 
     .headerIcon {
         margin-left: 26px;
