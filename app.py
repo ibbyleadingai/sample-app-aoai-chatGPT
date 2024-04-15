@@ -43,6 +43,7 @@ UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "#3498db"
 UI_STOP_GENERATING_COLOR = os.environ.get("UI_STOP_GENERATING_COLOR") or "white"
 UI_CONTACT_US_BUTTON_LINK = os.environ.get("UI_CONTACT_US_BUTTON_LINK")
 UI_CONTACT_US_BUTTON_COLOR = os.environ.get("UI_CONTACT_US_BUTTON_COLOR") or "black"
+UI_SHOW_LOGO = os.environ.get("UI_SHOW_LOGO", "false").lower() == "true"
 
 def create_app():
     app = Quart(__name__)
@@ -199,7 +200,8 @@ frontend_settings = {
         "improve_button_color": UI_IMPROVE_BUTTON_COLOR,
         "stop_generating_color": UI_STOP_GENERATING_COLOR,
         "contact_us_button_link": UI_CONTACT_US_BUTTON_LINK,
-        "contact_us_button_color": UI_CONTACT_US_BUTTON_COLOR
+        "contact_us_button_color": UI_CONTACT_US_BUTTON_COLOR,
+        "show_logo": UI_SHOW_LOGO
     }
 }
 

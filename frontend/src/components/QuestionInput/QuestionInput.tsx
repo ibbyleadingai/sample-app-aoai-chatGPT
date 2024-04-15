@@ -24,7 +24,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [buttonText, setButtonText] = useState('Improve Prompt');
 
     const updateButtonText = () => {
-        if (window.innerWidth <= 350) {
+        if (window.innerWidth <= 450) {
             setButtonText('Improve');
         } else {
             setButtonText('Improve Prompt');
@@ -170,8 +170,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>}
-
-            <a className={styles.contactUsButton} href={`mailto:${ui?.contact_us_button_link}`} style={{backgroundColor: ui?.contact_us_button_color}}>Contact us</a>
+            
+            <div className={styles.contactUsButtonContainer}>
+                <a className={styles.contactUsButton} href={`mailto:${ui?.contact_us_button_link}`} style={{backgroundColor: ui?.contact_us_button_color}}>Contact us</a>
+            </div>
         </Stack>
     );
 };
