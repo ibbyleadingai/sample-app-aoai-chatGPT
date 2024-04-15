@@ -21,6 +21,26 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [link, setLink] = useState<string>('')
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
+    const [buttonText, setButtonText] = useState('Improve Prompt');
+
+    const updateButtonText = () => {
+        if (window.innerWidth <= 350) {
+            setButtonText('Improve');
+        } else {
+            setButtonText('Improve Prompt');
+        }
+    }
+
+    useEffect(() => {
+        // Initial call to set the button text on component mount
+        updateButtonText();
+        // Event listener for window resize
+        window.addEventListener('resize', updateButtonText);
+        // Cleanup the event listener on component unmount
+        return () => {
+          window.removeEventListener('resize', updateButtonText);
+        };
+      }, []); // Empty dependency array ensures the effect runs only once on mount
 
     const handleImprovePrompt = async () => {
         try {
@@ -136,7 +156,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         handleImprovePrompt()
                     }}
                     disabled={isLoadingImproved}
-                >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}
+                >{isLoadingImproved ? "Loading prompt..." : buttonText}
                 </button>
             </div>
             <div className={styles.questionInputBottomBorder} />
