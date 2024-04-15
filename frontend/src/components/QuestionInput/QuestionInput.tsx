@@ -204,7 +204,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         handleImprovePrompt()
                     }}
                     disabled={isLoadingImproved}
-                >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}
+                >{isLoadingImproved ? "Loading prompt..." : buttonText}
                 </button>
             </div>
             <div className={styles.questionInputBottomBorder} />
