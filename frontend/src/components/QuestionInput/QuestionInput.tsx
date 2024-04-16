@@ -178,7 +178,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}
                 </button>
             </div>
-            <div className={styles.questionInputBottomBorder} />
+            {/* <div className={styles.questionInputBottomBorder} /> */}
             {ui?.show_web_scrape && <div className={styles.webScrapeContainer}>
             <input
                 type="text"
