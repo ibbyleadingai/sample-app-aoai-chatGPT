@@ -173,3 +173,9 @@ sup {
     font-size: 10px;
     line-height: 10px;
 }
+
+@media (max-width: 480px) {
+    .answerDisclaimer{
+        width: 120px;
+    }
+}
