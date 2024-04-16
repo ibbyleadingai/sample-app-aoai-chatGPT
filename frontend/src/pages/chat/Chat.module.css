@@ -351,4 +351,8 @@ a {
     .chatEmptyStateTitle {
         line-height: 36px;
     }
+
+    .citationPanel{
+        max-width: 100%;
+    }
 }
