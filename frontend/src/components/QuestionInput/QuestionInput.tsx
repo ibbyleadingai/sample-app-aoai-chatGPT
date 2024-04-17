@@ -143,8 +143,9 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       }, [question, isScraped])
 
     return (
-        <Stack horizontal className={styles.questionInputContainer}>
+        <Stack horizontal className={styles.questionInputContainer} style={{backgroundColor: "transparent"}}>
             <TextField
+                style={{backgroundColor: "transparent"}}
                 className={styles.questionInputTextArea}
                 placeholder={placeholder}
                 multiline
