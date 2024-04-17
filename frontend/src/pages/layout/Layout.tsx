@@ -3,6 +3,7 @@ import styles from "./Layout.module.css";
 import Contoso from "../../assets/Contoso.svg";
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
+import engine from "/workspaces/sample-app-aoai-chatGPT/frontend/src/assets/Engine-Mark.svg"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";
@@ -26,7 +27,8 @@ const Layout = () => {
     
       const imageImports: ImageImports = {
         leadingai: leadingai,
-        ambition: ambition
+        ambition: ambition,
+        engine: engine
         // Add more entries as needed for other images
       };
 
@@ -76,22 +78,14 @@ const Layout = () => {
         return () => window.removeEventListener('resize', handleResize);
       }, []);
 
-      useEffect(() => {
-        // Update the background color of the html element
-        document.documentElement.style.backgroundColor = ui?.header_color || '';
-      }, [ui?.header_color]);
-
-      const dynamicImage = ui?.logo
-    ? imageImports[ui.logo] || ""
-    : "";
 
     return (
         <div className={styles.layout}>
-            <header className={styles.header} style={{backgroundColor: ui?.header_color}} role={"banner"}>
+            <header className={styles.header} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
                         <img
-                            src={dynamicImage}
+                            src={engine}
                             className={styles.headerIcon}
                             aria-hidden="true"
                         />
