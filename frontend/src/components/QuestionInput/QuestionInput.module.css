@@ -20,6 +20,7 @@
     margin-left: 12px;
     margin-right: 12px;
     background: transparent;
+    font-family: monospace;
 }
 
 .questionInputSendButtonContainer {
@@ -73,6 +74,7 @@
     border-radius: 3px;
     border: none;
     font-family: monospace;
+    text-transform: uppercase;
 }
 
 /* .improvePromptButton:hover {

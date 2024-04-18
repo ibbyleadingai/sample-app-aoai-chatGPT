@@ -4,6 +4,7 @@ import Contoso from "../../assets/Contoso.svg";
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
 import engine from "../../assets/Engine-Mark.svg"
+import engineLogo from "../../assets/Engine-Logo.svg"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";
@@ -28,7 +29,8 @@ const Layout = () => {
       const imageImports: ImageImports = {
         leadingai: leadingai,
         ambition: ambition,
-        engine: engine
+        engine: engine,
+        engineLogo: engineLogo
         // Add more entries as needed for other images
       };
 
@@ -85,7 +87,7 @@ const Layout = () => {
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
                         <img
-                            src={engine}
+                            src={engineLogo}
                             className={styles.headerIcon}
                             aria-hidden="true"
                         />
