@@ -3,7 +3,7 @@ import styles from "./Layout.module.css";
 import Contoso from "../../assets/Contoso.svg";
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
-import engine from "/workspaces/sample-app-aoai-chatGPT/frontend/src/assets/Engine-Mark.svg"
+import engine from "../../assets/Engine-Mark.svg"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";

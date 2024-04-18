@@ -143,9 +143,19 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       }, [question, isScraped])
 
     return (
-        <Stack horizontal className={styles.questionInputContainer} style={{backgroundColor: "transparent"}}>
+        <Stack horizontal className={styles.questionInputContainer}>
             <TextField
-                style={{backgroundColor: "transparent"}}
+                styles={{
+                    fieldGroup: {
+                      background: 'transparent',
+                      // Other styles you want to apply to the fieldGroup
+                    },
+                    field: {
+                      height: '10px', // Set height to auto if it's multiline and you want it to shrink
+                      minHeight: '32px', // Or any other value that fits a single line of text
+                      // Other styles you want to apply to the field
+                    }
+                  }}
                 className={styles.questionInputTextArea}
                 placeholder={placeholder}
                 multiline
@@ -170,7 +180,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 <button
                     title="Improve prompt"
                     className={styles.improvePromptButton}
-                    style={{backgroundColor: ui?.improve_button_color}}
                     onClick={(e) => {
                         e.stopPropagation();
                         handleImprovePrompt()

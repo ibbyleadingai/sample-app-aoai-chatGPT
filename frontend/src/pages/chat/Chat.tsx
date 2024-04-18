@@ -653,29 +653,32 @@ const Chat = () => {
     return (
         <div className={styles.container} role="main">
             {showAuthMessage ? (
-                <Stack className={styles.chatEmptyState}>
+                <Stack className={styles.chatEmptyStateAuth}>
                     <ShieldLockRegular className={styles.chatIcon} style={{ color: 'darkorange', height: "200px", width: "200px" }} />
-                    <h1 className={styles.chatEmptyStateTitle}>Authentication Not Configured</h1>
-                    <h2 className={styles.chatEmptyStateSubtitle}>
+                    <h1 className={styles.chatEmptyStateTitleAuth}>Authentication Not Configured</h1>
+                    <h2 className={styles.chatEmptyStateSubtitleAuth}>
                         This app does not have authentication configured. Please add an identity provider by finding your app in the <a href="https://portal.azure.com/" target="_blank">Azure Portal</a> 
                         and following <a href="https://learn.microsoft.com/en-us/azure/app-service/scenario-secure-app-authentication-app-service#3-configure-authentication-and-authorization" target="_blank">these instructions</a>.
                     </h2>
-                    <h2 className={styles.chatEmptyStateSubtitle} style={{ fontSize: "20px" }}><strong>Authentication configuration takes a few minutes to apply. </strong></h2>
-                    <h2 className={styles.chatEmptyStateSubtitle} style={{ fontSize: "20px" }}><strong>If you deployed in the last 10 minutes, please wait and reload the page after 10 minutes.</strong></h2>
+                    <h2 className={styles.chatEmptyStateSubtitleAuth} style={{ fontSize: "20px" }}><strong>Authentication configuration takes a few minutes to apply. </strong></h2>
+                    <h2 className={styles.chatEmptyStateSubtitleAuth} style={{ fontSize: "20px" }}><strong>If you deployed in the last 10 minutes, please wait and reload the page after 10 minutes.</strong></h2>
                 </Stack>
             ) : (
                 <Stack horizontal className={styles.chatRoot}>
                     <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color}}>
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
-                                {ui?.show_chat_logo && 
+                                {/* {ui?.show_chat_logo && 
                                 <img
                                     src={dynamicImage}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
-                                />}
-                                <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>{ui?.chat_title}</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>{ui?.chat_description}</h2>
+                                />} */}
+                                <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>AI Powered MAT Assist</h1>
+                                <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>
+                                    Lorem ipsum dolor sit amet, consect adipiscing elit, sed diam nonummy nibh 
+                                    euismod tincidunt ut laoreet dolore 
+                                    magna aliquam erat volutp</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px" }} role="log">

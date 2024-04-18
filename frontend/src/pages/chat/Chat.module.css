@@ -2,7 +2,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px
+    gap: 20px;
+    font-family: monospace;
 }
 
 .chatRoot {
@@ -31,15 +32,24 @@
 .chatEmptyState {
     flex-grow: 1;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.chatEmptyStateAuth{
+    flex-grow: 1;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.chatEmptyStateTitle {
+.chatEmptyStateTitleAuth {
     font-style: normal;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 50px;
     display: flex;
     align-items: flex-end;
     text-align: center;
@@ -50,7 +60,19 @@
 
 }
 
-.chatEmptyStateSubtitle {
+.chatEmptyStateTitle {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    display: flex;
+    align-items: flex-end;
+    text-align: left;
+    line-height: 55px;
+    color: #f5f5f5;
+    width: 30%;
+}
+
+.chatEmptyStateSubtitleAuth {
     margin-top: 20px;
     font-style: normal;
     font-weight: 400;
@@ -61,6 +83,20 @@
     letter-spacing: -0.01em;
     color: #f5f5f5;
     padding: 15px;
+}
+
+.chatEmptyStateSubtitle {
+    margin-top: 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    align-items: flex-end;
+    text-align: left;
+    letter-spacing: -0.01em;
+    color: #f5f5f5;
+    padding: 15px;
+    width: 45%;
 }
 
 .chatIcon {
