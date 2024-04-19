@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
-import { SendRegular } from "@fluentui/react-icons";
+import { SendRegular, Whiteboard20Filled } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
 import styles from "./QuestionInput.module.css";
 import { handleImprovePromptApi } from "../../api";
@@ -153,6 +153,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     field: {
                       height: '10px', // Set height to auto if it's multiline and you want it to shrink
                       minHeight: '32px', // Or any other value that fits a single line of text
+                      color: 'white'
                       // Other styles you want to apply to the field
                     }
                   }}

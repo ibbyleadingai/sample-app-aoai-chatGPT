@@ -674,11 +674,8 @@ const Chat = () => {
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />} */}
-                                <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>AI Powered MAT Assist</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>
-                                    Lorem ipsum dolor sit amet, consect adipiscing elit, sed diam nonummy nibh 
-                                    euismod tincidunt ut laoreet dolore 
-                                    magna aliquam erat volutp</h2>
+                                <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>{ui?.chat_title}</h1>
+                                <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>{ui?.chat_description}</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px" }} role="log">
@@ -753,7 +750,7 @@ const Chat = () => {
                                         },
                                         root: {
                                             color: '#FFFFFF',
-                                            background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #0F6CBD 33.63%, #2D87C3 70.31%, #8DDDD8 100%)"
+                                            background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #2d2d2d 33.63%, #4aae7c 100%)"
                                         },
                                         rootDisabled: {
                                             background: "#F0F0F0"
@@ -765,7 +762,7 @@ const Chat = () => {
                                     disabled={disabledButton()}
                                     aria-label="start a new chat button"
                                 />}
-                                <CommandBarButton
+                                {/* <CommandBarButton
                                     role="button"
                                     styles={{
                                         icon: {
@@ -787,7 +784,7 @@ const Chat = () => {
                                     onClick={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? clearChat : newChat}
                                     disabled={disabledButton()}
                                     aria-label="clear chat button"
-                                />
+                                /> */}
                                 <Dialog
                                     hidden={hideErrorDialog}
                                     onDismiss={handleErrorDialogClose}
