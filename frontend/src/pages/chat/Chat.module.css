@@ -26,6 +26,7 @@
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
     background-color: #2effab;
+    max-height: calc(100vh - 60px);
 }
 
 .chatEmptyState {
