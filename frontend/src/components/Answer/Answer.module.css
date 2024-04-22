@@ -74,7 +74,7 @@
     font-size: 12px;
     line-height: 16px;
 
-    color: #115EA3;
+    color: black;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -109,7 +109,6 @@
     line-height: 14px;
     text-align: center;
     color: #424242;
-    cursor: pointer;
 }
 
 .citation:hover {
