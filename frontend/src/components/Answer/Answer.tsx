@@ -268,9 +268,9 @@ export const Answer = ({
                                 <span 
                                     title={createCitationFilepath(citation, ++idx)} 
                                     tabIndex={0} 
-                                    role="link" 
+                                    // role="link" 
                                     key={idx} 
-                                    onClick={() => onCitationClicked(citation)} 
+                                    // onClick={() => onCitationClicked(citation)} 
                                     onKeyDown={e => e.key === "Enter" || e.key === " " ? onCitationClicked(citation) : null}
                                     className={styles.citationContainer}
                                     aria-label={createCitationFilepath(citation, idx)}

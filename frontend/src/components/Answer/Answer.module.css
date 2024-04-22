@@ -84,10 +84,10 @@
     border-radius: 4px;
 }
 
-.citationContainer:hover {
+/* .citationContainer:hover {
     text-decoration: underline;
     cursor: pointer;
-}
+} */
 
 .citation {
     box-sizing: border-box;

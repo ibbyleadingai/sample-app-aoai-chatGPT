@@ -330,22 +330,22 @@ a {
 }
 
 @media (max-width: 480px) {
-    .chatInput {
+    /* .chatInput {
         width: 90%;
         max-width: 90%;
-    }
+    } */
 
-    .newChatIcon {
+    /* .newChatIcon {
         left: 0px;
-    }
+    } */
 
-    .clearChatBroom {
+    /* .clearChatBroom {
         left: 0px;
-    }
+    } */
 
-    .clearChatBroomNoCosmos {
+    /* .clearChatBroomNoCosmos {
         left: 0px;
-    }
+    } */
 
     .chatEmptyStateTitle {
         line-height: 36px;
@@ -353,5 +353,23 @@ a {
 
     .citationPanel {
         max-width: 100%;
+    }
+
+    .chatInput {
+        width: 95%;
+    }
+    .chatMessageUserMessage {
+        width: auto;
+        max-width: 100%;
+    }
+
+    .citationPanelContent {
+        width:20%;
+    } 
+}
+
+@media (max-width: 500px) {
+    .clearChatBroom, .clearChatBroomNoCosmos, .newChatIcon {
+        display: none;
     }
 }

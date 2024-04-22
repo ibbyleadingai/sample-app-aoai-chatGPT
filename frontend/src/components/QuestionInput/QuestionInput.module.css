@@ -135,8 +135,10 @@
     font-size: 14px;
   }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
     .questionInputContainer {
-        left: 16.5%;
+        left: 0.5%;
+        top: 40%;
     }
+
 }
