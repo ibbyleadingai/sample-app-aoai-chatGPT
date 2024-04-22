@@ -15,7 +15,7 @@ const Layout = () => {
     const [isSharePanelOpen, setIsSharePanelOpen] = useState<boolean>(false);
     const [copyClicked, setCopyClicked] = useState<boolean>(false);
     const [copyText, setCopyText] = useState<string>("Copy URL");
-    const [shareLabel, setShareLabel] = useState<string | undefined>("Share");
+    const [shareLabel, setShareLabel] = useState<string | undefined>("Policy Assistant");
     const [hideHistoryLabel, setHideHistoryLabel] = useState<string>("Hide chat history");
     const [showHistoryLabel, setShowHistoryLabel] = useState<string>("Show chat history");
     const appStateContext = useContext(AppStateContext)
@@ -33,7 +33,8 @@ const Layout = () => {
       };
 
     const handleShareClick = () => {
-        setIsSharePanelOpen(true);
+        // setIsSharePanelOpen(true);
+        window.open('https://ambitionaiassistant.azurewebsites.net/', '_blank', 'noopener,noreferrer');
     };
 
     const handleSharePanelDismiss = () => {
@@ -66,7 +67,7 @@ const Layout = () => {
             setHideHistoryLabel("Hide history")
             setShowHistoryLabel("Show history")
           } else {
-            setShareLabel("Share")
+            setShareLabel("Policy Assistant")
             setHideHistoryLabel("Hide chat history")
             setShowHistoryLabel("Show chat history")
           }
