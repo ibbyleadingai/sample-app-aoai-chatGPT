@@ -64,8 +64,7 @@
 
 .chatIcon {
     height: 62px;
-    width: 150px;
-    /* border-radius: 30%; */
+    width: 62px;
 }
 
 .chatMessageStream {
@@ -132,6 +131,7 @@
     word-wrap: break-word;
     gap: 12px;
     align-items: center;
+    color: whitesmoke;
 }
 
 .chatInput {
@@ -216,7 +216,7 @@
 .stopGeneratingIcon {
     width: 14px;
     height: 14px;
-    color: #424242;
+    color: whitesmoke;
 }
 
 .stopGeneratingText {
@@ -232,6 +232,7 @@
     flex: none;
     order: 0;
     flex-grow: 0;
+    cursor: pointer;
 }
 
 .citationPanel {
@@ -288,10 +289,10 @@
     margin-bottom: 12px;
 } 
 
-.citationPanelTitle:hover {
+/* .citationPanelTitle:hover {
     text-decoration: underline;
     cursor: pointer;
-}
+} */
 
 .citationPanelContent {
     font-style: normal;
@@ -315,7 +316,7 @@ a {
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
-    color: #115EA3;
+    color: #323130;
     flex-direction: row;
     align-items: center;
     padding: 4px 6px;
@@ -329,29 +330,30 @@ a {
     cursor: pointer;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
     .chatInput {
-        width: 90%;
-        max-width: 90%;
+        width: 95%;
     }
-
-    .newChatIcon {
-        left: 0px;
-    }
-
-    .clearChatBroom {
-        left: 0px;
-    }
-
-    .clearChatBroomNoCosmos {
-        left: 0px;
-    }
-
-    .chatEmptyStateTitle {
-        line-height: 36px;
-    }
-
-    .citationPanel {
+    .chatMessageUserMessage {
+        width: auto;
         max-width: 100%;
     }
-}
+    .citationPanel {
+        max-width: 80%;
+    }
+    .citationPanelContent {
+        width:20%;
+    } 
+    .clearChatBroom {
+        display: none;
+    }
+    
+    .clearChatBroomNoCosmos {
+        display: none;
+    }
+    
+    .newChatIcon {
+        display: none;
+    }
+  
+  }

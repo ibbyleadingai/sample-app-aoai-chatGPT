@@ -19,6 +19,7 @@
     box-sizing: border-box;
     border-radius: 5px;
     display: flex;
+    color: black;
 }
 
 /* .itemCell:hover {
@@ -39,7 +40,8 @@
 }
 
 .itemButton:hover {
-    background: #23252c;
+    background-color: #23252c;
+    color: whitesmoke;
 }
 
 .chatGroup {
@@ -71,11 +73,4 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: whitesmoke;
-}
-
-@media (max-width: 480px) {
-    .container {
-        width: 100%; 
-    }
 }

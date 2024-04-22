@@ -261,16 +261,16 @@ export const Answer = ({
                         <span className={styles.answerDisclaimer}>AI-generated content may be incorrect</span>
                     </Stack.Item>
                 </Stack>
-                {chevronIsExpanded &&
-                    <div className={styles.citationWrapper} >
+                {chevronIsExpanded && 
+                    <div style={{ marginTop: 8, display: "flex", flexFlow: "wrap column", maxHeight: "300px", gap: "4px"}}>
                         {parsedAnswer.citations.map((citation, idx) => {
                             return (
                                 <span 
                                     title={createCitationFilepath(citation, ++idx)} 
                                     tabIndex={0} 
-                                    role="link" 
+                                    // role="link" //This and the onclick for showing citations
                                     key={idx} 
-                                    onClick={() => onCitationClicked(citation)} 
+                                    // onClick={() => onCitationClicked(citation)} 
                                     onKeyDown={e => e.key === "Enter" || e.key === " " ? onCitationClicked(citation) : null}
                                     className={styles.citationContainer}
                                     aria-label={createCitationFilepath(citation, idx)}

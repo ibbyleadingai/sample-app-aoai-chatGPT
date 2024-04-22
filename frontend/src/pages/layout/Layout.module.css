@@ -5,7 +5,7 @@
 }
 
 .header {
-    background-color: #1a1b21;
+    background-color: #1A1B21;
 }
 
 .headerContainer {
@@ -17,7 +17,7 @@
 .headerTitleContainer {
     display: flex;
     align-items: center;
-    margin-left: 14px;
+    margin-left: 18px;
     text-decoration: none;
 }
 
@@ -28,8 +28,7 @@
     line-height: 28px;
     display: flex;
     align-items: flex-end;
-    color: #f5f5f5;
-
+    color: whitesmoke;
 }
 
 .headerIcon {
@@ -103,12 +102,12 @@
     color: #242424;
 }
 
-@media (max-width: 480px) {
-    .headerTitleContainer {
-        margin-left: 4px;
+@media (max-width: 500px) {
+    .headerTitle {
+        padding: 0px 5px 0px 5px;
+        font-size: 16px;
     }
-
-    .headerIcon {
-        margin-left: 26px;
+    .buttonContainer{
+        display: none;
     }
 }

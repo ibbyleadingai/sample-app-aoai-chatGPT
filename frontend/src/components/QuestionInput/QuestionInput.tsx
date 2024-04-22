@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular } from "@fluentui/react-icons";
 import Send from "../../assets/Send.svg";
+import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import { handleImprovePromptApi } from "../../api";
 import { AppStateContext } from "../../state/AppProvider";
@@ -163,6 +164,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
             />
+
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
                 tabIndex={0}
@@ -170,10 +172,11 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
             >
+
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
                     :
-                    <img src={Send} className={styles.questionInputSendButton}/>
+                    <img title="Send prompt" src={Send} className={styles.questionInputSendButton}/>
                 }
                 <button
                     title="Improve prompt"
