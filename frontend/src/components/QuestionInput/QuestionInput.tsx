@@ -23,6 +23,26 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [isScraped, setIsScraped] = useState<boolean>(false)
     const [selectedFile, setSelectedFile] = useState<string | undefined>("");
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
+    const [buttonText, setButtonText] = useState('Improve Prompt');
+
+    const updateButtonText = () => {
+        if (window.innerWidth <= 450) {
+            setButtonText('Improve');
+        } else {
+            setButtonText('Improve Prompt');
+        }
+    }
+
+    useEffect(() => {
+        // Initial call to set the button text on component mount
+        updateButtonText();
+        // Event listener for window resize
+        window.addEventListener('resize', updateButtonText);
+        // Cleanup the event listener on component unmount
+        return () => {
+          window.removeEventListener('resize', updateButtonText);
+        };
+      }, []); // Empty dependency array ensures the effect runs only once on mount
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
@@ -153,7 +173,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     field: {
                       height: '10px', // Set height to auto if it's multiline and you want it to shrink
                       minHeight: '32px', // Or any other value that fits a single line of text
-                      color: 'white'
+                      color: 'white',
                       // Other styles you want to apply to the field
                     }
                   }}
@@ -186,7 +206,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         handleImprovePrompt()
                     }}
                     disabled={isLoadingImproved}
-                >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}
+                >{isLoadingImproved ? "Loading prompt..." : buttonText}
                 </button>
             </div>
             {/* <div className={styles.questionInputBottomBorder} /> */}

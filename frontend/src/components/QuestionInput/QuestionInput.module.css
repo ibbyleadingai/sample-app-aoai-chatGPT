@@ -24,7 +24,7 @@
 }
 
 .questionInputSendButtonContainer {
-    position: absolute;
+    /* position: absolute; */
     right: 20px;
     bottom: 5px;
     display: flex;
@@ -34,6 +34,7 @@
     top: 0px;
     height: 100%;
     justify-content: center;
+    margin-right: 20px
 }
 
 .questionInputSendButton {
