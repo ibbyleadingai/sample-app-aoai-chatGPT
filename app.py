@@ -49,6 +49,7 @@ UI_CHAT_TITLE = os.environ.get("UI_CHAT_TITLE") or "Start chatting"
 UI_CHAT_DESCRIPTION = os.environ.get("UI_CHAT_DESCRIPTION") or "How can I help you today?"
 UI_FAVICON = os.environ.get("UI_FAVICON") or "/favicon.ico"
 UI_SHOW_SHARE_BUTTON = os.environ.get("UI_SHOW_SHARE_BUTTON", "false").lower() == "true"
+UI_SHOW_HISTORY_BUTTON = os.environ.get("UI_SHOW_HISTORY_BUTTON", "true").lower() == "true"
 UI_SHOW_WEB_SCRAPE = os.environ.get("UI_SHOW_WEB_SCRAPE", "false").lower() == "true"
 UI_HEADER_COLOR = os.environ.get("UI_HEADER_COLOR") or "#1a1b21"
 UI_CHAT_COLOR = os.environ.get("UI_CHAT_COLOR") or "#23252c"
@@ -284,7 +285,8 @@ frontend_settings = {
         "stop_generating_color": UI_STOP_GENERATING_COLOR,
         "show_chat_logo": UI_SHOW_CHAT_LOGO,
         "show_logo": UI_SHOW_LOGO,
-        "show_upload_button": UI_SHOW_UPLOAD_BUTTON
+        "show_upload_button": UI_SHOW_UPLOAD_BUTTON,
+        "show_history_button": UI_SHOW_HISTORY_BUTTON
     }
 }
 

@@ -119,6 +119,7 @@ export type UI = {
     show_chat_logo?: boolean;
     show_logo?: boolean;
     show_upload_button?: boolean;
+    show_history_button?: boolean;
 }
 
 export type FrontendSettings = {
