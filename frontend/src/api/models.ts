@@ -119,6 +119,7 @@ export type UI = {
     contact_us_button_link?: string;
     contact_us_button_color?: string;
     show_logo?: boolean;
+    show_chat_logo?: boolean;
 }
 
 export type FrontendSettings = {
