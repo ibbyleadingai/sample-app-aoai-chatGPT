@@ -15,6 +15,7 @@ import leadingai from "../../assets/leadingai.svg"
 import fea from "../../assets/fea.svg"
 import ambition from "../../assets/ambition.png"
 import airplane from "../../assets/airplane.png"
+import coram from "../../assets/coram.gif"
 import { XSSAllowTags } from "../../constants/xssAllowTags";
 
 import {
@@ -47,7 +48,8 @@ type ImageImports = {
     leadingai: leadingai,
     fea: fea,
     ambition: ambition,
-    airplane: airplane
+    airplane: airplane,
+    coram: coram
     // Add more entries as needed for other images
   };
 
