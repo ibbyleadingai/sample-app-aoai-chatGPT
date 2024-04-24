@@ -12,6 +12,7 @@ import DOMPurify from 'dompurify';
 import styles from "./Chat.module.css";
 // import Contoso from "../../assets/Contoso.svg";
 import leadingai from "../../assets/leadingai.svg"
+import morley from "../../assets/morley.png"
 import fea from "../../assets/fea.svg"
 import ambition from "../../assets/ambition.png"
 import airplane from "../../assets/airplane.png"
@@ -49,7 +50,8 @@ type ImageImports = {
     fea: fea,
     ambition: ambition,
     airplane: airplane,
-    coram: coram
+    coram: coram,
+    morley: morley
     // Add more entries as needed for other images
   };
 

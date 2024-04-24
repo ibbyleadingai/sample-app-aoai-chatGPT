@@ -3,6 +3,7 @@ import styles from "./Layout.module.css";
 import Contoso from "../../assets/Contoso.svg";
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
+import morley from "../../assets/morley.png"
 import coram from "../../assets/coram.gif"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
@@ -28,7 +29,8 @@ const Layout = () => {
       const imageImports: ImageImports = {
         leadingai: leadingai,
         ambition: ambition,
-        coram: coram
+        coram: coram,
+        morley: morley
         // Add more entries as needed for other images
       };
 
@@ -98,7 +100,7 @@ const Layout = () => {
                             aria-hidden="true"
                         />}
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>
+                            <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title} <i>Beta</i></h1>
                         </Link>
                     </Stack>
                         <Stack horizontal tokens={{ childrenGap: 4 }}>
