@@ -109,6 +109,7 @@ export type UI = {
     logo?: string;
     chat_logo?: string;
     show_share_button?: boolean;
+    show_history_button?: boolean;
     show_web_scrape?: boolean;
     header_color?: string;
     chat_color?: string;
