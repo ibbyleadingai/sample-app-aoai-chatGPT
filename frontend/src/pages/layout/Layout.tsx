@@ -79,7 +79,7 @@ const Layout = () => {
                             aria-hidden="true"
                         /> */}
                         <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>EcoPlanAdvisor</h1>
+                            <h1 className={styles.headerTitle}>EcoPlanAdviser</h1>
                         </Link>
                     </Stack>
                     <Stack className={styles.buttonContainer} horizontal tokens={{ childrenGap: 4 }}>
