@@ -646,9 +646,9 @@ const Chat = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
 
-    const dynamicImage = ui?.chat_logo
-    ? imageImports[ui.chat_logo] || ""
-    : "";
+    // const dynamicImage = ui?.chat_logo
+    // ? imageImports[ui.chat_logo] || ""
+    // : "";
 
     return (
         <div className={styles.container} role="main">
