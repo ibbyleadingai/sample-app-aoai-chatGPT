@@ -55,11 +55,13 @@ UI_HEADER_COLOR = os.environ.get("UI_HEADER_COLOR") or "#1a1b21"
 UI_CHAT_COLOR = os.environ.get("UI_CHAT_COLOR") or "#23252c"
 UI_CHAT_TEXT_COLOR = os.environ.get("UI_CHAT_TEXT_COLOR") or "whitesmoke"
 UI_TITLE_TEXT_COLOR = os.environ.get("UI_TITLE_TEXT_COLOR") or "whitesmoke"
-UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "#3498db"
+UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "none"
+UI_IMPROVE_BUTTON_TEXT_COLOR = os.environ.get("UUI_IMPROVE_BUTTON_TEXT_COLOR") or "white"
 UI_STOP_GENERATING_COLOR = os.environ.get("UI_STOP_GENERATING_COLOR") or "white"
 UI_SHOW_CHAT_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "true").lower() == "true"
 UI_SHOW_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "false").lower() == "true"
 UI_SHOW_UPLOAD_BUTTON = os.environ.get("UI_SHOW_UPLOAD_BUTTON", "false").lower() == "true"
+UI_TEXT_INPUT_BORDER_COLOR = os.environ.get("UI_TEXT_INPUT_BORDER_COLOR") or "#28fbaa"
 
 def create_app():
     app = Quart(__name__)
@@ -286,7 +288,8 @@ frontend_settings = {
         "show_chat_logo": UI_SHOW_CHAT_LOGO,
         "show_logo": UI_SHOW_LOGO,
         "show_upload_button": UI_SHOW_UPLOAD_BUTTON,
-        "show_history_button": UI_SHOW_HISTORY_BUTTON
+        "show_history_button": UI_SHOW_HISTORY_BUTTON,
+        "improve_button_text_color": UI_IMPROVE_BUTTON_TEXT_COLOR
     }
 }
 

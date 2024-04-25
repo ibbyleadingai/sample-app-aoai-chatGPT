@@ -80,17 +80,21 @@ const Layout = () => {
         return () => window.removeEventListener('resize', handleResize);
       }, []);
 
+      const dynamicImage = ui?.logo
+    ? imageImports[ui.logo] || ""
+    : "";
+
 
     return (
         <div className={styles.layout}>
             <header className={styles.header} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
-                        <img
-                            src={engineLogo}
+                        {ui?.show_logo && <img
+                            src={dynamicImage}
                             className={styles.headerIcon}
                             aria-hidden="true"
-                        />
+                        />}
                         <Link to="/" className={styles.headerTitleContainer}>
                             <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>
                         </Link>

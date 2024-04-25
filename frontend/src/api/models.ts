@@ -120,6 +120,8 @@ export type UI = {
     show_logo?: boolean;
     show_upload_button?: boolean;
     show_history_button?: boolean;
+    text_input_border_color?: string;
+    improve_button_text_color?: string
 }
 
 export type FrontendSettings = {

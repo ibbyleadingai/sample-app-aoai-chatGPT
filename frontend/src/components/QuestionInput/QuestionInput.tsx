@@ -163,7 +163,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       }, [question, isScraped])
 
     return (
-        <Stack horizontal className={styles.questionInputContainer}>
+        <Stack horizontal className={styles.questionInputContainer} style={{border: `2px solid ${ui?.text_input_border_color}`}}>
             <TextField
                 styles={{
                     fieldGroup: {
@@ -201,6 +201,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 <button
                     title="Improve prompt"
                     className={styles.improvePromptButton}
+                    style={{ color: ui?.improve_button_text_color, backgroundColor: ui?.improve_button_color}}
                     onClick={(e) => {
                         e.stopPropagation();
                         handleImprovePrompt()
