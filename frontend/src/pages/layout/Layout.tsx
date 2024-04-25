@@ -80,8 +80,9 @@ const Layout = () => {
         return () => window.removeEventListener('resize', handleResize);
       }, []);
 
-      const dynamicImage = ui?.logo
-    ? imageImports[ui.logo] || ""
+    
+    const dynamicImage = ui?.chat_logo
+    ? imageImports[ui.chat_logo] || ""
     : "";
 
 

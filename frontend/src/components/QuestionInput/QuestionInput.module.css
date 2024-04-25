@@ -70,7 +70,7 @@
 
 .improvePromptButton{
     background: none;
-    color: #ffffff;
+    /* color: #ffffff; */
     cursor: pointer;
     padding: 7px;
     border-radius: 3px;
@@ -87,7 +87,7 @@
 
 .webScrapeContainer{
     position: absolute;
-    top: 106px;
+    top: 66px;
 }
 
 .linkInput{
@@ -117,7 +117,7 @@
 
 .innerdocumentUploadContainer{
     position: absolute;
-    top: 105px;
+    top: 66px;
     left: 0;
     display: flex;
     gap: 5px;
