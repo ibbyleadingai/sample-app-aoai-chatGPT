@@ -59,7 +59,7 @@ UI_IMPROVE_BUTTON_COLOR = os.environ.get("UI_IMPROVE_BUTTON_COLOR") or "none"
 UI_IMPROVE_BUTTON_TEXT_COLOR = os.environ.get("UI_IMPROVE_BUTTON_TEXT_COLOR") or "white"
 UI_STOP_GENERATING_COLOR = os.environ.get("UI_STOP_GENERATING_COLOR") or "white"
 UI_SHOW_CHAT_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "true").lower() == "true"
-UI_SHOW_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "false").lower() == "true"
+UI_SHOW_LOGO = os.environ.get("UI_SHOW_LOGO", "true").lower() == "true"
 UI_SHOW_UPLOAD_BUTTON = os.environ.get("UI_SHOW_UPLOAD_BUTTON", "false").lower() == "true"
 UI_TEXT_INPUT_BORDER_COLOR = os.environ.get("UI_TEXT_INPUT_BORDER_COLOR") or "#28fbaa"
 
