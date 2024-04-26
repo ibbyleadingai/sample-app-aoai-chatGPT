@@ -4,6 +4,7 @@ import Contoso from "../../assets/Contoso.svg";
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
 import engine from "../../assets/Engine-Mark.svg"
+import morley from "../../assets/morley.png"
 import engineLogo from "../../assets/Engine-Logo.svg"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
@@ -30,7 +31,8 @@ const Layout = () => {
         leadingai: leadingai,
         ambition: ambition,
         engine: engine,
-        engineLogo: engineLogo
+        engineLogo: engineLogo,
+        morley: morley
         // Add more entries as needed for other images
       };
 
