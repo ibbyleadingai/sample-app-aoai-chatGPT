@@ -106,7 +106,7 @@ const Layout = () => {
                             <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>
                         </Link>
                     </Stack>
-                        <Stack horizontal tokens={{ childrenGap: 4 }}>
+                        <Stack horizontal tokens={{ childrenGap: 4 }} style={{marginRight: '25px'}}>
                             {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && ui?.show_history_button) &&
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? hideHistoryLabel : showHistoryLabel} />
                             }
