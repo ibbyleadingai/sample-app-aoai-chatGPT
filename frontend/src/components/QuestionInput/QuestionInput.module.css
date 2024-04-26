@@ -76,7 +76,7 @@
     border-radius: 3px;
     border: none;
     font-family: monospace;
-    text-transform: uppercase;
+    text-transform: capitalize;
     width: 140px;
 }
 
