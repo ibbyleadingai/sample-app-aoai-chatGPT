@@ -85,6 +85,11 @@ const Layout = () => {
     ? imageImports[ui.logo] || ""
     : "";
 
+    useEffect(() => {
+        // Update the background color of the html element
+        document.documentElement.style.backgroundColor = ui?.header_color || '';
+      }, [ui?.header_color]);
+
 
     return (
         <div className={styles.layout}>
