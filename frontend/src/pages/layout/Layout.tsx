@@ -35,7 +35,8 @@ const Layout = () => {
       };
 
     const handleShareClick = () => {
-        setIsSharePanelOpen(true);
+        // setIsSharePanelOpen(true);
+        window.open(ui?.share_button_link, '_blank', 'noopener,noreferrer');
     };
 
     const handleSharePanelDismiss = () => {
@@ -109,7 +110,7 @@ const Layout = () => {
                             {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && ui?.show_history_button) &&
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? hideHistoryLabel : showHistoryLabel} />
                             }
-                            {ui?.show_share_button && <ShareButton onClick={handleShareClick} text={shareLabel} />}
+                            {ui?.show_share_button && <ShareButton onClick={handleShareClick} text={ui?.share_button_text} />}
                         </Stack>
                     
                 </Stack>

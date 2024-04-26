@@ -109,6 +109,8 @@ export type UI = {
     logo?: string;
     chat_logo?: string;
     show_share_button?: boolean;
+    share_button_text?: string;
+    share_button_link?: string;
     show_web_scrape?: boolean;
     header_color?: string;
     chat_color?: string;
@@ -121,7 +123,7 @@ export type UI = {
     show_upload_button?: boolean;
     show_history_button?: boolean;
     text_input_border_color?: string;
-    improve_button_text_color?: string
+    improve_button_text_color?: string;
 }
 
 export type FrontendSettings = {
