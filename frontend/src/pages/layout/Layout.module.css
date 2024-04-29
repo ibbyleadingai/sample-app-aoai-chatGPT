@@ -28,8 +28,7 @@
     line-height: 28px;
     display: flex;
     align-items: flex-end;
-    color: #f5f5f5;
-
+    font-family: monospace;
 }
 
 .headerIcon {

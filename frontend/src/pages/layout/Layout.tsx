@@ -3,7 +3,7 @@ import styles from "./Layout.module.css";
 import Contoso from "../../assets/Contoso.svg";
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
-import engine from "../../assets/Engine-Mark.svg"
+import engine from "../../assets/Engine-Mark2.png"
 import engineLogo from "../../assets/Engine-Logo.svg"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
@@ -86,11 +86,11 @@ const Layout = () => {
             <header className={styles.header} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
-                        {/* <img
-                            src={engineLogo}
+                        <img
+                            src={engine}
                             className={styles.headerIcon}
                             aria-hidden="true"
-                        /> */}
+                        />
                         <Link to="/" className={styles.headerTitleContainer}>
                             <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>
                         </Link>
