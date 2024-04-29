@@ -21,6 +21,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [link, setLink] = useState<string>('')
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
+    const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
     const [selectedFile, setSelectedFile] = useState<string | undefined>("");
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState('Improve Prompt');
@@ -69,6 +70,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     throw new Error(`Server responded with ${response.status}`);
                 }
                 const data = await response.json();
+                setTextFromDocument(true);
                 setQuestion(data.text);  
                 setIsLoadingDocument(false)
             } catch (error) {
@@ -161,6 +163,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             sendQuestion()
         }
       }, [question, isScraped])
+
+      useEffect(() => {
+        if (question && textFromDocument) {
+            sendQuestion();
+            setTextFromDocument(false); // Reset the flag after sending
+        }
+    }, [question, textFromDocument]);
+
 
     return (
         <Stack horizontal className={styles.questionInputContainer} style={{border: `2px solid ${ui?.text_input_border_color}`}}>
