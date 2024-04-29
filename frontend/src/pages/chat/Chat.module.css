@@ -397,3 +397,9 @@ a {
         max-width: 100%;
     }
 }
+
+@media (max-width: 350px) {
+    .chatMessageGpt{
+        max-width: 100%;
+    }
+}
