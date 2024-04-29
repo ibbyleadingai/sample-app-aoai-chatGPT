@@ -4,7 +4,7 @@
     left: 6.5%;
     right: 0%;
     bottom: 0%;
-    background: transparent;
+    background: white;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
     border-radius: 30px;
     border: 2px solid #28fbaa;
@@ -70,7 +70,7 @@
 
 .improvePromptButton{
     background: none;
-    color: #ffffff;
+    color: black;
     cursor: pointer;
     padding: 7px;
     border-radius: 3px;
@@ -148,5 +148,19 @@
 @media (max-width: 480px) {
     .questionInputContainer {
         left: 16.5%;
+    }
+
+    .improvePromptButton{
+        width: 60px;
+    }
+
+    .questionInputSendButtonContainer{
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 374px) {
+    .improvePromptButton{
+        display: none;
     }
 }

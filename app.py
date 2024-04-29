@@ -45,8 +45,8 @@ load_dotenv()
 UI_TITLE = os.environ.get("UI_TITLE")
 UI_LOGO = os.environ.get("UI_LOGO")
 UI_CHAT_LOGO = os.environ.get("UI_CHAT_LOGO")
-UI_CHAT_TITLE = os.environ.get("UI_CHAT_TITLE") or "Start chatting"
-UI_CHAT_DESCRIPTION = os.environ.get("UI_CHAT_DESCRIPTION") or "How can I help you today?"
+UI_CHAT_TITLE = os.environ.get("UI_CHAT_TITLE")
+UI_CHAT_DESCRIPTION = os.environ.get("UI_CHAT_DESCRIPTION")
 UI_FAVICON = os.environ.get("UI_FAVICON") or "/favicon.ico"
 UI_SHOW_SHARE_BUTTON = os.environ.get("UI_SHOW_SHARE_BUTTON", "false").lower() == "true"
 UI_SHOW_HISTORY_BUTTON = os.environ.get("UI_SHOW_HISTORY_BUTTON", "true").lower() == "true"
