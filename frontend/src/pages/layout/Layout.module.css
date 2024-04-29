@@ -112,4 +112,8 @@
     .headerIcon {
         margin-left: 26px;
     }
+
+    .headerTitle{
+        font-size: 30px;
+    }
 }
