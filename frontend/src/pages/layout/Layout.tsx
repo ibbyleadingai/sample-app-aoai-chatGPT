@@ -86,11 +86,11 @@ const Layout = () => {
             <header className={styles.header} role={"banner"}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
-                        <img
+                        {/* <img
                             src={engineLogo}
                             className={styles.headerIcon}
                             aria-hidden="true"
-                        />
+                        /> */}
                         <Link to="/" className={styles.headerTitleContainer}>
                             <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>
                         </Link>
