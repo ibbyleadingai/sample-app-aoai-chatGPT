@@ -64,6 +64,7 @@ UI_SHOW_CHAT_LOGO = os.environ.get("UI_SHOW_CHAT_LOGO", "true").lower() == "true
 UI_SHOW_LOGO = os.environ.get("UI_SHOW_LOGO", "true").lower() == "true"
 UI_SHOW_UPLOAD_BUTTON = os.environ.get("UI_SHOW_UPLOAD_BUTTON", "false").lower() == "true"
 UI_TEXT_INPUT_BORDER_COLOR = os.environ.get("UI_TEXT_INPUT_BORDER_COLOR") or "#28fbaa"
+UI_CHAT_FONT_EMPTY_STATE = os.environ.get("UI_CHAT_FONT_EMPTY_STATE") or 'monospace'
 
 def create_app():
     app = Quart(__name__)
@@ -140,7 +141,7 @@ AZURE_OPENAI_SYSTEM_MESSAGE = os.environ.get(
 )
 AZURE_IMPROVE_PROMPT_SYSTEM_MESSAGE = os.environ.get(
     "AZURE_IMPROVE_PROMPT_SYSTEM_MESSAGE",
-    "You are an AI assistant that helps people find information.",
+    "#Role: You are a user prompt improver dedicated to refining and clarifying user input prompts. #Objective: Your primary function is to enhance the prompt's clarity and precision without performing any actions or providing answers based on the content of the prompt.  #Context: Users will enter a prompt and need to have their prompt improved to get better answers. You need to improve the prompt. #Audience: Your primary audience consists of users who want their user prompt improved by making it clear. #Style: Your responses should be strictly limited to providing an improved version of the original prompt, and you are designed to accomplish this without needing additional context or engaging in conversation.  #Other rules: Respond in UK English. Do not perform or execute any actions based on the content of the prompt. Do not engage in any conversation. Just respond with the improved prompt. Nothing else.",
 )
 AZURE_OPENAI_PREVIEW_API_VERSION = os.environ.get(
     "AZURE_OPENAI_PREVIEW_API_VERSION",
@@ -293,7 +294,8 @@ frontend_settings = {
         "show_logo": UI_SHOW_LOGO,
         "show_upload_button": UI_SHOW_UPLOAD_BUTTON,
         "show_history_button": UI_SHOW_HISTORY_BUTTON,
-        "improve_button_text_color": UI_IMPROVE_BUTTON_TEXT_COLOR
+        "improve_button_text_color": UI_IMPROVE_BUTTON_TEXT_COLOR,
+        "chat_font_empty_state": UI_CHAT_FONT_EMPTY_STATE
     }
 }
 

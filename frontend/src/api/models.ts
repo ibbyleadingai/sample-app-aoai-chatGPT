@@ -124,6 +124,7 @@ export type UI = {
     show_history_button?: boolean;
     text_input_border_color?: string;
     improve_button_text_color?: string;
+    chat_font_empty_state?: string;
 }
 
 export type FrontendSettings = {

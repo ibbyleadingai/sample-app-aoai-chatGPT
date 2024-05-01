@@ -674,8 +674,8 @@ const Chat = () => {
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />} */}
-                                <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>{ui?.chat_title}</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>{ui?.chat_description}</h2>
+                                <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state}}>{ui?.chat_title}</h1>
+                                <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state}}>{ui?.chat_description}</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px" }} role="log">
