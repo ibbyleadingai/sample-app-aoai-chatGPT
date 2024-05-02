@@ -9,17 +9,16 @@
     border-radius: 30px;
     /* border: 2px solid #28fbaa; */
     outline: none;
-    height: 55px;
+    height: 60px;
 }
 
 .questionInputTextArea {
     width: 85%;
     line-height: 40px;
-    margin-top: 10px;
+    margin-top: 6px;
     margin-bottom: 10px;
     margin-left: 12px;
     margin-right: 12px;
-    background: transparent;
     font-family: monospace;
 }
 

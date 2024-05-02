@@ -170,6 +170,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             setTextFromDocument(false); // Reset the flag after sending
         }
     }, [question, textFromDocument]);
+    
 
 
     return (
@@ -181,7 +182,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                       // Other styles you want to apply to the fieldGroup
                     },
                     field: {
-                      height: '10px', // Set height to auto if it's multiline and you want it to shrink
+                      height: '47px', // Set height to auto if it's multiline and you want it to shrink
                       minHeight: '32px', // Or any other value that fits a single line of text
                       // Other styles you want to apply to the field
                     }
