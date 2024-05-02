@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { SendRegular, Whiteboard20Filled } from "@fluentui/react-icons";
+import { useBoolean } from '@fluentui/react-hooks';
 import Send from "../../assets/Send.svg";
 import styles from "./QuestionInput.module.css";
 import { handleImprovePromptApi } from "../../api";
 import { AppStateContext } from "../../state/AppProvider";
+import React from "react";
 
 interface Props {
     onSend: (question: string, id?: string) => void;
@@ -25,6 +27,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [selectedFile, setSelectedFile] = useState<string | undefined>("");
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState('Improve Prompt');
+    const [multiline, { toggle: toggleMultiline }] = useBoolean(false);
 
     const updateButtonText = () => {
         if (window.innerWidth <= 450) {
@@ -117,8 +120,16 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     };
 
     const onQuestionChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-        setQuestion(newValue || "");
+        const newText = newValue || ""; // Safeguard against undefined values
+        setQuestion(newText); // Update the question state with the new value
+    
+        // Check if we need to switch between single and multiline based on the text length
+        const newMultiline = newText.length > 120;
+        if (newMultiline !== multiline) {
+            toggleMultiline(); // Toggle multiline if there's a change in the condition
+        }
     };
+
 
     const sendQuestionDisabled = disabled || !question.trim();
 
@@ -182,19 +193,22 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                       // Other styles you want to apply to the fieldGroup
                     },
                     field: {
-                      height: '47px', // Set height to auto if it's multiline and you want it to shrink
                       minHeight: '32px', // Or any other value that fits a single line of text
+                      maxHeight: '85px', // Maximum height before scrolling
+                        overflowY: 'auto', // Enable vertical scrolling
+                        overflowX: 'hidden', // Hide horizontal scroll
                       // Other styles you want to apply to the field
                     }
                   }}
                 className={styles.questionInputTextArea}
                 placeholder={placeholder}
-                multiline
+                multiline={multiline}
                 resizable={false}
                 borderless
                 value={question}
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
+                autoAdjustHeight
             />
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
