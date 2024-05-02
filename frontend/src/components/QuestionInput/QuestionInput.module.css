@@ -91,7 +91,7 @@
 
 .webScrapeContainer{
     position: absolute;
-    top: 66px;
+    top: -37px;
 }
 
 .linkInput{
@@ -121,7 +121,7 @@
 
 .innerdocumentUploadContainer{
     position: absolute;
-    top: 66px;
+    top: -37px;
     left: 0;
     display: flex;
     gap: 5px;
