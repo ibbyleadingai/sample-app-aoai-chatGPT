@@ -62,21 +62,21 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             //     console.log(`${key}: ${value}`);
             // }
             try {
-                const response = await fetch('/upload-pdf', {
+                const response = await fetch('/upload_csv', {
                     method: 'POST',
-                    body: formData,  
+                    body: formData,
+                    // Do not set 'Content-Type': 'multipart/form-data' manually
+                    // The browser will set it correctly including the boundary parameter
                 });
+
                 if (!response.ok) {
-                    throw new Error(`Server responded with ${response.status}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const data = await response.json();
-                setTextFromDocument(true);
-                setQuestion(data.text);  
-                setIsLoadingDocument(false)
+
+                const responseData = await response.text();  // or .json() if the server responds with JSON
+                console.log('Response:', responseData);
             } catch (error) {
-                console.error('Error uploading file:', error);
-                setIsLoadingDocument(false)
-                alert("Error uploading file. Please ensure the file type is a PDF.")
+                console.error('Error:', error);
             }
         } else {
             console.error('No file selected');
@@ -230,7 +230,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
             <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
             </div>}
-            {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
+            <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer}>
                     <label htmlFor="upload-btn" className={styles.customUploadButton}>
                         {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
@@ -239,7 +239,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     id="upload-btn"
                     className={styles.hiddenUploadInput}
                     type="file"
-                    accept="application/pdf"
+                    accept=".csv"
                     onChange={handleFileChange}
                     />
                     {selectedFile && <div style={{ 
@@ -248,7 +248,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         // Add more styles as needed
                     }}>{selectedFile}</div>}
                 </div>
-            </div>}
+            </div>
         </Stack>
     );
 };

@@ -8,6 +8,9 @@ from dotenv import load_dotenv
 import httpx
 import pdfplumber
 import aiofiles
+import openai
+
+ID = 'asst_J0MJKioWaJVlY3TkKha85bTN'
 
 from quart import (
     Blueprint,
@@ -298,6 +301,21 @@ frontend_settings = {
         "chat_font_empty_state": UI_CHAT_FONT_EMPTY_STATE
     }
 }
+
+@bp.route('/upload_csv', methods=['POST'])
+async def upload_csv():
+    if 'file' not in await request.files:
+        return jsonify({"error": "No file part"}), 400
+    
+    file = await request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    if file and file.filename.endswith('.csv'):
+        # Here, replace with actual file processing
+        return jsonify({"Uploaded File in the backend": file})
+    else:
+        return jsonify({"error": "Invalid file type, only CSV files are allowed"}), 400
 
 @bp.route('/upload-pdf', methods=['POST'])
 async def upload_pdf():
