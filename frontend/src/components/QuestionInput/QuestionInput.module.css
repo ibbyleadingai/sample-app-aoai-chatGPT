@@ -91,7 +91,8 @@
 
 .webScrapeContainer{
     position: absolute;
-    top: -37px;
+    bottom: -33px;
+    left: 18px;
 }
 
 .linkInput{
@@ -121,11 +122,11 @@
 
 .innerdocumentUploadContainer{
     position: absolute;
-    top: -37px;
-    left: 0;
+    left: 18px;
     display: flex;
     gap: 5px;
-    align-items: center
+    align-items: center;
+    bottom: -33px;
 }
 
 /* Hides the original file input visually but remains accessible */
