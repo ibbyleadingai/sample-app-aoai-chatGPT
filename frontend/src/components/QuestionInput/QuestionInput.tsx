@@ -45,41 +45,40 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         };
       }, []); // Empty dependency array ensures the effect runs only once on mount
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
-        handleUpload(file);  // Call handleUpload directly with the file
-        setSelectedFile(file?.name)
-    };
-    
-    const handleUpload = async (file: File | null) => {
-        if (file) {  // Use the file parameter that is passed to the function
-            // console.log("selected file", file);
-            setIsLoadingDocument(true)
-            const formData = new FormData();
-            formData.append('file', file);  // Use the file parameter
-    
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(`${key}: ${value}`);
-            // }
-            try {
-                const response = await fetch('/upload_csv', {
-                    method: 'POST',
-                    body: formData,
-                    // Do not set 'Content-Type': 'multipart/form-data' manually
-                    // The browser will set it correctly including the boundary parameter
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const responseData = await response.text();  // or .json() if the server responds with JSON
-                console.log('Response:', responseData);
-            } catch (error) {
-                console.error('Error:', error);
-            }
+        if (file) {
+            setSelectedFile(file.name);
+            handleUpload(file);
         } else {
+            setSelectedFile("");
             console.error('No file selected');
+        }
+    };
+
+    const handleUpload = async (file: File) => {
+        setIsLoadingDocument(true);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('/upload_csv', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const responseData = await response.text();  // or .json()
+            console.log('Response:', responseData);
+            setIsLoadingDocument(false);
+            alert('File uploaded successfully!');
+        } catch (error) {
+            console.error('Error:', error);
+            setIsLoadingDocument(false);
+            alert('Failed to upload file.');
         }
     };
 

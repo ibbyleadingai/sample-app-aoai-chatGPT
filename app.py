@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import httpx
 import pdfplumber
 import aiofiles
-import openai
+# import openai
 
 ID = 'asst_J0MJKioWaJVlY3TkKha85bTN'
 
@@ -312,8 +312,9 @@ async def upload_csv():
         return jsonify({"error": "No selected file"}), 400
 
     if file and file.filename.endswith('.csv'):
-        # Here, replace with actual file processing
-        return jsonify({"Uploaded File in the backend": file})
+        # Process CSV here (asynchronously if necessary)
+        # For now, just returning a simple response
+        return jsonify({"message": f"Uploaded File: {file.filename}"})
     else:
         return jsonify({"error": "Invalid file type, only CSV files are allowed"}), 400
 
