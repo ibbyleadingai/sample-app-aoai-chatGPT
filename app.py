@@ -304,19 +304,22 @@ frontend_settings = {
 
 @bp.route('/upload_csv', methods=['POST'])
 async def upload_csv():
-    if 'file' not in await request.files:
-        return jsonify({"error": "No file part"}), 400
-    
-    file = await request.files['file']
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
+    try:
+        if 'file' not in await request.files:
+            return jsonify({"error": "No file part"}), 400
+        
+        file = await request.files['file']
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
 
-    if file and file.filename.endswith('.csv'):
-        # Process CSV here (asynchronously if necessary)
-        # For now, just returning a simple response
-        return jsonify({"message": f"Uploaded File: {file.filename}"})
-    else:
-        return jsonify({"error": "Invalid file type, only CSV files are allowed"}), 400
+        if file and file.filename.endswith('.csv'):
+            # Placeholder: Process CSV here (asynchronously if necessary)
+            return jsonify({"message": f"Uploaded File: {file.filename}"})
+        else:
+            return jsonify({"error": "Invalid file type, only CSV files are allowed"}), 400
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
 
 @bp.route('/upload-pdf', methods=['POST'])
 async def upload_pdf():
