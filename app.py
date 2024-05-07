@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import httpx
 import pdfplumber
 import aiofiles
+import openai
 
 from quart import (
     Blueprint,
@@ -40,6 +41,11 @@ bp = Blueprint("routes", __name__, static_folder="static", template_folder="stat
 MINIMUM_SUPPORTED_AZURE_OPENAI_PREVIEW_API_VERSION = "2024-02-15-preview"
 
 load_dotenv()
+
+# Initialize the client
+client = openai.OpenAI()
+
+ID = 'asst_J0MJKioWaJVlY3TkKha85bTN'
 
 # UI configuration (optional)
 UI_TITLE = os.environ.get("UI_TITLE")
@@ -324,6 +330,58 @@ async def upload_pdf():
             return jsonify({'error': 'An internal server error occurred'}), 500
     else:
         return jsonify({'error': 'No file uploaded'}), 400
+
+@bp.route("/conversation-csv", methods=["POST"])
+async def conversation_csv():
+    try:
+        user_input = (await request.get_json()).get("request_body", "")
+        ai_response = await handle_conversation(user_input)
+        return jsonify({"conversation": ai_response}), 200
+    except Exception as e:
+        # Handle exceptions
+        return jsonify({"error": str(e)}), 500
+    
+async def handle_conversation(user_input):
+    # Create a Thread
+    thread = await client.beta.threads.create()
+
+    # Send the user's message to the thread and handle the conversation
+    response = await send_message_and_wait(thread.id, user_input)
+    return response
+
+async def send_message_and_wait(thread_id, user_query):
+    # Add a Message to a Thread
+    message = await client.beta.threads.messages.create(
+        thread_id=thread_id,
+        role="user",
+        content=user_query
+    )
+
+    # Run the Assistant
+    run = await client.beta.threads.runs.create(
+        thread_id=thread_id,
+        assistant_id=ID,
+        instructions=user_query
+    )
+
+    # Wait for the assistant's response
+    while True:
+        await asyncio.sleep(5)  # Async sleep for 5 seconds
+        run_status = await client.beta.threads.runs.retrieve(
+            thread_id=thread_id,
+            run_id=run.id
+        )
+
+        if run_status.status == 'completed':
+            response_messages = await client.beta.threads.messages.list(
+                thread_id=thread_id
+            )
+            # Sort and display the response from the assistant
+            sorted_messages = sorted(response_messages.data, key=lambda x: x.created_at)
+            return [msg.content[0].text.value for msg in sorted_messages if msg.role == "assistant"]
+        elif run_status.status == 'failed':
+            return "Failed to process request"
+
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])

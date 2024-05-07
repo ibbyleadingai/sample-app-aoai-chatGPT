@@ -96,6 +96,28 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
     };
 
+    const csvAnalysisAI = async () => {
+        try {
+            const result = await fetch('/conversation-csv', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ request_body: question })
+            });
+
+            if (!result.ok) {
+                throw new Error('Failed to fetch from the API');
+            }
+
+            const data = await result.json();
+            setQuestion(data);
+        } catch (error) {
+            console.error("Error talking to AI:", error);
+            return "AI unavailable";
+          }
+    };
+
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
             return;
@@ -228,7 +250,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     style={{ color: ui?.improve_button_text_color, backgroundColor: ui?.improve_button_color}}
                     onClick={(e) => {
                         e.stopPropagation();
-                        handleImprovePrompt()
+                        // handleImprovePrompt()
+                        csvAnalysisAI()
                     }}
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : buttonText}
