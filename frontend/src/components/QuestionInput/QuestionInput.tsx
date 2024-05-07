@@ -32,6 +32,27 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           setIsLoadingImproved(false);
         }
       };
+
+      const sendQueryCSV = async () => {
+        try {
+            const response = await fetch('/csv-conversation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_query: question })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch AI response');
+            }
+
+            const data = await response.json();
+            setQuestion(data.ai_response);
+        } catch (err) {
+            console.log(err)
+        }
+    };
       
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -152,7 +173,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     style={{backgroundColor: improvePromptButtonColor}}
                     onClick={(e) => {
                         e.stopPropagation();
-                        handleImprovePrompt()
+                        // handleImprovePrompt()
+                        sendQueryCSV()
                     }}
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : "Improve prompt"}

@@ -16,6 +16,10 @@ load_dotenv()
 
 app = Flask(__name__, static_folder="static")
 
+# client = openai.OpenAI()
+
+ASSISTANT_ID = 'asst_J0MJKioWaJVlY3TkKha85bTN'
+
 # Static Files
 @app.route("/")
 def index():
@@ -135,6 +139,48 @@ def get_config():
         "AZURE_LOGO_BORDER_RADIUS": AZURE_LOGO_BORDER_RADIUS
     }
     return jsonify(config_data)
+
+@app.route("/csv-conversation", methods=["POST"])
+def csv_conversation():
+    try:
+        # Get the user's query from the request's JSON body
+        user_input = request.json.get("user_query", "")
+        if not user_input:
+            return jsonify({"error": "No query provided"}), 400
+
+        # Process the conversation
+        ai_response = handle_conversation(user_input)
+        return jsonify({"ai_response": ai_response}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+def handle_conversation(user_query):
+    # Create a new Thread for the conversation
+    thread = openai.Thread.create()
+    
+    # Send the user's query to the OpenAI Assistant and get the response
+    message = openai.Message.create(
+        thread_id=thread.id,
+        role="user",
+        content=user_query
+    )
+
+    # Run the Assistant
+    run = openai.Run.create(
+        thread_id=thread.id,
+        assistant_id=ASSISTANT_ID,
+        instructions=user_query
+    )
+
+    # Wait for the assistant's response (synchronous handling for simplicity)
+    response = openai.Run.get(
+        thread_id=thread.id,
+        run_id=run.id
+    )
+
+    # Assuming response is ready immediately (check real implementation details)
+    return response["choices"][0]["message"]["content"]
 
 #Web scraping
 @app.route('/scrape', methods=['POST'])
@@ -559,7 +605,7 @@ def get_improved_prompt(request_body):
     messages = [
         {
             "role": "system",
-            "content": "Optimize and enhance the clarity of the input prompts provided without introducing conversational elements. If the input appears to be unclear or needs refinement, provide a more polished and effective version of the prompt without executing the action described. You should try and improve their phrase without context. #### User:'What is the policy for constant student absences? System response:'What is the institution's policy regarding frequent student absences?'"
+            "content": "Optimize and enhance the clarity of the input prompts"
         },
         {
             "role": "user",
