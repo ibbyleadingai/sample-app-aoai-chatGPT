@@ -35,7 +35,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
       const sendQueryCSV = async () => {
         try {
-            const response = await fetch('/csv-conversation', {
+            const response = await fetch('/conversation-csv', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -16,8 +16,7 @@ load_dotenv()
 
 app = Flask(__name__, static_folder="static")
 
-# client = openai.OpenAI()
-
+openai.api_key = os.getenv("OPENAI_API_KEY")
 ASSISTANT_ID = 'asst_J0MJKioWaJVlY3TkKha85bTN'
 
 # Static Files
@@ -140,47 +139,55 @@ def get_config():
     }
     return jsonify(config_data)
 
-@app.route("/csv-conversation", methods=["POST"])
-def csv_conversation():
-    try:
-        # Get the user's query from the request's JSON body
-        user_input = request.json.get("user_query", "")
-        if not user_input:
-            return jsonify({"error": "No query provided"}), 400
+@app.route("/conversation-csv", methods=["POST"])
+def conversation_csv():
+    # Extract the user query from the request's JSON body
+    data = request.json
+    user_query = data.get('user_query', '')
+    
+    if not user_query:
+        return jsonify({'error': 'No user query provided'}), 400
 
-        # Process the conversation
-        ai_response = handle_conversation(user_input)
-        return jsonify({"ai_response": ai_response}), 200
+    try:
+        # Create a new conversation thread with the AI
+        thread = openai.Thread.create()
+
+        # Add a user message to the thread
+        message = openai.Message.create(
+            thread_id=thread.id,
+            role="user",
+            content=user_query
+        )
+
+        # Run the conversation with the AI
+        run = openai.Run.create(
+            thread_id=thread.id,
+            assistant_id=ASSISTANT_ID,
+            instructions=user_query
+        )
+
+        # Poll for the assistant's response
+        while True:
+            run_status = openai.Run.get(
+                thread_id=thread.id,
+                run_id=run.id
+            )
+
+            if run_status.status == 'completed':
+                response_messages = openai.Message.list(
+                    thread_id=thread.id
+                )
+                ai_responses = [msg.content for msg in response_messages.data if msg.role == "assistant"]
+                return jsonify({'ai_response': ai_responses}), 200
+
+            elif run_status.status == 'failed':
+                return jsonify({'error': 'AI processing failed'}), 500
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
-def handle_conversation(user_query):
-    # Create a new Thread for the conversation
-    thread = openai.Thread.create()
-    
-    # Send the user's query to the OpenAI Assistant and get the response
-    message = openai.Message.create(
-        thread_id=thread.id,
-        role="user",
-        content=user_query
-    )
-
-    # Run the Assistant
-    run = openai.Run.create(
-        thread_id=thread.id,
-        assistant_id=ASSISTANT_ID,
-        instructions=user_query
-    )
-
-    # Wait for the assistant's response (synchronous handling for simplicity)
-    response = openai.Run.get(
-        thread_id=thread.id,
-        run_id=run.id
-    )
-
-    # Assuming response is ready immediately (check real implementation details)
-    return response["choices"][0]["message"]["content"]
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 #Web scraping
 @app.route('/scrape', methods=['POST'])
