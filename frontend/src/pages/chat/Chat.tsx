@@ -539,6 +539,7 @@ const Chat = () => {
         setIsCitationPanelOpen(false);
         setActiveCitation(undefined);
         appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: null });
+        appStateContext?.dispatch({ type: 'RESET_SELECTED_FILE' });
         setProcessMessages(messageStatus.Done)
     };
 

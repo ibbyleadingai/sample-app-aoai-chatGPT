@@ -24,7 +24,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
     const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
-    const [selectedFile, setSelectedFile] = useState<string | undefined>("");
+    const selectedFile = appStateContext?.state.selectedFile;  // Access the selectedFile from the global state
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState('Improve Prompt');
     const [multiline, { toggle: toggleMultiline }] = useBoolean(false);
@@ -50,8 +50,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
-        handleUpload(file);  // Call handleUpload directly with the file
-        setSelectedFile(file?.name)
+        if (file) {
+            handleUpload(file);  // Call handleUpload directly with the file
+            appStateContext?.dispatch({ type: 'SET_SELECTED_FILE', payload: file.name });  // Dispatch the file name to the global state
+        } else {
+            appStateContext?.dispatch({ type: 'RESET_SELECTED_FILE' });  // Reset the selected file in the global state if no file is chosen
+        }
     };
     
     const handleUpload = async (file: File | null) => {

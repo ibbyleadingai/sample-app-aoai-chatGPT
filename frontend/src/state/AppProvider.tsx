@@ -11,6 +11,7 @@ export interface AppState {
     currentChat: Conversation | null;
     frontendSettings: FrontendSettings | null;
     feedbackState: { [answerId: string]: Feedback.Neutral | Feedback.Positive | Feedback.Negative; };
+    selectedFile: string | undefined; // Added to manage the selected file
 }
 
 export type Action =
@@ -27,7 +28,9 @@ export type Action =
     | { type: 'FETCH_CHAT_HISTORY', payload: Conversation[] | null }  // API Call
     | { type: 'FETCH_FRONTEND_SETTINGS', payload: FrontendSettings | null }  // API Call
     | { type: 'SET_FEEDBACK_STATE'; payload: { answerId: string; feedback: Feedback.Positive | Feedback.Negative | Feedback.Neutral } }
-    | { type: 'GET_FEEDBACK_STATE'; payload: string };
+    | { type: 'GET_FEEDBACK_STATE'; payload: string }
+    | { type: 'SET_SELECTED_FILE'; payload: string | undefined }
+    | { type: 'RESET_SELECTED_FILE' };
 
 const initialState: AppState = {
     isChatHistoryOpen: false,
@@ -40,7 +43,8 @@ const initialState: AppState = {
         status: CosmosDBStatus.NotConfigured,
     },
     frontendSettings: null,
-    feedbackState: {}
+    feedbackState: {},
+    selectedFile: undefined
 };
 
 export const AppStateContext = createContext<{

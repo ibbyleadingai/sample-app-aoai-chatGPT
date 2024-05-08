@@ -74,7 +74,17 @@ export const appStateReducer = (state: AppState, action: Action): AppState => {
                     ...state.feedbackState,
                     [action.payload.answerId]: action.payload.feedback,
                 },
-            };    
+            };  
+            case 'SET_SELECTED_FILE':
+                return {
+                    ...state,
+                    selectedFile: action.payload  // setting the selected file
+                };
+            case 'RESET_SELECTED_FILE':
+                return {
+                    ...state,
+                    selectedFile: undefined  // resetting the selected file
+                };  
         default:
             return state;
       }
