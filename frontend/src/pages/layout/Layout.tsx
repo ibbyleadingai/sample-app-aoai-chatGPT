@@ -6,6 +6,7 @@ import leadingai from "../../assets/leadingai.svg"
 import engine from "../../assets/Engine-Mark.svg"
 import morley from "../../assets/morley.png"
 import engineLogo from "../../assets/Engine-Logo.svg"
+import coram from "../../assets/coram.gif"
 import { CopyRegular } from "@fluentui/react-icons";
 import { Dialog, Stack, TextField } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";
@@ -32,7 +33,8 @@ const Layout = () => {
         ambition: ambition,
         engine: engine,
         engineLogo: engineLogo,
-        morley: morley
+        morley: morley,
+        coram: coram
         // Add more entries as needed for other images
       };
 
