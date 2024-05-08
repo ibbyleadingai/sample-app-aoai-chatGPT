@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import httpx
 import pdfplumber
 import aiofiles
+import openai
 
 from quart import (
     Blueprint,
@@ -40,6 +41,8 @@ bp = Blueprint("routes", __name__, static_folder="static", template_folder="stat
 MINIMUM_SUPPORTED_AZURE_OPENAI_PREVIEW_API_VERSION = "2024-02-15-preview"
 
 load_dotenv()
+
+client = openai.OpenAI()
 
 # UI configuration (optional)
 UI_TITLE = os.environ.get("UI_TITLE")
