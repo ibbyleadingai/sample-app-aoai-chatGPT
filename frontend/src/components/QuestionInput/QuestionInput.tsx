@@ -90,6 +90,22 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
     };
 
+    function sendQuery() {
+        fetch('/interact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ query: question })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            setQuestion(data.responses)
+        })
+        .catch(error => console.error('Error:', error));
+      }
+
     const handleImprovePrompt = async () => {
         try {
           setIsLoadingImproved(true);
@@ -232,7 +248,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     style={{ color: ui?.improve_button_text_color, backgroundColor: ui?.improve_button_color}}
                     onClick={(e) => {
                         e.stopPropagation();
-                        handleImprovePrompt()
+                        // handleImprovePrompt()
+                        sendQuery()
                     }}
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : buttonText}

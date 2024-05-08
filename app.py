@@ -44,6 +44,40 @@ load_dotenv()
 
 client = openai.OpenAI()
 
+assistant_id = 'asst_J0MJKioWaJVlY3TkKha85bTN'
+
+@bp.route('/interact', methods=['POST'])
+def interact_with_assistant():
+    user_input = request.json.get('query')
+    if not user_input:
+        return jsonify({"error": "No input provided"}), 400
+
+    # Creating a Thread
+    thread = client.beta.threads.create()
+
+    # Sending the user message to the thread
+    message = client.beta.threads.messages.create(
+        thread_id=thread.id,
+        role="user",
+        content=user_input
+    )
+
+    # Running the Assistant
+    run = client.beta.threads.runs.create(
+        thread_id=thread.id,
+        assistant_id=assistant_id,
+        instructions=user_input
+    )
+
+    # Fetching the Assistant's response
+    response_messages = client.beta.threads.messages.list(
+        thread_id=thread.id
+    )
+    sorted_messages = sorted(response_messages.data, key=lambda x: x.created_at)
+    responses = [msg.content[0].text.value for msg in sorted_messages if msg.role == "assistant"]
+
+    return jsonify({"responses": responses})
+
 # UI configuration (optional)
 UI_TITLE = os.environ.get("UI_TITLE")
 UI_LOGO = os.environ.get("UI_LOGO")
