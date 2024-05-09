@@ -14,9 +14,10 @@ interface Props {
     placeholder?: string;
     clearOnSend?: boolean;
     conversationId?: string;
+    resetKey: number;
 }
 
-export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId }: Props) => {
+export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId, resetKey}: Props) => {
     const appStateContext = useContext(AppStateContext)
     const ui = appStateContext?.state.frontendSettings?.ui;
     const [question, setQuestion] = useState<string>("")
@@ -260,6 +261,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     type="file"
                     accept="application/pdf"
                     onChange={handleFileChange}
+                    key={resetKey}  // Use the key to force a re-render
                     />
                     {selectedFile && <div style={{ 
                         color: '#fff', 

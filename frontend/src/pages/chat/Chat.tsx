@@ -73,6 +73,7 @@ const Chat = () => {
     const [clearingChat, setClearingChat] = useState<boolean>(false);
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
+    const [inputKey, setInputKey] = useState(0);
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -541,6 +542,7 @@ const Chat = () => {
         appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: null });
         appStateContext?.dispatch({ type: 'RESET_SELECTED_FILE' });
         setProcessMessages(messageStatus.Done)
+        setInputKey(prevKey => prevKey + 1);
     };
 
     const stopGenerating = () => {
@@ -802,6 +804,7 @@ const Chat = () => {
                                     appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)
                                 }}
                                 conversationId={appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined}
+                                resetKey={inputKey}
                             />
                         </Stack>
                     </div>
