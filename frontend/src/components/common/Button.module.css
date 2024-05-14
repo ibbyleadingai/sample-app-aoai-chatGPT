@@ -18,32 +18,33 @@
     color: #FFFFFF;
   }
 
-  .shareButtonRoot i, .shareButtonRoot:hover i {
-    color: #FFFFFF !important;
-  }
-  
-  .historyButtonRoot {
-    width: 180px;
-    border: 1px solid #D1D1D1;
+.shareButtonRoot i,
+.shareButtonRoot:hover i {
+  color: #ffffff !important;
+}
+
+.historyButtonRoot {
+  width: 180px;
+  border: 1px solid #d1d1d1;
     /* margin-right: 20px; */
+}
+
+.historyButtonRoot:hover {
+  border: 1px solid #d1d1d1;
+}
+
+.historyButtonRoot:active {
+  border: 1px solid #d1d1d1;
+}
+
+@media (max-width: 480px) {
+  .shareButtonRoot {
+    width: auto;
+    padding: 5px 8px;
   }
 
-  .historyButtonRoot:hover {
-    border: 1px solid #D1D1D1;
+  .historyButtonRoot {
+    width: auto;
+    padding: 0 8px;
   }
-
-  .historyButtonRoot:active {
-    border: 1px solid #D1D1D1;
-  }
-
-  @media (max-width: 480px) {
-    .shareButtonRoot {
-      width: auto; 
-      padding: 5px 8px; 
-    }
-
-    .historyButtonRoot {
-      width: auto;
-      padding: 0 8px  
-    }
-  }
+}

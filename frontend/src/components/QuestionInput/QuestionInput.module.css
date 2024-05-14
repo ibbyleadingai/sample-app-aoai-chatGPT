@@ -48,22 +48,22 @@
 }
 
 .questionInputSendButtonDisabled {
-    /* opacity: 0.4; */
-    width: 24px;
-    height: 23px;
-    background: none;
-    color: #424242;
+  /* opacity: 0.4; */
+  width: 24px;
+  height: 23px;
+  background: none;
+  color: #424242;
 }
 
 .questionInputBottomBorder {
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    left: 0%;
-    bottom: 0%;
-    background: radial-gradient(106.04% 106.06% at 100.1% 90.19%,#0F6CBD 33.63%,#8DDDD8 100%);
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  left: 0%;
+  bottom: 0%;
+  background: radial-gradient(106.04% 106.06% at 100.1% 90.19%, #0f6cbd 33.63%, #8dddd8 100%);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .questionInputOptionsButton {
@@ -151,7 +151,7 @@
   
 
 @media (max-width: 480px) {
-    .questionInputContainer {
-        left: 16.5%;
-    }
+  .questionInputContainer {
+    left: 16.5%;
+  }
 }

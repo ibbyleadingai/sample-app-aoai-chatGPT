@@ -1,5 +1,4 @@
-import { Conversation, Feedback, fetchChatHistoryInit, historyList } from '../api';
-import { Action, AppState } from './AppProvider';
+import { Action, AppState } from './AppProvider'
 
 // Define the reducer function
 export const appStateReducer = (state: AppState, action: Action): AppState => {

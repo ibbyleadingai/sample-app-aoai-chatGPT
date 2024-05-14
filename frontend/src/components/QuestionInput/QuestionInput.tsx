@@ -9,11 +9,11 @@ import { AppStateContext } from "../../state/AppProvider";
 import React from "react";
 
 interface Props {
-    onSend: (question: string, id?: string) => void;
-    disabled: boolean;
-    placeholder?: string;
-    clearOnSend?: boolean;
-    conversationId?: string;
+  onSend: (question: string, id?: string) => void
+  disabled: boolean
+  placeholder?: string
+  clearOnSend?: boolean
+  conversationId?: string
     resetKey: number;
 }
 
@@ -101,28 +101,28 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         }
     };
 
-    const sendQuestion = () => {
-        if (disabled || !question.trim()) {
-            return;
-        }
+  const sendQuestion = () => {
+    if (disabled || !question.trim()) {
+      return
+    }
 
-        if(conversationId){
-            onSend(question, conversationId);
-        }else{
-            onSend(question);
-        }
+    if (conversationId) {
+      onSend(question, conversationId)
+    } else {
+      onSend(question)
+    }
 
-        if (clearOnSend) {
-            setQuestion("");
-        }
-    };
+    if (clearOnSend) {
+      setQuestion('')
+    }
+  }
 
-    const onEnterPress = (ev: React.KeyboardEvent<Element>) => {
-        if (ev.key === "Enter" && !ev.shiftKey && !(ev.nativeEvent?.isComposing === true)) {
-            ev.preventDefault();
-            sendQuestion();
-        }
-    };
+  const onEnterPress = (ev: React.KeyboardEvent<Element>) => {
+    if (ev.key === 'Enter' && !ev.shiftKey && !(ev.nativeEvent?.isComposing === true)) {
+      ev.preventDefault()
+      sendQuestion()
+    }
+  }
 
     const onQuestionChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         const newText = newValue || ""; // Safeguard against undefined values
