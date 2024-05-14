@@ -26,6 +26,8 @@ import { GroupedChatHistory } from './ChatHistoryList'
 
 import styles from './ChatHistoryPanel.module.css'
 
+import { jsPDF } from "jspdf"; //library for download pdf
+
 interface ChatHistoryListItemCellProps {
   item?: Conversation
   onSelect: (item: Conversation | null) => void
