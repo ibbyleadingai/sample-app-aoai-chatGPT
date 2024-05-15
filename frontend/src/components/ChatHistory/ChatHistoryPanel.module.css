@@ -64,7 +64,7 @@
     font-weight: 600;
     margin-bottom: 5px;
     padding-left: 15px;
-    color: whitesmoke;
+    /* color: whitesmoke; */
 }
 
 .chatTitle {
@@ -72,7 +72,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: whitesmoke;
+    /* color: whitesmoke; */
 }
 
 @media (max-width: 480px) {
