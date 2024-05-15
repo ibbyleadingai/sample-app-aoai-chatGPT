@@ -22,11 +22,15 @@ import { historyDelete, historyList, historyRename } from '../../api'
 import { Conversation } from '../../api/models'
 import { AppStateContext } from '../../state/AppProvider'
 
+
 import { GroupedChatHistory } from './ChatHistoryList'
 
 import styles from './ChatHistoryPanel.module.css'
 
 import { jsPDF } from "jspdf"; //library for download pdf
+const appStateContext = useContext(AppStateContext)
+const ui = appStateContext?.state.frontendSettings?.ui;
+
 
 interface ChatHistoryListItemCellProps {
   item?: Conversation
@@ -247,6 +251,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
             styles={{
                 root: {
                     backgroundColor: isSelected ? '#1a1b21' : 'transparent',
+                    color: ui?.chat_text_color
                 }
             }}
         >

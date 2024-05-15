@@ -21,6 +21,8 @@ import { useBoolean } from '@fluentui/react-hooks'
 
 import { ChatHistoryLoadingState, historyDeleteAll } from '../../api'
 import { AppStateContext } from '../../state/AppProvider'
+const appStateContext = useContext(AppStateContext)
+const ui = appStateContext?.state.frontendSettings?.ui;
 
 import ChatHistoryList from './ChatHistoryList'
 
@@ -114,7 +116,8 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
               fontWeight: '600',
               fontSize: '18px',
               marginRight: 'auto',
-              paddingLeft: '20px'
+              paddingLeft: '20px',
+              color: ui?.chat_text_color
             }}>
             Chat history
           </Text>
