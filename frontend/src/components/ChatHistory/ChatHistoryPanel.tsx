@@ -21,8 +21,6 @@ import { useBoolean } from '@fluentui/react-hooks'
 
 import { ChatHistoryLoadingState, historyDeleteAll } from '../../api'
 import { AppStateContext } from '../../state/AppProvider'
-const appStateContext = useContext(AppStateContext)
-const ui = appStateContext?.state.frontendSettings?.ui;
 
 import ChatHistoryList from './ChatHistoryList'
 
@@ -47,6 +45,7 @@ const commandBarButtonStyle: Partial<IStackStyles> = { root: { height: '50px' } 
 
 export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
   const appStateContext = useContext(AppStateContext)
+  const ui = appStateContext?.state.frontendSettings?.ui;
   const [showContextualMenu, setShowContextualMenu] = React.useState(false)
   const [hideClearAllDialog, { toggle: toggleClearAllDialog }] = useBoolean(true)
   const [clearing, setClearing] = React.useState(false)
