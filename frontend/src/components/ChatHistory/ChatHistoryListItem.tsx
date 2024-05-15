@@ -28,8 +28,6 @@ import { GroupedChatHistory } from './ChatHistoryList'
 import styles from './ChatHistoryPanel.module.css'
 
 import { jsPDF } from "jspdf"; //library for download pdf
-const appStateContext = useContext(AppStateContext)
-const ui = appStateContext?.state.frontendSettings?.ui;
 
 
 interface ChatHistoryListItemCellProps {
@@ -67,6 +65,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
   const textFieldRef = useRef<ITextField | null>(null)
 
   const appStateContext = React.useContext(AppStateContext)
+  const ui = appStateContext?.state.frontendSettings?.ui;
   const isSelected = item?.id === appStateContext?.state.currentChat?.id
   const dialogContentProps = {
     type: DialogType.close,
