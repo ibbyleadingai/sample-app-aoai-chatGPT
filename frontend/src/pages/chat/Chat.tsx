@@ -168,7 +168,7 @@ const Chat = () => {
         setShowLoadingMessage(true);
         const abortController = new AbortController();
         abortFuncs.current.unshift(abortController);
-
+        
         const userMessage: ChatMessage = {
             id: uuid(),
             role: "user",
@@ -181,7 +181,7 @@ const Chat = () => {
             conversation = {
                 id: conversationId ?? uuid(),
                 title: question,
-                messages: [userMessage],
+                messages: !isPromptUseCase ? [userMessage] : [],
                 date: new Date().toISOString(),
             }
         } else {
@@ -192,7 +192,7 @@ const Chat = () => {
                 setShowLoadingMessage(false);
                 abortFuncs.current = abortFuncs.current.filter(a => a !== abortController);
                 return;
-            } else if (!isPromptUseCase) {
+            } else{
                 conversation.messages.push(userMessage);
             }
         }
