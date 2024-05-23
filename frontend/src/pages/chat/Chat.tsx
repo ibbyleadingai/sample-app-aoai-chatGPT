@@ -163,7 +163,7 @@ const Chat = () => {
         }
     }
 
-    const makeApiRequestWithoutCosmosDB = async (question: string, conversationId?: string) => {
+    const makeApiRequestWithoutCosmosDB = async (question: string, isPromptUseCase?: boolean, conversationId?: string) => {
         setIsLoading(true);
         setShowLoadingMessage(true);
         const abortController = new AbortController();
@@ -192,7 +192,7 @@ const Chat = () => {
                 setShowLoadingMessage(false);
                 abortFuncs.current = abortFuncs.current.filter(a => a !== abortController);
                 return;
-            } else {
+            } else if (!isPromptUseCase) {
                 conversation.messages.push(userMessage);
             }
         }
@@ -683,9 +683,9 @@ const Chat = () => {
                                 <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>{ui?.chat_title}</h1>
                                 <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>{ui?.chat_description}</h2>
                                 <div className={styles.promptSuggestionsContainer}>
-                                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Letter)} className={styles.promptSuggestions}><h3>Write a letter to Parents: early school closure</h3></div>
-                                    <div className={styles.promptSuggestions}><h3>Complaint Response</h3></div>
-                                    <div className={styles.promptSuggestions}><h3>Headteacher’s Report to Governors</h3></div>
+                                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Letter, true)} className={styles.promptSuggestions}><h3>Write a letter to Parents: early school closure</h3></div>
+                                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Complaint, true)} className={styles.promptSuggestions}><h3>Complaint Response</h3></div>
+                                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Headteacher, true)} className={styles.promptSuggestions}><h3>Headteacher’s Report to Governors</h3></div>
                                 </div>
                     
                             </Stack>
@@ -810,7 +810,7 @@ const Chat = () => {
                                 placeholder="Ask a question..."
                                 disabled={isLoading}
                                 onSend={(question, id) => {
-                                    appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)
+                                    appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, undefined,  id)
                                 }}
                                 conversationId={appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined}
                             />

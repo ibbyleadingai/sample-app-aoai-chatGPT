@@ -374,6 +374,8 @@ a {
 .promptSuggestionsContainer{
     display: flex;
     gap: 15px;
+    position: absolute;
+    margin-top: 100px;
 }
 
 .promptSuggestions{
