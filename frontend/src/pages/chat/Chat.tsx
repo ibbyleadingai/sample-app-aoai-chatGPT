@@ -646,24 +646,10 @@ const Chat = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
 
-    const sendSuggestedPrompt = async (promptId: string) => {
-        try {
-            const response = await fetch('/send-suggested-prompt', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ prompt_id: promptId }),
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            console.log('AI Response:', data.response);
-        }catch (error) {
-            console.error('Error sending suggested prompt:', error);
-        }
+    const promptBtnObj = {
+        'Letter': 'Act as an expert headteacher of a UK school. Write a letter for the head teacher to send to parents to inform them of an early closure of the school on a future date. Ensure the response is sensitive to the needs of parents who may need to arrange childcare.',
+        'Complaint': 'Act as an expert headteacher of a UK school. Write a letter to respond to a complaint made to the school. The response should be friendly and properly deal with the complaint, based on required policies.',
+        'Headteacher': 'Act as an expert UK headteacher. Based on the documents, write an outline for a headteacher’s report to Governors. Suggest topics that should be addressed.'
     }
 
     // const dynamicImage = ui?.chat_logo
@@ -697,7 +683,7 @@ const Chat = () => {
                                 <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>{ui?.chat_title}</h1>
                                 <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>{ui?.chat_description}</h2>
                                 <div className={styles.promptSuggestionsContainer}>
-                                    <div onClick={() => sendSuggestedPrompt("prompt1")} className={styles.promptSuggestions}><h3>Write a letter to Parents: early school closure</h3></div>
+                                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Letter)} className={styles.promptSuggestions}><h3>Write a letter to Parents: early school closure</h3></div>
                                     <div className={styles.promptSuggestions}><h3>Complaint Response</h3></div>
                                     <div className={styles.promptSuggestions}><h3>Headteacher’s Report to Governors</h3></div>
                                 </div>
