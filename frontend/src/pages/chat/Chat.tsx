@@ -73,6 +73,7 @@ const Chat = () => {
     const [clearingChat, setClearingChat] = useState<boolean>(false);
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
+    const [isFromPrompt, setIsFromPrompt] = useState<boolean>(false)
 
     const errorDialogContentProps = {
         type: DialogType.close,
@@ -652,6 +653,11 @@ const Chat = () => {
         'Headteacher': 'Act as an expert UK headteacher. Based on the documents, write an outline for a headteacher’s report to Governors. Suggest topics that should be addressed.'
     }
 
+    const handlePromptClick = () =>{
+        setIsFromPrompt(true)
+        makeApiRequestWithoutCosmosDB(promptBtnObj.Headteacher)
+    }
+
     // const dynamicImage = ui?.chat_logo
     // ? imageImports[ui.chat_logo] || ""
     // : "";
@@ -685,7 +691,7 @@ const Chat = () => {
                                 <div className={styles.promptSuggestionsContainer}>
                                     <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Letter)} className={styles.promptSuggestions}><h3>Write a letter to Parents: early school closure</h3></div>
                                     <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Complaint)} className={styles.promptSuggestions}><h3>Complaint Response</h3></div>
-                                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.Headteacher)} className={styles.promptSuggestions}><h3>Headteacher’s Report to Governors</h3></div>
+                                    <div onClick={() => handlePromptClick()} className={styles.promptSuggestions}><h3>Headteacher’s Report to Governors</h3></div>
                                 </div>
                     
                             </Stack>
@@ -695,7 +701,7 @@ const Chat = () => {
                                     <>
                                         {answer.role === "user" ? ( //And prompt != to true
                                             <div className={styles.chatMessageUser} tabIndex={0}>
-                                                <div className={styles.chatMessageUserMessage}>{answer.content}</div>
+                                                {!isFromPrompt && <div className={styles.chatMessageUserMessage}>{answer.content}</div>}
                                             </div>
                                         ) : (
                                             answer.role === "assistant" ? <div className={styles.chatMessageGpt}>
@@ -810,6 +816,7 @@ const Chat = () => {
                                 placeholder="Ask a question..."
                                 disabled={isLoading}
                                 onSend={(question, id) => {
+                                    setIsFromPrompt(false)
                                     appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)
                                 }}
                                 conversationId={appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined}
