@@ -816,8 +816,8 @@ const Chat = () => {
                                 placeholder="Ask a question..."
                                 disabled={isLoading}
                                 onSend={(question, id) => {
-                                    setIsFromPrompt(false)
                                     appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)
+                                    setIsFromPrompt(false)
                                 }}
                                 conversationId={appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined}
                             />
