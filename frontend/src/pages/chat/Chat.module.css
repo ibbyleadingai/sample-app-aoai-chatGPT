@@ -400,3 +400,33 @@ a {
     max-width: 100%;
   }
 }
+
+@media (max-width: 350px) {
+    .chatMessageGpt{
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 680px){
+    .chatEmptyStateTitle{
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 550px){
+    .chatEmptyStateTitle{
+        font-size: 32px;
+    }
+    .chatEmptyStateSubtitle{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px){
+    .chatEmptyStateTitle{
+        display: none;
+    }
+    .chatEmptyStateSubtitle{
+        display: none;
+    }
+}

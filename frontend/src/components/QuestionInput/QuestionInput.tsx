@@ -14,7 +14,7 @@ interface Props {
   placeholder?: string
   clearOnSend?: boolean
   conversationId?: string
-    resetKey: number;
+  resetKey: number;
 }
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conversationId, resetKey}: Props) => {
@@ -31,7 +31,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [multiline, { toggle: toggleMultiline }] = useBoolean(false);
 
     const updateButtonText = () => {
-        if (window.innerWidth <= 450) {
+        if (window.innerWidth <= 480) {
             setButtonText('Improve');
         } else {
             setButtonText('Improve Prompt');

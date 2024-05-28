@@ -148,10 +148,24 @@
     border-radius: 4px;
     font-size: 14px;
   }
-  
 
 @media (max-width: 480px) {
-  .questionInputContainer {
-    left: 16.5%;
-  }
+    .questionInputContainer {
+        left: 16.5%;
+    }
+
+    .improvePromptButton{
+        width: 65px;
+    }
+
+    .questionInputSendButtonContainer{
+        margin-right: 8px;
+    }
 }
+
+@media (max-width: 374px) {
+    .improvePromptButton{
+        display: none;
+    }
+}
+
