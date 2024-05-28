@@ -646,29 +646,9 @@ const Chat = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
 
-    const sendSuggestedPrompt = async (promptId: string) => {
-        try {
-            const response = await fetch('/send-suggested-prompt', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ prompt_id: promptId }),
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            console.log('AI Response:', data.response);
-        }catch (error) {
-            console.error('Error sending suggested prompt:', error);
-        }
-    }
-
-    // const dynamicImage = ui?.chat_logo
-    // ? imageImports[ui.chat_logo] || ""
-    // : "";
+    const dynamicImage = ui?.chat_logo
+    ? imageImports[ui.chat_logo] || ""
+    : "";
 
     return (
         <div className={styles.container} role="main">
@@ -696,12 +676,6 @@ const Chat = () => {
                                 />} */}
                                 <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color}}>{ui?.chat_title}</h1>
                                 <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color}}>{ui?.chat_description}</h2>
-                                <div className={styles.promptSuggestionsContainer}>
-                                    <div onClick={() => sendSuggestedPrompt("prompt1")} className={styles.promptSuggestions}><h3>Write a letter to Parents: early school closure</h3></div>
-                                    <div className={styles.promptSuggestions}><h3>Complaint Response</h3></div>
-                                    <div className={styles.promptSuggestions}><h3>Headteacher’s Report to Governors</h3></div>
-                                </div>
-                    
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px" }} role="log">
