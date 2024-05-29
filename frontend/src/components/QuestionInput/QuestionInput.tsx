@@ -24,6 +24,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [selectedFile, setSelectedFile] = useState<string | undefined>("");
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState('Improve Prompt');
+    const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
 
     const updateButtonText = () => {
         if (window.innerWidth <= 450) {
@@ -69,8 +70,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     throw new Error(`Server responded with ${response.status}`);
                 }
                 const data = await response.json();
+                setTextFromDocument(true);
                 setQuestion(data.text);  
                 setIsLoadingDocument(false)
+                alert("PDF document uploaded. Please ask your questions.")
             } catch (error) {
                 console.error('Error uploading file:', error);
                 setIsLoadingDocument(false)
@@ -161,6 +164,13 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             sendQuestion()
         }
       }, [question, isScraped])
+
+      useEffect(() => {
+        if (question && textFromDocument) {
+            sendQuestion();
+            setTextFromDocument(false); // Reset the flag after sending
+        }
+    }, [question, textFromDocument]);
 
     return (
         <Stack horizontal className={styles.questionInputContainer}>
