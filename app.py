@@ -139,9 +139,9 @@ async def improve_prompt():
 
 async def get_improved_prompt(request_body):
     async with AsyncAzureOpenAI(
-        api_key=AZURE_OPENAI_KEY,
-        api_version="2023-08-01-preview",
-        azure_endpoint=AZURE_OPENAI_ENDPOINT
+        api_key=app_settings.azure_openai.key,
+        api_version=MINIMUM_SUPPORTED_AZURE_OPENAI_PREVIEW_API_VERSION,
+        azure_endpoint=app_settings.azure_openai.endpoint
     ) as openai_client:
 
         messages = [
@@ -156,11 +156,11 @@ async def get_improved_prompt(request_body):
         ]
 
         response = await openai_client.chat.completions.create(
-            model=AZURE_OPENAI_MODEL,
+            model=app_settings.azure_openai.model,
             messages=messages,
-            max_tokens=int(AZURE_OPENAI_MAX_TOKENS),
-            top_p=float(AZURE_OPENAI_TOP_P),
-            stop=AZURE_OPENAI_STOP_SEQUENCE.split("|") if AZURE_OPENAI_STOP_SEQUENCE else None,
+            max_tokens=int(app_settings.azure_openai.max_tokens),
+            top_p=float(app_settings.azure_openai.top_p),
+            stop=app_settings.azure_openai.stop_sequence.split("|") if app_settings.azure_openai.stop_sequence else None,
         )
 
         return response.choices[0].message.content
