@@ -22,7 +22,6 @@ import {
   conversationApi,
   Citation,
   ToolMessageContent,
-  AzureSqlServerExecResults,
   ChatResponse,
   getUserInfo,
   Conversation,
@@ -31,14 +30,24 @@ import {
   historyClear,
   ChatHistoryLoadingState,
   CosmosDBStatus,
-  ErrorMessage,
-  AzureSqlServerCodeExecResult
+  ErrorMessage
 } from '../../api'
 import { Answer } from '../../components/Answer'
 import { QuestionInput } from '../../components/QuestionInput'
 import { ChatHistoryPanel } from '../../components/ChatHistory/ChatHistoryPanel'
 import { AppStateContext } from '../../state/AppProvider'
 import { useBoolean } from '@fluentui/react-hooks'
+
+type ImageImports = {
+    [key: string]: string;
+  };
+
+  const imageImports: ImageImports = {
+    leadingai: leadingai,
+    fea: fea,
+    ambition: ambition
+    // Add more entries as needed for other images
+  };
 
 const enum messageStatus {
   NotRunning = 'Not Running',
@@ -695,25 +704,6 @@ const Chat = () => {
     return []
   }
 
-  const parsePlotFromMessage = (message: ChatMessage) => {
-    if (message?.role && message?.role === "tool") {
-      try {
-        const execResults = JSON.parse(message.content) as AzureSqlServerExecResults;
-        const codeExecResult = execResults.all_exec_results.at(-1)?.code_exec_result;
-        if (codeExecResult === undefined) {
-          return null;
-        }
-        return codeExecResult;
-      }
-      catch {
-        return null;
-      }
-      // const execResults = JSON.parse(message.content) as AzureSqlServerExecResults;
-      // return execResults.all_exec_results.at(-1)?.code_exec_result;
-    }
-    return null;
-  }
-
     const disabledButton = () => {
         return isLoading || (messages && messages.length === 0) || clearingChat || appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading
     }
@@ -763,7 +753,6 @@ const Chat = () => {
                                                     answer={{
                                                         answer: answer.content,
                                                         citations: parseCitationFromMessage(messages[index - 1]),
-                                                        plotly_data: parsePlotFromMessage(messages[index - 1]),
                                                         message_id: answer.id,
                                                         feedback: answer.feedback
                                                     }}
@@ -785,8 +774,7 @@ const Chat = () => {
                                             <Answer
                                                 answer={{
                                                     answer: "Generating answer...",
-                                                    citations: [],
-                                                    plotly_data: null
+                                                    citations: []
                                                 }}
                                                 onCitationClicked={() => null}
                                             />
