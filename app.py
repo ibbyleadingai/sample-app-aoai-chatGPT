@@ -94,7 +94,16 @@ frontend_settings = {
         "share_button_link": app_settings.ui.share_button_link,
         "show_web_scrape": app_settings.ui.show_web_scrape,
         "header_color": app_settings.ui.header_color,
-        "chat_color": app_settings.ui.chat_color
+        "chat_color": app_settings.ui.chat_color,
+        "chat_text_color": app_settings.ui.chat_text_color,
+        "title_text_color": app_settings.ui.chat_text_color,
+        "improve_button_color": app_settings.ui.improve_button_color,
+        "stop_generating_color": app_settings.ui.stop_generating_color,
+        "show_chat_logo": app_settings.ui.show_chat_logo,
+        "show_logo": app_settings.ui.show_logo,
+        "show_upload_button": app_settings.ui.show_upload_button,
+        "show_history_button": app_settings.ui.show_history_button,
+        "chat_font_empty_state": app_settings.ui.chat_font_empty_state
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
