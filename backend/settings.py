@@ -41,28 +41,13 @@ class _UiSettings(BaseSettings):
         env_ignore_empty=True
     )
 
-    title: str = "AI Assistant"
+    title: str = "Contoso"
     logo: Optional[str] = None
     chat_logo: Optional[str] = None
     chat_title: str = ""
     chat_description: str = ""
     favicon: str = "/favicon.ico"
     show_share_button: bool = False
-    share_button_text: str = ""
-    share_button_link: str = ""
-    show_web_scrape: bool = False
-    header_color: str = "#1a1b21"
-    chat_color: str = "23252c"
-    chat_text_color: str = "whitesmoke"
-    title_text_color: str = "whitesmoke"
-    improve_button_color: str = "#1a1b21"
-    stop_generating_color: str = "whitesmoke"
-    show_chat_logo: bool = False
-    show_logo: bool = False
-    show_upload_button: bool = False
-    show_history_button: bool = False
-    improve_button_text_color: str = "whitesmoke"
-    chat_font_empty_state: bool = "monospace"
     # Add more env variables here
 
 
