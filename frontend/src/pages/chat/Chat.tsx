@@ -765,7 +765,7 @@ const Chat = () => {
         </Stack>
       ) : (
         <Stack horizontal className={styles.chatRoot}>
-          <div className={styles.chatContainer}>
+          <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color}}>
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>
                 {/* <img src={ui?.chat_logo ? ui.chat_logo : Contoso} className={styles.chatIcon} aria-hidden="true" /> */}

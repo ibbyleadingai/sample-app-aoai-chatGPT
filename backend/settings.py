@@ -48,7 +48,11 @@ class _UiSettings(BaseSettings):
     chat_description: str = ""
     favicon: str = "/favicon.ico"
     show_share_button: bool = True
-    # share_button_text: str = "Share"
+    share_button_text: str = "Share"
+    share_button_link: str = "https://www.google.com/"
+    show_web_scrape: bool = False
+    header_color: str = "#1a1b21"
+    chat_color: str = "#23252c"
     # Add more env variables here
 
 
