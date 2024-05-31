@@ -90,6 +90,7 @@ frontend_settings = {
         "chat_title": app_settings.ui.chat_title,
         "chat_description": app_settings.ui.chat_description,
         "show_share_button": app_settings.ui.show_share_button,
+        # "share_button_text": app_settings.ui.share_button_text
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }

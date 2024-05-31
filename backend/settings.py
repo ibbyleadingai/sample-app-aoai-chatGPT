@@ -47,7 +47,8 @@ class _UiSettings(BaseSettings):
     chat_title: str = ""
     chat_description: str = ""
     favicon: str = "/favicon.ico"
-    show_share_button: bool = False
+    show_share_button: bool = True
+    # share_button_text: str = "Share"
     # Add more env variables here
 
 
