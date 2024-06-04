@@ -8,7 +8,7 @@ import morley from "../../assets/morley.png"
 import engineLogo from "../../assets/Engine-Logo.svg"
 import coram from "../../assets/coram.gif"
 import glasgowuni from "../../assets/glasgowuni.svg"
-import footballIcon from "../../assets/football-icon.jpg"
+import footballIcon from "../../assets/football-icon.png"
 import { CopyRegular } from '@fluentui/react-icons'
 
 import { CosmosDBStatus } from '../../api'
