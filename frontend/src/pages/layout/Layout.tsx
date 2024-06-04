@@ -8,11 +8,11 @@ import morley from "../../assets/morley.png"
 import engineLogo from "../../assets/Engine-Logo.svg"
 import coram from "../../assets/coram.gif"
 import glasgowuni from "../../assets/glasgowuni.svg"
-import footballIcon from "../..assets/football-icon.jpg"
+import footballIcon from "../../assets/football-icon.jpg"
 import { CopyRegular } from '@fluentui/react-icons'
 
 import { CosmosDBStatus } from '../../api'
-import Contoso from '../../assets/Contoso.svg'
+// import Contoso from '../../assets/Contoso.svg'
 import { HistoryButton, ShareButton } from '../../components/common/Button'
 import { AppStateContext } from '../../state/AppProvider'
 
