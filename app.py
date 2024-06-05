@@ -65,7 +65,7 @@ UI_SHOW_LOGO = os.environ.get("UI_SHOW_LOGO", "true").lower() == "true"
 UI_SHOW_UPLOAD_BUTTON = os.environ.get("UI_SHOW_UPLOAD_BUTTON", "false").lower() == "true"
 UI_TEXT_INPUT_BORDER_COLOR = os.environ.get("UI_TEXT_INPUT_BORDER_COLOR") or "#28fbaa"
 UI_CHAT_FONT_EMPTY_STATE = os.environ.get("UI_CHAT_FONT_EMPTY_STATE") or 'monospace'
-UI_SHOW_CITATION_PANEL = os.environ.get("UI_SHOW_CITATION_PANEL", "false").lower() == "true"
+UI_SHOW_CITATION_PANEL = os.environ.get("UI_SHOW_CITATION_PANEL", "true").lower() == "true"
 
 def create_app():
     app = Quart(__name__)
