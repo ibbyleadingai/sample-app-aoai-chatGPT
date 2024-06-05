@@ -125,6 +125,7 @@ export type UI = {
     text_input_border_color?: string;
     improve_button_text_color?: string;
     chat_font_empty_state?: string;
+    show_citation_panel?: boolean;
 }
 
 export type FrontendSettings = {

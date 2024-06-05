@@ -63,7 +63,7 @@ const Chat = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showLoadingMessage, setShowLoadingMessage] = useState<boolean>(false);
     const [activeCitation, setActiveCitation] = useState<Citation>();
-    const [isCitationPanelOpen, setIsCitationPanelOpen] = useState<boolean>(false);
+    const [isCitationPanelOpen, setIsCitationPanelOpen] = useState<boolean | undefined>(false);
     const abortFuncs = useRef([] as AbortController[]);
     const [showAuthMessage, setShowAuthMessage] = useState<boolean>(true);
     const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -683,7 +683,7 @@ const Chat = () => {
 
   const onShowCitation = (citation: Citation) => {
     setActiveCitation(citation)
-    setIsCitationPanelOpen(true)
+    setIsCitationPanelOpen(ui?.show_citation_panel)
   }
 
   const onViewSource = (citation: Citation) => {
