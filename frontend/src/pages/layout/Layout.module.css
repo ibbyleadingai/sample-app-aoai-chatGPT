@@ -4,9 +4,10 @@
   height: 100%;
 }
 
-/* .header {
-    background-color: #2d2d2d;
-} */
+.header {
+  position: relative;
+  z-index: 3;
+}
 
 .headerContainer {
   display: flex;
