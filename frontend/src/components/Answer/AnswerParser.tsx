@@ -1,6 +1,7 @@
 import { cloneDeep } from 'lodash'
 
 import { AskResponse, Citation } from '../../api'
+import { AppStateContext } from '../../state/AppProvider'
 
 export type ParsedAnswer = {
   citations: Citation[]
