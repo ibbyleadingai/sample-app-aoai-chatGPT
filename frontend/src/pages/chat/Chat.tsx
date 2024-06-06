@@ -8,13 +8,12 @@ import rehypeRaw from 'rehype-raw'
 import uuid from 'react-uuid'
 import { isEmpty } from 'lodash'
 import DOMPurify from 'dompurify'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-import styles from "./Chat.module.css";
-// import Contoso from "../../assets/Contoso.svg";
-import leadingai from "../../assets/leadingai.svg"
-import fea from "../../assets/fea.svg"
-import ambition from "../../assets/ambition.png"
-import { XSSAllowTags } from "../../constants/xssAllowTags";
+import styles from './Chat.module.css'
+import Contoso from '../../assets/Contoso.svg'
+import { XSSAllowTags } from '../../constants/xssAllowTags'
 
 import {
   ChatMessage,
@@ -32,6 +31,7 @@ import {
   ChatHistoryLoadingState,
   CosmosDBStatus,
   ErrorMessage,
+  ExecResults,
   AzureSqlServerCodeExecResult
 } from "../../api";
 import { Answer } from "../../components/Answer";
@@ -66,9 +66,11 @@ const Chat = () => {
     const [showLoadingMessage, setShowLoadingMessage] = useState<boolean>(false);
     const [activeCitation, setActiveCitation] = useState<Citation>();
     const [isCitationPanelOpen, setIsCitationPanelOpen] = useState<boolean>(false);
-    const abortFuncs = useRef([] as AbortController[]);
+    const [isIntentsPanelOpen, setIsIntentsPanelOpen] = useState<boolean>(false)
+  const abortFuncs = useRef([] as AbortController[]);
     const [showAuthMessage, setShowAuthMessage] = useState<boolean>(true);
     const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [execResults, setExecResults] = useState<ExecResults[]>([])
     const [processMessages, setProcessMessages] = useState<messageStatus>(messageStatus.NotRunning);
     const [clearingChat, setClearingChat] = useState<boolean>(false);
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
@@ -137,6 +139,11 @@ const Chat = () => {
   let assistantContent = ''
 
   const processResultMessage = (resultMessage: ChatMessage, userMessage: ChatMessage, conversationId?: string) => {
+    if (resultMessage.content.includes('all_exec_results')) {
+      const parsedExecResults = JSON.parse(resultMessage.content) as AzureSqlServerExecResults
+      setExecResults(parsedExecResults.all_exec_results)
+    }
+
     if (resultMessage.role === ASSISTANT) {
       assistantContent += resultMessage.content
       assistantMessage = resultMessage
@@ -534,6 +541,7 @@ const Chat = () => {
         appStateContext?.dispatch({ type: 'UPDATE_CHAT_HISTORY', payload: appStateContext?.state.currentChat })
         setActiveCitation(undefined)
         setIsCitationPanelOpen(false)
+        setIsIntentsPanelOpen(false)
         setMessages([])
       }
     }
@@ -599,6 +607,7 @@ const Chat = () => {
         setProcessMessages(messageStatus.Processing)
         setMessages([])
         setIsCitationPanelOpen(false);
+        setIsIntentsPanelOpen(false)
         setActiveCitation(undefined);
         appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: null });
         appStateContext?.dispatch({ type: 'RESET_SELECTED_FILE' });
@@ -686,6 +695,10 @@ const Chat = () => {
   const onShowCitation = (citation: Citation) => {
     setActiveCitation(citation)
     setIsCitationPanelOpen(true)
+  }
+
+  const onShowExecResult = () => {
+    setIsIntentsPanelOpen(true)
   }
 
   const onViewSource = (citation: Citation) => {
@@ -788,9 +801,11 @@ const Chat = () => {
                             citations: parseCitationFromMessage(messages[index - 1]),
                             plotly_data: parsePlotFromMessage(messages[index - 1]),
                             message_id: answer.id,
-                            feedback: answer.feedback
+                            feedback: answer.feedback,
+                            exec_results: execResults
                           }}
                           onCitationClicked={c => onShowCitation(c)}
+                          onExectResultClicked={() => onShowExecResult()}
                         />
                       </div>
                     ) : answer.role === ERROR ? (
@@ -814,6 +829,7 @@ const Chat = () => {
                           plotly_data: null
                         }}
                         onCitationClicked={() => null}
+                        onExectResultClicked={() => null}
                       />
                     </div>
                   </>
@@ -957,6 +973,54 @@ const Chat = () => {
                   rehypePlugins={[rehypeRaw]}
                 />
               </div>
+            </Stack.Item>
+          )}
+          {messages && messages.length > 0 && isIntentsPanelOpen && (
+            <Stack.Item className={styles.citationPanel} tabIndex={0} role="tabpanel" aria-label="Intents Panel">
+              <Stack
+                aria-label="Intents Panel Header Container"
+                horizontal
+                className={styles.citationPanelHeaderContainer}
+                horizontalAlign="space-between"
+                verticalAlign="center">
+                <span aria-label="Intents" className={styles.citationPanelHeader}>
+                  Intents
+                </span>
+                <IconButton
+                  iconProps={{ iconName: 'Cancel' }}
+                  aria-label="Close intents panel"
+                  onClick={() => setIsIntentsPanelOpen(false)}
+                />
+              </Stack>
+              <Stack horizontalAlign="space-between">
+                {execResults.map((execResult) => {
+                  return (
+                    <Stack className={styles.exectResultList} verticalAlign="space-between">
+                      <><span>Intent:</span> <p>{execResult.intent}</p></>
+                      {execResult.search_query && <><span>Search Query:</span>
+                        <SyntaxHighlighter
+                          style={nord}
+                          wrapLines={true}
+                          lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
+                          language="sql"
+                          PreTag="p">
+                          {execResult.search_query}
+                        </SyntaxHighlighter></>}
+                      {execResult.search_result && <><span>Search Result:</span> <p>{execResult.search_result}</p></>}
+                      {execResult.code_generated && <><span>Code Generated:</span>
+                        <SyntaxHighlighter
+                          style={nord}
+                          wrapLines={true}
+                          lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
+                          language="python"
+                          PreTag="p">
+                          {execResult.code_generated}
+                        </SyntaxHighlighter>
+                      </>}
+                    </Stack>
+                  )
+                })}
+              </Stack>
             </Stack.Item>
           )}
           {appStateContext?.state.isChatHistoryOpen &&
