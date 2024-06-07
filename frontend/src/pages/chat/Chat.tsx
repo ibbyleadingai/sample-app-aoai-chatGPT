@@ -292,7 +292,6 @@ const Chat = () => {
   const makeApiRequestWithCosmosDB = async (question: string, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
-    setIsLoadingWebsite(true)
     const abortController = new AbortController()
     abortFuncs.current.unshift(abortController)
 
@@ -312,7 +311,6 @@ const Chat = () => {
         console.error('Conversation not found.')
         setIsLoading(false) 
         setShowLoadingMessage(false)
-        setIsLoadingWebsite(false)
         abortFuncs.current = abortFuncs.current.filter(a => a !== abortController)
         return
       } else {
