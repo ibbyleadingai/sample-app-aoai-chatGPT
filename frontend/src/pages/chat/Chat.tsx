@@ -72,6 +72,7 @@ const Chat = () => {
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
     const [inputKey, setInputKey] = useState(0);
+    const [loadingWebsite, setIsLoadingWebsite] = useState<boolean>(false)
 
   const errorDialogContentProps = {
     type: DialogType.close,
@@ -290,6 +291,7 @@ const Chat = () => {
   const makeApiRequestWithCosmosDB = async (question: string, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
+    setIsLoadingWebsite(true)
     const abortController = new AbortController()
     abortFuncs.current.unshift(abortController)
 
@@ -307,8 +309,9 @@ const Chat = () => {
       conversation = appStateContext?.state?.chatHistory?.find(conv => conv.id === conversationId)
       if (!conversation) {
         console.error('Conversation not found.')
-        setIsLoading(false)
+        setIsLoading(false) 
         setShowLoadingMessage(false)
+        setIsLoadingWebsite(false)
         abortFuncs.current = abortFuncs.current.filter(a => a !== abortController)
         return
       } else {
@@ -797,7 +800,7 @@ const Chat = () => {
                                     onKeyDown={e => e.key === "Enter" || e.key === " " ? stopGenerating() : null}
                                 >
                                     <SquareRegular className={styles.stopGeneratingIcon} aria-hidden="true" />
-                                    <span className={styles.stopGeneratingText} style={{color: ui?.stop_generating_color}} aria-hidden="true">Stop generating</span>
+                                    <span className={styles.stopGeneratingText} style={{color: ui?.stop_generating_color}} aria-hidden="true">{loadingWebsite ? "Loading assistant. Please wait..." : "Stop generating"}</span>
                                 </Stack>
                             )}
                             <Stack>
