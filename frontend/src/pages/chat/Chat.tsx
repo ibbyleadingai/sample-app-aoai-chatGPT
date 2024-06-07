@@ -72,7 +72,7 @@ const Chat = () => {
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
     const [inputKey, setInputKey] = useState(0);
-    const [loadingWebsite, setIsLoadingWebsite] = useState<boolean>(false)
+    const [isLoadingWebsite, setIsLoadingWebsite] = useState<boolean>(false)
 
   const errorDialogContentProps = {
     type: DialogType.close,
@@ -115,7 +115,8 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
+    // setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
+    setIsLoadingWebsite(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
   }, [appStateContext?.state.chatHistoryLoadingState])
 
   const getUserInfoList = async () => {
@@ -800,7 +801,7 @@ const Chat = () => {
                                     onKeyDown={e => e.key === "Enter" || e.key === " " ? stopGenerating() : null}
                                 >
                                     <SquareRegular className={styles.stopGeneratingIcon} aria-hidden="true" />
-                                    <span className={styles.stopGeneratingText} style={{color: ui?.stop_generating_color}} aria-hidden="true">{loadingWebsite ? "Loading assistant. Please wait..." : "Stop generating"}</span>
+                                    <span className={styles.stopGeneratingText} style={{color: ui?.stop_generating_color}} aria-hidden="true">{isLoadingWebsite ? "Please wait..." : "Stop generating"}</span>
                                 </Stack>
                             )}
                             <Stack>
