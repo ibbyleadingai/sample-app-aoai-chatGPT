@@ -9,6 +9,7 @@ import engineLogo from "../../assets/Engine-Logo.svg"
 import coram from "../../assets/coram.gif"
 import glasgowuni from "../../assets/glasgowuni.svg"
 import footballIcon from "../../assets/football-icon.png"
+import faLogo from "../../assets/falogo.png"
 import { CopyRegular } from '@fluentui/react-icons'
 
 import { CosmosDBStatus } from '../../api'
