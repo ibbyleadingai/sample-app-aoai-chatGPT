@@ -41,7 +41,8 @@ const Layout = () => {
         morley: morley,
         coram: coram,
         glasgowuni: glasgowuni,
-        footballIcon: footballIcon
+        footballIcon: footballIcon,
+        faLogo: faLogo
         // Add more entries as needed for other images
       };
 
