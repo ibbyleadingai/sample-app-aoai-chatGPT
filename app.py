@@ -66,6 +66,7 @@ UI_SHOW_UPLOAD_BUTTON = os.environ.get("UI_SHOW_UPLOAD_BUTTON", "false").lower()
 UI_TEXT_INPUT_BORDER_COLOR = os.environ.get("UI_TEXT_INPUT_BORDER_COLOR") or "#28fbaa"
 UI_CHAT_FONT_EMPTY_STATE = os.environ.get("UI_CHAT_FONT_EMPTY_STATE") or 'monospace'
 UI_SHOW_CITATION_PANEL = os.environ.get("UI_SHOW_CITATION_PANEL", "true").lower() == "true"
+UI_ADDITIONAL_TEXT = os.environ.get("UI_ADDITIONAL_TEXT")
 
 def create_app():
     app = Quart(__name__)
@@ -300,7 +301,8 @@ frontend_settings = {
         "show_history_button": UI_SHOW_HISTORY_BUTTON,
         "improve_button_text_color": UI_IMPROVE_BUTTON_TEXT_COLOR,
         "chat_font_empty_state": UI_CHAT_FONT_EMPTY_STATE,
-        "show_citation_panel": UI_SHOW_CITATION_PANEL
+        "show_citation_panel": UI_SHOW_CITATION_PANEL,
+        "additional_text": UI_ADDITIONAL_TEXT
     }
 }
 

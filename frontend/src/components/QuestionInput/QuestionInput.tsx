@@ -270,6 +270,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     }}>{selectedFile}</div>}
                 </div>
             </div>}
+            <p style={{color: ui?.chat_text_color}} className={styles.additionalText}>{ui?.additional_text}</p>
         </Stack>
     );
 };
