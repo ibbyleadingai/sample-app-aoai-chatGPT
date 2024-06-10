@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
-import { SendRegular, Whiteboard20Filled } from "@fluentui/react-icons";
+import { SendRegular, Whiteboard20Filled, WindowWrench16Filled } from "@fluentui/react-icons";
 import { useBoolean } from '@fluentui/react-hooks';
 import Send from "../../assets/Send.svg";
 import styles from "./QuestionInput.module.css";
@@ -270,7 +270,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     }}>{selectedFile}</div>}
                 </div>
             </div>}
-            <p style={{color: ui?.chat_text_color}} className={styles.additionalText}>{ui?.additional_text}</p>
+            <p style={{color: ui?.chat_text_color}} className={styles.additionalText}>
+              {ui?.disclaimer_text} 
+              <a href={ui?.disclaimer_text_link} target="_blank">here</a>
+            </p>
         </Stack>
     );
 };
