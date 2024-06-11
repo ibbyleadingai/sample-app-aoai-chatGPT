@@ -272,7 +272,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             </div>}
             <p style={{color: ui?.chat_text_color}} className={styles.additionalText}>
               {ui?.disclaimer_text} 
-              <a href={ui?.disclaimer_text_link} target="_blank">here</a>
+              {ui?.disclaimer_text && <a href={ui?.disclaimer_text_link} target="_blank">here</a>}
             </p>
         </Stack>
     );
