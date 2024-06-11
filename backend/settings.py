@@ -63,6 +63,9 @@ class _UiSettings(BaseSettings):
     show_history_button: bool = False
     improve_button_text_color: str = "whitesmoke"
     chat_font_empty_state: str = "monospace"
+    show_citation_panel: bool = True
+    disclaimer_text: str = ""
+    disclaimer_text_link: str = ""
     # Add more env variables here
 
 
