@@ -264,7 +264,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     key={resetKey}  // Use the key to force a re-render
                     />
                     {selectedFile && <div style={{ 
-                        color: '#fff', 
+                        color: ui?.chat_text_color, 
                         fontSize: '14px',
                         // Add more styles as needed
                     }}>{selectedFile}</div>}
