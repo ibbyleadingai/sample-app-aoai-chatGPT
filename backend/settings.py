@@ -66,6 +66,14 @@ class _UiSettings(BaseSettings):
     show_citation_panel: bool = True
     disclaimer_text: str = ""
     disclaimer_text_link: str = ""
+    prompt1_suggestion_text: str = ""
+    prompt2_suggestion_text: str = ""
+    prompt3_suggestion_text: str = ""
+    prompt1_suggestion_message: str = ""
+    prompt2_suggestion_message: str = ""
+    prompt3_suggestion_message: str = ""
+
+
     # Add more env variables here
 
 

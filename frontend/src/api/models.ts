@@ -156,6 +156,12 @@ export type UI = {
     show_citation_panel?: boolean;
     disclaimer_text?: string;
     disclaimer_text_link?: string;
+    prompt1_suggestion_text?: string;
+    prompt2_suggestion_text?: string;
+    prompt3_suggestion_text?: string;
+    prompt1_suggestion_message?: string;
+    prompt2_suggestion_message?: string;
+    prompt3_suggestion_message?: string
 }
 
 export type FrontendSettings = {
