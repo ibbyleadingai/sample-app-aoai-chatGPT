@@ -104,7 +104,10 @@ frontend_settings = {
         "show_logo": app_settings.ui.show_logo,
         "show_upload_button": app_settings.ui.show_upload_button,
         "show_history_button": app_settings.ui.show_history_button,
-        "chat_font_empty_state": app_settings.ui.chat_font_empty_state
+        "chat_font_empty_state": app_settings.ui.chat_font_empty_state,
+        "show_citation_panel": app_settings.ui.show_citation_panel,
+        "disclaimer_text": app_settings.ui.disclaimer_text,
+        "disclaimer_text_link": app_settings.ui.disclaimer_text
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
