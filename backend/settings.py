@@ -58,9 +58,9 @@ class _UiSettings(BaseSettings):
     improve_button_color: str = "#1a1b21"
     stop_generating_color: str = "whitesmoke"
     show_chat_logo: bool = False
-    show_logo: bool = False
+    show_logo: bool = True
     show_upload_button: bool = False
-    show_history_button: bool = False
+    show_history_button: bool = True
     improve_button_text_color: str = "whitesmoke"
     chat_font_empty_state: str = "monospace"
     show_citation_panel: bool = True
