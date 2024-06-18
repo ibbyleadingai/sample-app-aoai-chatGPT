@@ -47,7 +47,7 @@ class _UiSettings(BaseSettings):
     chat_title: str = ""
     chat_description: str = ""
     favicon: str = "/favicon.ico"
-    show_share_button: bool = True
+    show_share_button: bool = False
     share_button_text: str = "Share"
     share_button_link: str = "https://www.google.com/"
     show_web_scrape: bool = False

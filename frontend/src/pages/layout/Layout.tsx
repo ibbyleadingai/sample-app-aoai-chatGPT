@@ -9,6 +9,7 @@ import engineLogo from "../../assets/Engine-Logo.svg"
 import fea from "../../assets/fea.svg"
 import coram from "../../assets/coram.gif"
 import glasgowuni from "../../assets/glasgowuni.svg"
+import tri from "../../assets/tri.png"
 import { CopyRegular } from '@fluentui/react-icons'
 
 import { CosmosDBStatus } from '../../api'
@@ -40,7 +41,8 @@ const Layout = () => {
         morley: morley,
         coram: coram,
         glasgowuni: glasgowuni,
-        fea: fea
+        fea: fea,
+        tri: tri
         // Add more entries as needed for other images
       };
 
