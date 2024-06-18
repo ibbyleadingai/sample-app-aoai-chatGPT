@@ -66,6 +66,8 @@ class _UiSettings(BaseSettings):
     show_citation_panel: bool = True
     disclaimer_text: str = ""
     disclaimer_text_link: str = ""
+    chat_text_shadow: bool = True
+    show_title: bool = True
     # Add more env variables here
 
 

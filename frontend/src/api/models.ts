@@ -156,6 +156,8 @@ export type UI = {
     show_citation_panel?: boolean;
     disclaimer_text?: string;
     disclaimer_text_link?: string;
+    chat_text_shadow?: boolean;
+    show_title?: boolean
 }
 
 export type FrontendSettings = {
