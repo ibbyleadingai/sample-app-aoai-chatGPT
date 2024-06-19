@@ -10,6 +10,7 @@ import pdfplumber
 import tempfile
 import magic
 import aiofiles
+import logging
 
 from quart import (
     Blueprint,
@@ -133,32 +134,39 @@ async def upload_pdf():
         if file.content_length > MAX_FILE_SIZE:
             return jsonify({'error': 'File size exceeds limit'}), 400
 
-        # Create a temporary directory for file storage
-        with tempfile.TemporaryDirectory() as tempdir:
-            filepath = os.path.join(tempdir, file.filename)
-            text = ''
+        # Create a temporary directory for storage
+        tempdir = tempfile.mkdtemp()
+        filepath = os.path.join(tempdir, file.filename)
 
-            try:
-                # Save the file securely
-                async with aiofiles.open(filepath, 'wb') as out_file:
-                    content = await file.read()
-                    await out_file.write(content)
+        text = ''
+        try:
+            # Save the file securely
+            async with aiofiles.open(filepath, 'wb') as out_file:
+                content = file.read()  # Read the file content without await
+                await out_file.write(content)
 
-                # Verify the file type
-                mime = magic.Magic(mime=True)
-                file_mime_type = mime.from_file(filepath)
-                if file_mime_type != 'application/pdf':
-                    return jsonify({'error': 'Invalid file type'}), 400
+            # Verify the file type
+            mime = magic.Magic(mime=True)
+            file_mime_type = mime.from_file(filepath)
+            if file_mime_type != 'application/pdf':
+                os.remove(filepath)
+                return jsonify({'error': 'Invalid file type'}), 400
 
-                # Process the PDF
-                with pdfplumber.open(filepath) as pdf:
-                    pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
-                    text = ' '.join(pages)
+            # Process the PDF
+            with pdfplumber.open(filepath) as pdf:
+                pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
+                text = ' '.join(pages)
 
-                return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
-            except Exception as e:
-                logger.error(f"An error occurred: {e}")
-                return jsonify({'error': 'An internal server error occurred'}), 500
+            os.remove(filepath)
+            os.rmdir(tempdir)
+            return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
+        except Exception as e:
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            if os.path.exists(tempdir):
+                os.rmdir(tempdir)
+            print(f"An error occurred: {e}")  # Detailed logging
+            return jsonify({'error': 'An internal server error occurred'}), 500
     else:
         return jsonify({'error': 'No file uploaded'}), 400
 
