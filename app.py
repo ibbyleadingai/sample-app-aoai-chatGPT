@@ -10,7 +10,6 @@ import pdfplumber
 import tempfile
 import magic
 import aiofiles
-import logging
 
 from quart import (
     Blueprint,
