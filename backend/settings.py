@@ -68,6 +68,13 @@ class _UiSettings(BaseSettings):
     disclaimer_text_link: str = ""
     chat_text_shadow: bool = True
     show_title: bool = True
+    prompt1_suggestion_text: str = ""
+    prompt2_suggestion_text: str = ""
+    prompt3_suggestion_text: str = ""
+    prompt1_suggestion_message: str = ""
+    prompt2_suggestion_message: str = ""
+    prompt3_suggestion_message: str = ""
+
     # Add more env variables here
 
 

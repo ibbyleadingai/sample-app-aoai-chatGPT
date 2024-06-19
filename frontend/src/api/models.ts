@@ -157,7 +157,13 @@ export type UI = {
     disclaimer_text?: string;
     disclaimer_text_link?: string;
     chat_text_shadow?: boolean;
-    show_title?: boolean
+    show_title?: boolean;
+    prompt1_suggestion_text?: string;
+    prompt2_suggestion_text?: string;
+    prompt3_suggestion_text?: string;
+    prompt1_suggestion_message?: string;
+    prompt2_suggestion_message?: string;
+    prompt3_suggestion_message?: string;
 }
 
 export type FrontendSettings = {
