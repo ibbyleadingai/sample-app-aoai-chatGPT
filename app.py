@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import httpx
 import pdfplumber
+import tempfile
+import magic
 import aiofiles
 
 from quart import (
@@ -114,29 +116,49 @@ frontend_settings = {
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
 
+# File size limit (10 MB)
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
+
 @bp.route('/upload-pdf', methods=['POST'])
 async def upload_pdf():
     files = await request.files
     file = files['file'] if 'file' in files else None
 
     if file:
-        filepath = os.path.join('temporary', file.filename)
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        text = ''
-        try:
-            async with aiofiles.open(filepath, 'wb') as out_file:
-                content = file.read()
-                await out_file.write(content)
+        # Ensure the file has a .pdf extension
+        if not file.filename.lower().endswith('.pdf'):
+            return jsonify({'error': 'File type not supported'}), 400
 
-            with pdfplumber.open(filepath) as pdf:
-                pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
-                text = ' '.join(pages)
+        # Check file size
+        if file.content_length > MAX_FILE_SIZE:
+            return jsonify({'error': 'File size exceeds limit'}), 400
 
-            os.remove(filepath)
-            return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            return jsonify({'error': 'An internal server error occurred'}), 500
+        # Create a temporary directory for file storage
+        with tempfile.TemporaryDirectory() as tempdir:
+            filepath = os.path.join(tempdir, file.filename)
+            text = ''
+
+            try:
+                # Save the file securely
+                async with aiofiles.open(filepath, 'wb') as out_file:
+                    content = await file.read()
+                    await out_file.write(content)
+
+                # Verify the file type
+                mime = magic.Magic(mime=True)
+                file_mime_type = mime.from_file(filepath)
+                if file_mime_type != 'application/pdf':
+                    return jsonify({'error': 'Invalid file type'}), 400
+
+                # Process the PDF
+                with pdfplumber.open(filepath) as pdf:
+                    pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
+                    text = ' '.join(pages)
+
+                return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
+            except Exception as e:
+                logger.error(f"An error occurred: {e}")
+                return jsonify({'error': 'An internal server error occurred'}), 500
     else:
         return jsonify({'error': 'No file uploaded'}), 400
 
