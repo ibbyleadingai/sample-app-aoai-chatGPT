@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import httpx
 import pdfplumber
 import tempfile
-import magic
+# import magic
 import aiofiles
 
 from quart import (
@@ -144,12 +144,12 @@ async def upload_pdf():
                 content = file.read()  # Read the file content without await
                 await out_file.write(content)
 
-            # Verify the file type
-            mime = magic.Magic(mime=True)
-            file_mime_type = mime.from_file(filepath)
-            if file_mime_type != 'application/pdf':
-                os.remove(filepath)
-                return jsonify({'error': 'Invalid file type'}), 400
+            # # Verify the file type
+            # mime = magic.Magic(mime=True)
+            # file_mime_type = mime.from_file(filepath)
+            # if file_mime_type != 'application/pdf':
+            #     os.remove(filepath)
+            #     return jsonify({'error': 'Invalid file type'}), 400
 
             # Process the PDF
             with pdfplumber.open(filepath) as pdf:
