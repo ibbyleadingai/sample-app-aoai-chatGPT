@@ -7,9 +7,7 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import httpx
 import pdfplumber
-import tempfile
-# import magic
-import aiofiles
+import io
 
 from quart import (
     Blueprint,
@@ -122,52 +120,44 @@ MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 @bp.route('/upload-pdf', methods=['POST'])
 async def upload_pdf():
     files = await request.files
-    file = files['file'] if 'file' in files else None
+    file = files.get('file')
 
-    if file:
-        # Ensure the file has a .pdf extension
-        if not file.filename.lower().endswith('.pdf'):
-            return jsonify({'error': 'File type not supported'}), 400
-
-        # Check file size
-        if file.content_length > MAX_FILE_SIZE:
-            return jsonify({'error': 'File size exceeds limit'}), 400
-
-        # Create a temporary directory for storage
-        tempdir = tempfile.mkdtemp()
-        filepath = os.path.join(tempdir, file.filename)
-
-        text = ''
-        try:
-            # Save the file securely
-            async with aiofiles.open(filepath, 'wb') as out_file:
-                content = file.read()  # Read the file content without await
-                await out_file.write(content)
-
-            # # Verify the file type
-            # mime = magic.Magic(mime=True)
-            # file_mime_type = mime.from_file(filepath)
-            # if file_mime_type != 'application/pdf':
-            #     os.remove(filepath)
-            #     return jsonify({'error': 'Invalid file type'}), 400
-
-            # Process the PDF
-            with pdfplumber.open(filepath) as pdf:
-                pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
-                text = ' '.join(pages)
-
-            os.remove(filepath)
-            os.rmdir(tempdir)
-            return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
-        except Exception as e:
-            if os.path.exists(filepath):
-                os.remove(filepath)
-            if os.path.exists(tempdir):
-                os.rmdir(tempdir)
-            print(f"An error occurred: {e}")  # Detailed logging
-            return jsonify({'error': 'An internal server error occurred'}), 500
-    else:
+    if not file:
         return jsonify({'error': 'No file uploaded'}), 400
+
+    # Ensure the file has a .pdf extension
+    if not file.filename.lower().endswith('.pdf'):
+        return jsonify({'error': 'File type not supported'}), 400
+
+    # Check MIME type (Content-Type) to ensure it is a PDF
+    if file.content_type != 'application/pdf':
+        return jsonify({'error': 'File type not supported'}), 400
+
+    # Read file content
+    try:
+        file_content = file.read()  # Use await for async read
+    except Exception as e:
+        logging.error(f"Error reading file: {e}", exc_info=True)
+        return jsonify({'error': 'Error reading file'}), 500
+
+    # Check file size
+    if len(file_content) > MAX_FILE_SIZE:
+        return jsonify({'error': 'File size exceeds limit'}), 400
+
+    try:
+        text = ''
+        # Process the PDF in-memory
+        with pdfplumber.open(io.BytesIO(file_content)) as pdf:
+            pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
+            text = ' '.join(pages)
+
+        return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions:\n\n' + text})
+    except pdfplumber.PDFSyntaxError as e:
+        logging.error(f"PDF syntax error: {e}", exc_info=True)  # Detailed logging
+        return jsonify({'error': 'Invalid PDF file'}), 400
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}", exc_info=True)  # Detailed logging
+        return jsonify({'error': 'An internal server error occurred'}), 500
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])

@@ -21,7 +21,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const appStateContext = useContext(AppStateContext)
     const ui = appStateContext?.state.frontendSettings?.ui;
     const [question, setQuestion] = useState<string>("")
-    const [link, setLink] = useState<string>('')
+    const [link, setLink] = useState<string>("")
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
     const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
@@ -29,6 +29,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState('Improve Prompt');
     const [multiline, { toggle: toggleMultiline }] = useBoolean(false);
+    const [fileUploadError, setFileUploadError] = useState<string>("")
 
     const updateButtonText = () => {
         if (window.innerWidth <= 480) {
@@ -60,36 +61,46 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     };
     
     const handleUpload = async (file: File | null) => {
-        if (file) {  // Use the file parameter that is passed to the function
-            // console.log("selected file", file);
-            setIsLoadingDocument(true)
-            const formData = new FormData();
-            formData.append('file', file);  // Use the file parameter
-    
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(`${key}: ${value}`);
-            // }
-            try {
-                const response = await fetch('/upload-pdf', {
-                    method: 'POST',
-                    body: formData,  
-                });
-                if (!response.ok) {
-                    throw new Error(`Server responded with ${response.status}`);
-                }
-                const data = await response.json();
-                setTextFromDocument(true);
-                setQuestion(data.text);  
-                setIsLoadingDocument(false)
-            } catch (error) {
-                console.error('Error uploading file:', error);
-                setIsLoadingDocument(false)
-                alert("Error uploading file. Please ensure the file type is a PDF.")
-            }
-        } else {
-            console.error('No file selected');
-        }
-    };
+      if (file) {
+          setIsLoadingDocument(true);
+          const formData = new FormData();
+          formData.append('file', file);
+          try {
+              const response = await fetch('/upload-pdf', {
+                  method: 'POST',
+                  body: formData,
+              });
+  
+              // Attempt to parse the response as JSON
+              let data;
+              try {
+                  data = await response.json();
+              } catch (parseError) {
+                  // If parsing fails, handle the error
+                  console.error('Error parsing response:', parseError);
+                  throw new Error('Failed to parse server response');
+              }
+  
+              if (!response.ok || data.error) {
+                  throw new Error(data.error || `Server responded with status ${response.status}`);
+              }
+  
+              setTextFromDocument(true);
+              setQuestion(data.text);
+          } catch (error) {
+              console.error('Error uploading file:', error);
+  
+              // Check if the error is a custom error message
+              const errorMessage = (error instanceof Error) ? error.message : 'An unknown error occurred.';
+              setFileUploadError(errorMessage);
+              alert(errorMessage);
+          } finally {
+              setIsLoadingDocument(false);
+          }
+      } else {
+          console.error('No file selected');
+      }
+  };
 
     const handleImprovePrompt = async () => {
         try {
