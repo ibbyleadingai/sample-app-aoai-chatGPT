@@ -131,8 +131,18 @@ async def upload_pdf():
     if not file.filename.lower().endswith('.pdf'):
         return jsonify({'error': 'File type not supported'}), 400
 
+    # Check MIME type (Content-Type) to ensure it is a PDF
+    if file.content_type != 'application/pdf':
+        return jsonify({'error': 'File type not supported'}), 400
+
+    # Read file content
+    try:
+        file_content = file.read()  # Use await for async read
+    except Exception as e:
+        # logger.error(f"Error reading file: {e}", exc_info=True)
+        return jsonify({'error': 'Error reading file'}), 500
+
     # Check file size
-    file_content = file.read()
     if len(file_content) > MAX_FILE_SIZE:
         return jsonify({'error': 'File size exceeds limit'}), 400
 
@@ -144,8 +154,11 @@ async def upload_pdf():
             text = ' '.join(pages)
 
         return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions:\n\n' + text})
+    except pdfplumber.PDFSyntaxError as e:
+        # logger.error(f"PDF syntax error: {e}", exc_info=True)  # Detailed logging
+        return jsonify({'error': 'Invalid PDF file'}), 400
     except Exception as e:
-        logger.error(f"An error occurred: {e}", exc_info=True)  # Detailed logging
+        # logger.error(f"An unexpected error occurred: {e}", exc_info=True)  # Detailed logging
         return jsonify({'error': 'An internal server error occurred'}), 500
 
 #Improve my prompt
