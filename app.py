@@ -6,9 +6,12 @@ import uuid
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import httpx
+
 import pdfplumber
 import aiofiles
 import tempfile
+from werkzeug.utils import secure_filename
+
 
 from quart import (
     Blueprint,
@@ -155,14 +158,14 @@ async def upload_pdf():
             # Clean up if an error occurs
             if os.path.exists(filepath):
                 os.remove(filepath)
-            if os.path.exists(tempdir):
+            if os.path.exists(tempdir) and not os.listdir(tempdir):
                 os.rmdir(tempdir)
+            logger.error(f"An error occurred: {e}", exc_info=True)  # Detailed logging
             return jsonify({'error': 'An internal server error occurred'}), 500
     else:
         return jsonify({'error': 'No file uploaded'}), 400
 
-def secure_filename(filename):
-    return filename.replace(" ", "_").replace("/", "_")
+# Secure filename function is replaced by werkzeug.utils.secure_filename
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])
