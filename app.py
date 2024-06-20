@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import httpx
 import pdfplumber
 import aiofiles
+import tempfile
 
 from quart import (
     Blueprint,
@@ -114,31 +115,54 @@ frontend_settings = {
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
 
+MAX_FILE_SIZE = 10 * 1024 * 1024  # Adjust as needed
+
 @bp.route('/upload-pdf', methods=['POST'])
 async def upload_pdf():
     files = await request.files
     file = files['file'] if 'file' in files else None
 
     if file:
-        filepath = os.path.join('temporary', file.filename)
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        # Ensure the file has a .pdf extension
+        if not file.filename.lower().endswith('.pdf'):
+            return jsonify({'error': 'File type not supported'}), 400
+
+        # Check file size
+        if file.content_length > MAX_FILE_SIZE:
+            return jsonify({'error': 'File size exceeds limit'}), 400
+
+        # Create a temporary directory for storage
+        tempdir = tempfile.mkdtemp()
+        filepath = os.path.join(tempdir, secure_filename(file.filename))  # Ensure filename is secure
+
         text = ''
         try:
+            # Save the file securely
             async with aiofiles.open(filepath, 'wb') as out_file:
-                content = file.read()
+                content = file.read()  # Keep this synchronous since it works for you
                 await out_file.write(content)
 
+            # Process the PDF
             with pdfplumber.open(filepath) as pdf:
                 pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
                 text = ' '.join(pages)
 
+            # Clean up the temporary file and directory
             os.remove(filepath)
-            return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions: \n\n' + text})
+            os.rmdir(tempdir)
+            return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions:\n\n' + text})
         except Exception as e:
-            print(f"An error occurred: {e}")
+            # Clean up if an error occurs
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            if os.path.exists(tempdir):
+                os.rmdir(tempdir)
             return jsonify({'error': 'An internal server error occurred'}), 500
     else:
         return jsonify({'error': 'No file uploaded'}), 400
+
+def secure_filename(filename):
+    return filename.replace(" ", "_").replace("/", "_")
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])
