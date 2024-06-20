@@ -60,36 +60,45 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     };
     
     const handleUpload = async (file: File | null) => {
-        if (file) {  // Use the file parameter that is passed to the function
-            // console.log("selected file", file);
-            setIsLoadingDocument(true)
-            const formData = new FormData();
-            formData.append('file', file);  // Use the file parameter
-    
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(`${key}: ${value}`);
-            // }
-            try {
-                const response = await fetch('/upload-pdf', {
-                    method: 'POST',
-                    body: formData,  
-                });
-                if (!response.ok) {
-                    throw new Error(`Server responded with ${response.status}`);
-                }
-                const data = await response.json();
-                setTextFromDocument(true);
-                setQuestion(data.text);  
-                setIsLoadingDocument(false)
-            } catch (error) {
-                console.error('Error uploading file:', error);
-                setIsLoadingDocument(false)
-                alert("Error uploading file. Please ensure the file type is a PDF.")
-            }
-        } else {
-            console.error('No file selected');
-        }
-    };
+      if (file) {
+          setIsLoadingDocument(true);
+          const formData = new FormData();
+          formData.append('file', file);
+          try {
+              const response = await fetch('/upload-pdf', {
+                  method: 'POST',
+                  body: formData,
+              });
+  
+              // Attempt to parse the response as JSON
+              let data;
+              try {
+                  data = await response.json();
+              } catch (parseError) {
+                  // If parsing fails, handle the error
+                  console.error('Error parsing response:', parseError);
+                  throw new Error('Failed to parse server response');
+              }
+  
+              if (!response.ok || data.error) {
+                  throw new Error(data.error || `Server responded with status ${response.status}`);
+              }
+  
+              setTextFromDocument(true);
+              setQuestion(data.text);
+          } catch (error) {
+              console.error('Error uploading file:', error);
+  
+              // Check if the error is a custom error message
+              const errorMessage = (error instanceof Error) ? error.message : 'An unknown error occurred.';
+              alert(errorMessage);
+          } finally {
+              setIsLoadingDocument(false);
+          }
+      } else {
+          console.error('No file selected');
+      }
+  };
 
     const handleImprovePrompt = async () => {
         try {
