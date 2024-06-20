@@ -111,6 +111,7 @@ frontend_settings = {
         "disclaimer_text_link": app_settings.ui.disclaimer_text,
         "chat_text_shadow": app_settings.ui.chat_text_shadow,
         "show_title": app_settings.ui.show_title,
+        "show_prompt_suggestions": app_settings.ui.show_prompt_suggestions,
         "prompt1_suggestion_text": app_settings.ui.prompt1_suggestion_text,
         "prompt2_suggestion_text": app_settings.ui.prompt2_suggestion_text,
         "prompt3_suggestion_text": app_settings.ui.prompt3_suggestion_text,

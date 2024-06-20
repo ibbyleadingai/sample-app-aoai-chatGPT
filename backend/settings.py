@@ -68,6 +68,7 @@ class _UiSettings(BaseSettings):
     disclaimer_text_link: str = ""
     chat_text_shadow: bool = True
     show_title: bool = True
+    show_prompt_suggestions: bool = False
     prompt1_suggestion_text: str = ""
     prompt2_suggestion_text: str = ""
     prompt3_suggestion_text: str = ""
