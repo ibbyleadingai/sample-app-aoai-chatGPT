@@ -29,7 +29,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState('Improve Prompt');
     const [multiline, { toggle: toggleMultiline }] = useBoolean(false);
-    const [fileUploadError, setFileUploadError] = useState<string>("")
 
     const updateButtonText = () => {
         if (window.innerWidth <= 480) {
@@ -92,7 +91,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
   
               // Check if the error is a custom error message
               const errorMessage = (error instanceof Error) ? error.message : 'An unknown error occurred.';
-              setFileUploadError(errorMessage);
               alert(errorMessage);
           } finally {
               setIsLoadingDocument(false);
