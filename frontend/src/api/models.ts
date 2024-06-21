@@ -164,6 +164,7 @@ export type UI = {
     prompt1_suggestion_message?: string;
     prompt2_suggestion_message?: string;
     prompt3_suggestion_message?: string;
+    show_prompt_suggestions?: boolean;
 }
 
 export type FrontendSettings = {
