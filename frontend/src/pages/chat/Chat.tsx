@@ -14,6 +14,7 @@ import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import styles from './Chat.module.css'
 import Contoso from '../../assets/Contoso.svg'
 import leadingai from "../../assets/leadingai.svg"
+import engineBlackLogo from "../../assets/Engine-Mark.svg"
 import fea from "../../assets/fea.svg"
 import ambition from "../../assets/ambition.png"
 import { XSSAllowTags } from '../../constants/xssAllowTags'
@@ -790,7 +791,7 @@ const Chat = () => {
           <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color}}>
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>
-                {/* <img src={ui?.chat_logo ? ui.chat_logo : Contoso} className={styles.chatIcon} aria-hidden="true" /> */}
+                <img src={engineBlackLogo} className={styles.chatIcon} aria-hidden="true" />
                 <div className={styles.chatHeader}>
                   <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
@@ -883,8 +884,7 @@ const Chat = () => {
                       },
                       root: {
                         color: '#FFFFFF',
-                        background:
-                          'radial-gradient(109.81% 107.82% at 100.1% 90.19%, #004d00 33.63%, #006600 70.31%, #008000 100%)'
+                        background: "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #2d2d2d 33.63%, #4aae7c 100%)",
                       },
                       rootDisabled: {
                         background: '#F0F0F0'

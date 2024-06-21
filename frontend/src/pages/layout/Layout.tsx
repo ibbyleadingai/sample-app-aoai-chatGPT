@@ -3,7 +3,6 @@ import { Link, Outlet } from 'react-router-dom'
 import { Dialog, Stack, TextField } from '@fluentui/react'
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
-import engine from "../../assets/Engine-Mark.svg"
 import morley from "../../assets/morley.png"
 import engineLogo from "../../assets/Engine-Logo.svg"
 import fea from "../../assets/fea.svg"
@@ -36,7 +35,6 @@ const Layout = () => {
       const imageImports: ImageImports = {
         leadingai: leadingai,
         ambition: ambition,
-        engine: engine,
         engineLogo: engineLogo,
         morley: morley,
         coram: coram,
@@ -109,7 +107,7 @@ const Layout = () => {
                 <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
                     <Stack horizontal verticalAlign="center">
                         {ui?.show_logo && <img
-                            src={dynamicImage}
+                            src={engineLogo}
                             className={styles.headerIcon}
                             aria-hidden="true"
                         />}
