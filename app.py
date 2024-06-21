@@ -97,7 +97,7 @@ frontend_settings = {
         "header_color": app_settings.ui.header_color,
         "chat_color": app_settings.ui.chat_color,
         "chat_text_color": app_settings.ui.chat_text_color,
-        "title_text_color": app_settings.ui.chat_text_color,
+        "title_text_color": app_settings.ui.title_text_color,
         "improve_button_color": app_settings.ui.improve_button_color,
         "improve_button_text_color": app_settings.ui.improve_button_text_color,
         "stop_generating_color": app_settings.ui.stop_generating_color,
