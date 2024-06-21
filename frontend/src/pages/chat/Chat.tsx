@@ -791,8 +791,10 @@ const Chat = () => {
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>
                 {/* <img src={ui?.chat_logo ? ui.chat_logo : Contoso} className={styles.chatIcon} aria-hidden="true" /> */}
-                <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
-                <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
+                <div className={styles.chatHeader}>
+                  <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
+                  <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
+                </div>
                 {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
                     <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt1)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
                     <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt2)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
