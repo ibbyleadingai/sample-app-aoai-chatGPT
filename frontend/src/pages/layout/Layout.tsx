@@ -4,7 +4,7 @@ import { Dialog, Stack, TextField } from '@fluentui/react'
 import ambition from "../../assets/ambition.png"
 import leadingai from "../../assets/leadingai.svg"
 import morley from "../../assets/morley.png"
-import engineLogo from "../../assets/Engine-Logo.svg"
+import engineLogo from "../../assets/Engine-Mark.svg"
 import fea from "../../assets/fea.svg"
 import coram from "../../assets/coram.gif"
 import glasgowuni from "../../assets/glasgowuni.svg"
