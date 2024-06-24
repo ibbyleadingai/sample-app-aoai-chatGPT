@@ -750,6 +750,8 @@ const Chat = () => {
     )
   }
 
+  const newChatButtonColor = ui?.new_chat_button_color;
+
   return (
     <div className={styles.container} role="main">
       {showAuthMessage ? (
@@ -870,8 +872,7 @@ const Chat = () => {
                       },
                       root: {
                         color: '#FFFFFF',
-                        background:
-                          'radial-gradient(109.81% 107.82% at 100.1% 90.19%, #004d00 33.63%, #006600 70.31%, #008000 100%)'
+                        background: newChatButtonColor
                       },
                       rootDisabled: {
                         background: '#F0F0F0'
