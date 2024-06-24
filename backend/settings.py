@@ -59,7 +59,7 @@ class _UiSettings(BaseSettings):
     stop_generating_color: str = "whitesmoke"
     show_chat_logo: bool = False
     show_logo: bool = True
-    show_upload_button: bool = True
+    show_upload_button: bool = False
     show_history_button: bool = True
     improve_button_text_color: str = "whitesmoke"
     chat_font_empty_state: str = "monospace"
@@ -68,6 +68,7 @@ class _UiSettings(BaseSettings):
     disclaimer_text_link: str = ""
     chat_text_shadow: bool = True
     show_title: bool = True
+    new_chat_button_color: str = "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #2d2d2d 33.63%, #4aae7c 100%)"
     # Add more env variables here
 
 

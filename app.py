@@ -109,7 +109,8 @@ frontend_settings = {
         "disclaimer_text": app_settings.ui.disclaimer_text,
         "disclaimer_text_link": app_settings.ui.disclaimer_text,
         "chat_text_shadow": app_settings.ui.chat_text_shadow,
-        "show_title": app_settings.ui.show_title
+        "show_title": app_settings.ui.show_title,
+        "new_chat_button_color": app_settings.ui.new_chat_button_color
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }

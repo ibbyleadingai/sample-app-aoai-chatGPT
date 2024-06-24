@@ -158,6 +158,7 @@ export type UI = {
     disclaimer_text_link?: string;
     chat_text_shadow?: boolean;
     show_title?: boolean
+    new_chat_button_color?: string;
 }
 
 export type FrontendSettings = {
