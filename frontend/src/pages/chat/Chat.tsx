@@ -791,7 +791,7 @@ const Chat = () => {
           <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color}}>
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>
-                <img src={engineBlackLogo} className={styles.chatIcon} aria-hidden="true" />
+                {/* <img src={engineBlackLogo} className={styles.chatIcon} aria-hidden="true" /> */}
                 <div className={styles.chatHeader}>
                   <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
