@@ -16,7 +16,7 @@ import Contoso from '../../assets/Contoso.svg'
 import leadingai from "../../assets/leadingai.svg"
 import fea from "../../assets/fea.svg"
 import ambition from "../../assets/ambition.png"
-import { XSSAllowTags } from '../../constants/xssAllowTags'
+import { XSSAllowTags } from '../../constants/sanatizeAllowables'
 
 import {
   ChatMessage,
@@ -35,7 +35,6 @@ import {
   CosmosDBStatus,
   ErrorMessage,
   ExecResults,
-  AzureSqlServerCodeExecResult
 } from "../../api";
 import { Answer } from "../../components/Answer";
 import { QuestionInput } from "../../components/QuestionInput";
