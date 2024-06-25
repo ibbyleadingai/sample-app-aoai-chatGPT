@@ -159,6 +159,7 @@ export type UI = {
     chat_text_shadow?: boolean;
     show_title?: boolean
     new_chat_button_color?: string;
+    automatic_scroll_down?: boolean;
 }
 
 export type FrontendSettings = {
