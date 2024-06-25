@@ -444,6 +444,35 @@ a {
   font-weight: 600;
 }
 
+@media (max-width: 680px){
+    .chatEmptyStateTitle{
+        font-size: 40px;
+    }
+
+    .promptSuggestionsContainer{
+      display: flex;
+      gap: 10px;
+    }
+
+    .promptSuggestions{
+      width: 175px;
+      font-size: 12px;
+    }
+}
+
+@media (max-width: 550px){
+    .chatEmptyStateTitle{
+        font-size: 32px;
+    }
+    .chatEmptyStateSubtitle{
+        font-size: 12px;
+    }
+    .promptSuggestions{
+      width: 150px;
+      font-size: 12px;
+    }
+}
+
 @media (max-width: 480px) {
   .chatInput {
     width: 90%;
@@ -469,34 +498,28 @@ a {
   .citationPanel {
     max-width: 100%;
   }
+
+  .promptSuggestions{
+    width: 130px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 420px){
+    .chatEmptyStateTitle{
+        display: none;
+    }
+    .chatEmptyStateSubtitle{
+        display: none;
+    }
+    .promptSuggestionsContainer{
+      flex-direction: column;
+      margin-top: 70px;
+    }
 }
 
 @media (max-width: 350px) {
-    .chatMessageGpt{
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 680px){
-    .chatEmptyStateTitle{
-        font-size: 40px;
-    }
-}
-
-@media (max-width: 550px){
-    .chatEmptyStateTitle{
-        font-size: 32px;
-    }
-    .chatEmptyStateSubtitle{
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 400px){
-    .chatEmptyStateTitle{
-        display: none;
-    }
-    .chatEmptyStateSubtitle{
-        display: none;
-    }
+  .chatMessageGpt{
+      max-width: 100%;
+  }
 }
