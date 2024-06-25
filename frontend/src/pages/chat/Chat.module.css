@@ -516,6 +516,11 @@ a {
       flex-direction: column;
       margin-top: 70px;
     }
+
+    .promptSuggestions{
+      width: 200px;
+      font-size: 14px;
+    }
 }
 
 @media (max-width: 350px) {
