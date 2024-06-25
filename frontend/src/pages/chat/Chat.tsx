@@ -691,7 +691,9 @@ const Chat = () => {
   }, [AUTH_ENABLED])
 
     useLayoutEffect(() => {
-        chatMessageStreamEnd.current?.scrollIntoView({ behavior: "smooth" })
+      if (ui?.automatic_scroll_down) {
+        chatMessageStreamEnd.current?.scrollIntoView({ behavior: "smooth" });
+      }
     }, [ui?.automatic_scroll_down, showLoadingMessage, processMessages]);
 
   const onShowCitation = (citation: Citation) => {
