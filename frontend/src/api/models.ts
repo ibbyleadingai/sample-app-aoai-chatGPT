@@ -160,6 +160,13 @@ export type UI = {
     show_title?: boolean
     new_chat_button_color?: string;
     automatic_scroll_down?: boolean;
+    prompt1_suggestion_text?: string;
+    prompt2_suggestion_text?: string;
+    prompt3_suggestion_text?: string;
+    prompt1_suggestion_message?: string;
+    prompt2_suggestion_message?: string;
+    prompt3_suggestion_message?: string;
+    show_prompt_suggestions?: boolean;
 }
 
 export type FrontendSettings = {

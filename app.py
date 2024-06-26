@@ -111,7 +111,14 @@ frontend_settings = {
         "chat_text_shadow": app_settings.ui.chat_text_shadow,
         "show_title": app_settings.ui.show_title,
         "new_chat_button_color": app_settings.ui.new_chat_button_color,
-        "automatic_scroll_down": app_settings.ui.automatic_scroll_down
+        "automatic_scroll_down": app_settings.ui.automatic_scroll_down,
+        "show_prompt_suggestions": app_settings.ui.show_prompt_suggestions,
+        "prompt1_suggestion_text": app_settings.ui.prompt1_suggestion_text,
+        "prompt2_suggestion_text": app_settings.ui.prompt2_suggestion_text,
+        "prompt3_suggestion_text": app_settings.ui.prompt3_suggestion_text,
+        "prompt1_suggestion_message": app_settings.ui.prompt1_suggestion_message,
+        "prompt2_suggestion_message": app_settings.ui.prompt2_suggestion_message,
+        "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
