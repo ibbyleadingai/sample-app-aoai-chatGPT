@@ -223,13 +223,16 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
                 autoAdjustHeight
+                aria-required="true"
             />
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
                 tabIndex={0}
                 aria-label="Ask question button"
+                aria-disabled={sendQuestionDisabled}
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
+                style={{ cursor: sendQuestionDisabled ? 'not-allowed' : 'pointer' }}
             >
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
