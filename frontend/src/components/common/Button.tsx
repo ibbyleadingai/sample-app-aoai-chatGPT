@@ -25,6 +25,7 @@ export const HistoryButton: React.FC<ButtonProps> = ({ onClick, text }) => {
       text={text}
       iconProps={{ iconName: 'History' }}
       onClick={onClick}
+      aria-label="Check conversation history button"
     />
   )
 }

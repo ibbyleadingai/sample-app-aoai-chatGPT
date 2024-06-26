@@ -244,6 +244,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                         e.stopPropagation();
                         handleImprovePrompt()
                     }}
+                    aria-label="Improve your prompt button"
                     disabled={isLoadingImproved}
                 >{isLoadingImproved ? "Loading prompt..." : buttonText}
                 </button>
@@ -257,7 +258,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
             />
-            <button className={styles.linkBtn} onClick={scrapeLink}>Web Scrape</button>
+            <button className={styles.linkBtn} onClick={scrapeLink} aria-label="Web scrape a website button">Web Scrape</button>
             </div>}
             {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer}>
@@ -267,6 +268,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     <input
                     id="upload-btn"
                     className={styles.hiddenUploadInput}
+                    aria-label="Upload a PDF button"
                     type="file"
                     accept="application/pdf"
                     onChange={handleFileChange}

@@ -112,6 +112,7 @@ const Layout = () => {
                             src={dynamicImage}
                             className={styles.headerIcon}
                             aria-hidden="true"
+                            alt=""
                         />}
                         <Link to="/" className={styles.headerTitleContainer}>
                             {ui?.show_title && <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>}
