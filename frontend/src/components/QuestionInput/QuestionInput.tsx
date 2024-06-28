@@ -225,6 +225,20 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 autoAdjustHeight
                 aria-required="true"
             />
+          <div className={styles.questionInputButtonContainer}>
+          <button
+                    title="Improve prompt"
+                    className={styles.improvePromptButton}
+                    style={{ color: ui?.improve_button_text_color, backgroundColor: ui?.improve_button_color}}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleImprovePrompt()
+                    }}
+                    aria-label="Improve your prompt button"
+                    disabled={isLoadingImproved}
+                >{isLoadingImproved ? "Loading prompt..." : buttonText}
+              </button>
+
             <div className={styles.questionInputSendButtonContainer} 
                 role="button" 
                 tabIndex={0}
@@ -239,19 +253,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     :
                     <img src={Send} className={styles.questionInputSendButton}/>
                 }
-                <button
-                    title="Improve prompt"
-                    className={styles.improvePromptButton}
-                    style={{ color: ui?.improve_button_text_color, backgroundColor: ui?.improve_button_color}}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        handleImprovePrompt()
-                    }}
-                    aria-label="Improve your prompt button"
-                    disabled={isLoadingImproved}
-                >{isLoadingImproved ? "Loading prompt..." : buttonText}
-                </button>
             </div>
+          </div>
             {/* <div className={styles.questionInputBottomBorder} /> */}
             {ui?.show_web_scrape && <div className={styles.webScrapeContainer}>
             <input
