@@ -10,6 +10,7 @@ import fea from "../../assets/fea.svg"
 import coram from "../../assets/coram.gif"
 import glasgowuni from "../../assets/glasgowuni.svg"
 import tri from "../../assets/tri.png"
+import nhbc from "../../assets/nhbc-logo.svg"
 import { CopyRegular } from '@fluentui/react-icons'
 
 import { CosmosDBStatus } from '../../api'
@@ -42,7 +43,8 @@ const Layout = () => {
         coram: coram,
         glasgowuni: glasgowuni,
         fea: fea,
-        tri: tri
+        tri: tri,
+        nhbc: nhbc
         // Add more entries as needed for other images
       };
 

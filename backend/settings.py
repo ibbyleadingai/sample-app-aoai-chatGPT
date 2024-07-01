@@ -77,6 +77,7 @@ class _UiSettings(BaseSettings):
     prompt1_suggestion_message: str = ""
     prompt2_suggestion_message: str = ""
     prompt3_suggestion_message: str = ""
+    chat_background_image: str = ""
     # Add more env variables here
 
 

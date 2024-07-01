@@ -167,6 +167,7 @@ export type UI = {
     prompt2_suggestion_message?: string;
     prompt3_suggestion_message?: string;
     show_prompt_suggestions?: boolean;
+    chat_background_image?: string;
 }
 
 export type FrontendSettings = {

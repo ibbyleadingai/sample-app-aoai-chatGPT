@@ -16,6 +16,7 @@ import Contoso from '../../assets/Contoso.svg'
 import leadingai from "../../assets/leadingai.svg"
 import fea from "../../assets/fea.svg"
 import ambition from "../../assets/ambition.png"
+import nhbcBackgroundImage from "../../assets/nhbcimg1.jpg"
 import { XSSAllowTags } from '../../constants/sanatizeAllowables'
 
 import {
@@ -49,7 +50,8 @@ type ImageImports = {
   const imageImports: ImageImports = {
     leadingai: leadingai,
     fea: fea,
-    ambition: ambition
+    ambition: ambition,
+    nhbcBackgroundImage: nhbcBackgroundImage
     // Add more entries as needed for other images
   };
 
@@ -753,6 +755,10 @@ const Chat = () => {
 
   const newChatButtonColor = ui?.new_chat_button_color;
 
+  const dynamicImage = ui?.chat_background_image
+    ? imageImports[ui.chat_background_image] || ""
+    : "";
+
   const promptBtnObj = {
     'prompt1': ui?.prompt1_suggestion_message || "Hello (prompt 1)",
     'prompt2': ui?.prompt2_suggestion_message || "What can you do? (prompt 2)",
@@ -790,7 +796,7 @@ const Chat = () => {
         </Stack>
       ) : (
         <Stack horizontal className={styles.chatRoot}>
-          <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color}}>
+          <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color, backgroundImage: `url(${dynamicImage})`}}>
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>
                 {/* <img src={ui?.chat_logo ? ui.chat_logo : Contoso} className={styles.chatIcon} aria-hidden="true" /> */}
