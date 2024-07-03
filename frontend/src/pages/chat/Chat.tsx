@@ -12,12 +12,9 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 import styles from './Chat.module.css'
-import Contoso from '../../assets/Contoso.svg'
-import leadingai from "../../assets/leadingai.svg"
-import fea from "../../assets/fea.svg"
-import ambition from "../../assets/ambition.png"
-import nhbcBackgroundImage from "../../assets/nhbcimg1.jpg"
 import { XSSAllowTags } from '../../constants/sanatizeAllowables'
+
+import imageImports from '../../imageImports'; //Where all the logo and other images are
 
 import {
   ChatMessage,
@@ -42,18 +39,6 @@ import { QuestionInput } from "../../components/QuestionInput";
 import { ChatHistoryPanel } from "../../components/ChatHistory/ChatHistoryPanel";
 import { AppStateContext } from "../../state/AppProvider";
 import { useBoolean } from "@fluentui/react-hooks";
-
-type ImageImports = {
-    [key: string]: string;
-  };
-
-  const imageImports: ImageImports = {
-    leadingai: leadingai,
-    fea: fea,
-    ambition: ambition,
-    nhbcBackgroundImage: nhbcBackgroundImage
-    // Add more entries as needed for other images
-  };
 
 const enum messageStatus {
   NotRunning = 'Not Running',
@@ -762,7 +747,7 @@ const Chat = () => {
   const promptBtnObj = {
     'prompt1': ui?.prompt1_suggestion_message || "Hello (prompt 1)",
     'prompt2': ui?.prompt2_suggestion_message || "What can you do? (prompt 2)",
-    'prompt3': ui?.prompt3_suggestion_message || "What is RAG? (Prompt 3)",
+    'prompt3': ui?.prompt3_suggestion_message || "What sort of questions can I ask you? (Prompt 3)",
         }
 
   return (

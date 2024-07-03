@@ -1,22 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { Dialog, Stack, TextField } from '@fluentui/react'
-import ambition from "../../assets/ambition.png"
-import leadingai from "../../assets/leadingai.svg"
-import engine from "../../assets/Engine-Mark.svg"
-import morley from "../../assets/morley.png"
-import engineLogo from "../../assets/Engine-Logo.svg"
-import fea from "../../assets/fea.svg"
-import coram from "../../assets/coram.gif"
-import glasgowuni from "../../assets/glasgowuni.svg"
-import tri from "../../assets/tri.png"
-import nhbc from "../../assets/nhbc-logo.svg"
 import { CopyRegular } from '@fluentui/react-icons'
 
 import { CosmosDBStatus } from '../../api'
-import Contoso from '../../assets/Contoso.svg'
 import { HistoryButton, ShareButton } from '../../components/common/Button'
 import { AppStateContext } from '../../state/AppProvider'
+import imageImports from '../../imageImports'; //Where all the logo and other images are
 
 import styles from './Layout.module.css'
 
@@ -29,24 +19,6 @@ const Layout = () => {
   const [showHistoryLabel, setShowHistoryLabel] = useState<string>('Show chat history')
   const appStateContext = useContext(AppStateContext)
   const ui = appStateContext?.state.frontendSettings?.ui
-
-    type ImageImports = {
-        [key: string]: string;
-      };
-    
-      const imageImports: ImageImports = {
-        leadingai: leadingai,
-        ambition: ambition,
-        engine: engine,
-        engineLogo: engineLogo,
-        morley: morley,
-        coram: coram,
-        glasgowuni: glasgowuni,
-        fea: fea,
-        tri: tri,
-        nhbc: nhbc
-        // Add more entries as needed for other images
-      };
 
     const handleShareClick = () => {
         // setIsSharePanelOpen(true);
