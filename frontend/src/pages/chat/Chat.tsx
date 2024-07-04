@@ -792,9 +792,9 @@ const Chat = () => {
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
                 {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
-                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt1)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt1_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
-                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt2)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt2_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
-                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt3)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt3_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
+                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt1) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt1)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt1_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
+                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt2) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt2)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt2_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
+                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt3) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt3)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt3_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
                 </div>}
               </Stack>
             ) : (
