@@ -62,6 +62,7 @@ const groupByMonth = (entries: Conversation[]) => {
 const ChatHistoryList: React.FC<ChatHistoryListProps> = () => {
   const appStateContext = useContext(AppStateContext)
   const chatHistory = appStateContext?.state.chatHistory
+  const ui = appStateContext?.state.frontendSettings?.ui;
 
   React.useEffect(() => {}, [appStateContext?.state.chatHistory])
 
@@ -73,7 +74,7 @@ const ChatHistoryList: React.FC<ChatHistoryListProps> = () => {
       <Stack horizontal horizontalAlign="center" verticalAlign="center" style={{ width: '100%', marginTop: 10 }}>
         <StackItem>
           <Text style={{ alignSelf: 'center', fontWeight: '400', fontSize: 14 }}>
-            <span>No chat history.</span>
+            <span style={{color: ui?.chat_text_color}}>No chat history.</span>
           </Text>
         </StackItem>
       </Stack>
