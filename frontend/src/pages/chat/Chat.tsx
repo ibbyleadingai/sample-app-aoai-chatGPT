@@ -176,7 +176,7 @@ const Chat = () => {
     }
   }
 
-  const makeApiRequestWithoutCosmosDB = async (question: string, conversationId?: string) => {
+  const makeApiRequestWithoutCosmosDB = async (question: string, isHidden: boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
@@ -186,7 +186,8 @@ const Chat = () => {
       id: uuid(),
       role: 'user',
       content: question,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      hidden: isHidden
     }
 
     let conversation: Conversation | null | undefined
@@ -300,7 +301,7 @@ const Chat = () => {
     return abortController.abort()
   }
 
-  const makeApiRequestWithCosmosDB = async (question: string, conversationId?: string) => {
+  const makeApiRequestWithCosmosDB = async (question: string, isHidden: boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
@@ -797,14 +798,14 @@ const Chat = () => {
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
                 {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
-                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt1)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
-                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt2)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
-                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt3)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
+                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt1, true, undefined)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
+                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt2, true, undefined)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
+                    <div onClick={() => makeApiRequestWithoutCosmosDB(promptBtnObj.prompt3, true, undefined)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
                 </div>}
               </Stack>
             ) : (
               <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? '40px' : '0px' }} role="log">
-                {messages.map((answer, index) => (
+                {messages.filter(msg => !msg.hidden).map((answer, index) => (
                   <>
                     {answer.role === 'user' ? (
                       <div className={styles.chatMessageUser} tabIndex={0}>
@@ -941,8 +942,8 @@ const Chat = () => {
                 disabled={isLoading}
                 onSend={(question, id) => {
                   appStateContext?.state.isCosmosDBAvailable?.cosmosDB
-                    ? makeApiRequestWithCosmosDB(question, id)
-                    : makeApiRequestWithoutCosmosDB(question, id)
+                    ? makeApiRequestWithCosmosDB(question, false, id)
+                    : makeApiRequestWithoutCosmosDB(question, false, id)
                 }}
                 conversationId={
                   appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined
