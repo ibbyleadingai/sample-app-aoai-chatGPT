@@ -1014,6 +1014,42 @@ async def generate_title(conversation_messages) -> str:
     except Exception as e:
         logging.exception("Exception while generating title", e)
         return messages[-2]["content"]
+    
+async def generate_predefined_prompts():
+    prompt = f"Based on the system message prompt and the documents you are trained on: `{app_settings.azure_openai.system_message}`. Give me 1 question I can ask you in 12 words or less. Do not include any other commentary or description."
+
+    messages = [
+        {
+            "role": "user", "content": prompt
+        }
+    ]
+
+    try:
+        azure_openai_client = init_openai_client()
+        response = await azure_openai_client.chat.completions.create(
+            model=app_settings.azure_openai.model, 
+            messages=messages, 
+            temperature=1, 
+            extra_body={
+                "data_sources": [
+                app_settings.datasource.construct_payload_configuration(
+                    request=request
+                )
+            ]
+            }
+        )
+
+        title = response.choices[0].message.content
+        return title
+    except Exception as e:
+        logging.exception("Exception while generating prompt suggestion", e)
+        return jsonify({"error": str(e)}), 500
+    
+@bp.route('/get-prompt-suggestion', methods=['GET'])
+async def get_prompt_suggestion():
+    prompt_suggestion = await generate_predefined_prompts()
+    return jsonify({"prompt_suggestion": prompt_suggestion})
+    
 
 
 app = create_app()

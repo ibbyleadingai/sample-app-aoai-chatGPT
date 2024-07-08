@@ -66,6 +66,11 @@ const Chat = () => {
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
     const [inputKey, setInputKey] = useState(0);
     const [isLoadingWebsite, setIsLoadingWebsite] = useState<boolean>(false)
+    const [promptSuggestions, setPromptSuggestions] = useState<PromptSuggestions>({
+      prompt1: '',
+      prompt2: '',
+      prompt3: '',
+    });
 
   const errorDialogContentProps = {
     type: DialogType.close,
@@ -752,6 +757,28 @@ const Chat = () => {
     'prompt3': ui?.prompt3_suggestion_message || "What sort of questions can I ask you? (Prompt 3)",
         }
 
+  const fetchPromptSuggestion = async (promptKey: string) => {
+    try {
+      const response = await fetch('/get-prompt-suggestion');
+      const data = await response.json();
+      setPromptSuggestions((prev) => ({ ...prev, [promptKey]: data.prompt_suggestion }));
+    } catch (error) {
+      console.error('Error fetching prompt suggestion:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPromptSuggestion('prompt1');
+    fetchPromptSuggestion('prompt2');
+    fetchPromptSuggestion('prompt3');
+  }, []);
+
+  interface PromptSuggestions {
+    prompt1: string;
+    prompt2: string;
+    prompt3: string;
+  }
+
   return (
     <div className={styles.container} role="main">
       {showAuthMessage ? (
@@ -791,10 +818,34 @@ const Chat = () => {
                   <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
+
                 {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
-                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt1) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt1)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt1_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
-                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt2) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt2)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt2_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
-                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt3) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt3)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt3_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
+                  <div
+                      onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptSuggestions.prompt1) : makeApiRequestWithoutCosmosDB(promptSuggestions.prompt1)}
+                      className={styles.promptSuggestions}
+                      aria-label={`Prompt Suggestion: ${promptSuggestions.prompt1}`}
+                      tabIndex={0}
+                    >
+                      <h3 className={styles.promptTitle}>{promptSuggestions.prompt1}</h3>
+                  </div>
+
+                  <div
+                      onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptSuggestions.prompt2) : makeApiRequestWithoutCosmosDB(promptSuggestions.prompt2)}
+                      className={styles.promptSuggestions}
+                      aria-label={`Prompt Suggestion: ${promptSuggestions.prompt1}`}
+                      tabIndex={0}
+                    >
+                      <h3 className={styles.promptTitle}>{promptSuggestions.prompt2}</h3>
+                  </div>
+
+                  <div
+                      onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptSuggestions.prompt3) : makeApiRequestWithoutCosmosDB(promptSuggestions.prompt3)}
+                      className={styles.promptSuggestions}
+                      aria-label={`Prompt Suggestion: ${promptSuggestions.prompt3}`}
+                      tabIndex={0}
+                    >
+                      <h3 className={styles.promptTitle}>{promptSuggestions.prompt3}</h3>
+                  </div>
                 </div>}
               </Stack>
             ) : (
