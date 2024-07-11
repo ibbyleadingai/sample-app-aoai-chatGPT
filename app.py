@@ -125,7 +125,7 @@ frontend_settings = {
 }
 
 # File size limit (10 MB)
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
+MAX_FILE_SIZE = 20 * 1024 * 1024  # 10 MB
 
 @bp.route('/upload-pdf', methods=['POST'])
 async def upload_pdf():
