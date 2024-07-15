@@ -28,7 +28,8 @@ type ImageImports = {
     tri: tri,
     nhbc: nhbc,
     nhbcBackgroundImage: nhbcBackgroundImage,
-    northYorkshire: northYorkshire
+    northYorkshire: northYorkshire,
+    engineBackgroundImage: engineBackgroundImage,
     // Add more entries as needed for other images
   };
 
