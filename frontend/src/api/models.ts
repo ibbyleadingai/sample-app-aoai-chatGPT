@@ -162,9 +162,15 @@ export type UI = {
     prompt1_suggestion_text?: string;
     prompt2_suggestion_text?: string;
     prompt3_suggestion_text?: string;
+    prompt4_suggestion_text?: string;
+    prompt5_suggestion_text?: string;
+    prompt6_suggestion_text?: string;
     prompt1_suggestion_message?: string;
     prompt2_suggestion_message?: string;
     prompt3_suggestion_message?: string;
+    prompt4_suggestion_message?: string;
+    prompt5_suggestion_message?: string;
+    prompt6_suggestion_message?: string;
     show_prompt_suggestions?: boolean;
 }
 

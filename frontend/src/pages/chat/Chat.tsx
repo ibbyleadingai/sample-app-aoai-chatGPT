@@ -757,7 +757,10 @@ const Chat = () => {
     'prompt1': ui?.prompt1_suggestion_message || "Hello (prompt 1)",
     'prompt2': ui?.prompt2_suggestion_message || "What can you do? (prompt 2)",
     'prompt3': ui?.prompt3_suggestion_message || "What is RAG? (Prompt 3)",
-        }
+    'prompt4': ui?.prompt4_suggestion_message || "Tell me a joke (prompt 4)",
+    'prompt5': ui?.prompt5_suggestion_message || "What's the weather? (prompt 5)",
+    'prompt6': ui?.prompt6_suggestion_message || "Give me a quote (prompt 6)"
+  }
   
   const handlePromptClick = (prompt: string) => {
     appStateContext?.state.isCosmosDBAvailable.cosmosDB ? makeApiRequestWithCosmosDB(prompt, true, undefined) : makeApiRequestWithoutCosmosDB(prompt, true, undefined);
@@ -806,6 +809,9 @@ const Chat = () => {
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt1)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt2)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt3)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt4)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt4_suggestion_text}</h3></div>
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt5)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt5_suggestion_text}</h3></div>
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt6)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt6_suggestion_text}</h3></div>
                 </div>}
               </Stack>
             ) : (

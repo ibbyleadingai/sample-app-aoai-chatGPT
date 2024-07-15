@@ -412,7 +412,8 @@ a {
 }
 
 .promptSuggestionsContainer{
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   /* position: absolute;
   margin-top: 100px; */

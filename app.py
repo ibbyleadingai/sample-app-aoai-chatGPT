@@ -115,9 +115,15 @@ frontend_settings = {
         "prompt1_suggestion_text": app_settings.ui.prompt1_suggestion_text,
         "prompt2_suggestion_text": app_settings.ui.prompt2_suggestion_text,
         "prompt3_suggestion_text": app_settings.ui.prompt3_suggestion_text,
+        "prompt4_suggestion_text": app_settings.ui.prompt3_suggestion_text,
+        "prompt5_suggestion_text": app_settings.ui.prompt3_suggestion_text,
+        "prompt6_suggestion_text": app_settings.ui.prompt3_suggestion_text,
         "prompt1_suggestion_message": app_settings.ui.prompt1_suggestion_message,
         "prompt2_suggestion_message": app_settings.ui.prompt2_suggestion_message,
-        "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message
+        "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message,
+        "prompt4_suggestion_message": app_settings.ui.prompt1_suggestion_message,
+        "prompt5_suggestion_message": app_settings.ui.prompt1_suggestion_message,
+        "prompt6_suggestion_message": app_settings.ui.prompt1_suggestion_message,
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
