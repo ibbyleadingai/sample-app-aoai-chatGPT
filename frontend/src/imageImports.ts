@@ -1,15 +1,17 @@
 import ambition from "./assets/ambition.png"
 import leadingAi from "./assets/leadingai.svg"
-import engine from "./assets/Engine-Mark.svg"
 import morley from "./assets/morley.png"
 import engineLogo from "./assets/Engine-Logo.svg"
+import engineBlack from "./assets/Engine-Mark-Black.svg"
+import engineGreen from "./assets/Engine-Mark-Green.svg"
 import fea from "./assets/fea.svg"
 import coram from "./assets/coram.gif"
 import glasgowUni from "./assets/glasgowuni.svg"
 import tri from "./assets/tri.png"
 import nhbc from "./assets/nhbc-logo.svg"
-import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import northYorkshire from "./assets/NorthYorkshire.svg"
+
+import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
 
 type ImageImports = {
@@ -19,7 +21,8 @@ type ImageImports = {
   const imageImports: ImageImports = {
     leadingAi: leadingAi,
     ambition: ambition,
-    engine: engine,
+    engineBlack: engineBlack,
+    engineGreen: engineGreen,
     engineLogo: engineLogo,
     morley: morley,
     coram: coram,
