@@ -10,6 +10,7 @@ import tri from "./assets/tri.png"
 import nhbc from "./assets/nhbc-logo.svg"
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import northYorkshire from "./assets/NorthYorkshire.svg"
+import engineBackgroundImage from "./assets/engine-background-img.png"
 
 type ImageImports = {
     [key: string]: string;
