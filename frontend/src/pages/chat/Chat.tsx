@@ -806,12 +806,36 @@ const Chat = () => {
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
                 {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt1)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt2)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt3)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt4)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt4_suggestion_text}</h3></div>
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt5)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt5_suggestion_text}</h3></div>
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt6)} className={styles.promptSuggestions}><h3 className={styles.promptTitle}>{ui?.prompt6_suggestion_text}</h3></div>
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt1)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Policy adviser</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt1_suggestion_text}</h3>
+                    </div>
+
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt2)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Comms professional</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt2_suggestion_text}</h3>
+                    </div>
+                    
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt3)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>School Improvement Planner</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt3_suggestion_text}</h3>
+                    </div>
+                    
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt4)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Bid writer</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt4_suggestion_text}</h3>
+                    </div>
+
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt5)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>SEND planner</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt5_suggestion_text}</h3>
+                    </div>
+
+                    
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt6)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Report writer</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt6_suggestion_text}</h3>
+                    </div>
                 </div>}
               </Stack>
             ) : (
