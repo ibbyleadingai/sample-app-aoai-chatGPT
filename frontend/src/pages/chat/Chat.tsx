@@ -749,8 +749,15 @@ const Chat = () => {
   const promptBtnObj = {
     'prompt1': ui?.prompt1_suggestion_message || "Hello (prompt 1)",
     'prompt2': ui?.prompt2_suggestion_message || "What can you do? (prompt 2)",
-    'prompt3': ui?.prompt3_suggestion_message || "What sort of questions can I ask you? (Prompt 3)",
-        }
+    'prompt3': ui?.prompt3_suggestion_message || "What is RAG? (Prompt 3)",
+    'prompt4': ui?.prompt4_suggestion_message || "Tell me a joke (prompt 4)",
+    'prompt5': ui?.prompt5_suggestion_message || "What's the weather? (prompt 5)",
+    'prompt6': ui?.prompt6_suggestion_message || "Give me a quote (prompt 6)"
+  }
+    
+  const handlePromptClick = (prompt: string) => {
+    appStateContext?.state.isCosmosDBAvailable.cosmosDB ? makeApiRequestWithCosmosDB(prompt, true, undefined) : makeApiRequestWithoutCosmosDB(prompt, true, undefined);
+  }
 
   return (
     <div className={styles.container} role="main">
@@ -792,9 +799,36 @@ const Chat = () => {
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
                 {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
-                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt1) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt1)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt1_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt1_suggestion_text}</h3></div>
-                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt2) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt2)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt2_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt2_suggestion_text}</h3></div>
-                    <div onClick={() => appStateContext?.state.isCosmosDBAvailable?.cosmosDB  ? makeApiRequestWithCosmosDB(promptBtnObj.prompt3) : makeApiRequestWithoutCosmosDB(promptBtnObj.prompt3)} className={styles.promptSuggestions} aria-label={`Prompt Suggestion: ${ui?.prompt3_suggestion_text}`} tabIndex={0}><h3 className={styles.promptTitle}>{ui?.prompt3_suggestion_text}</h3></div>
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt1)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Policy adviser</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt1_suggestion_text}</h3>
+                    </div>
+
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt2)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Comms professional</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt2_suggestion_text}</h3>
+                    </div>
+                    
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt3)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>School Improvement Planner</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt3_suggestion_text}</h3>
+                    </div>
+                    
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt4)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Bid writer</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt4_suggestion_text}</h3>
+                    </div>
+
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt5)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>SEND planner</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt5_suggestion_text}</h3>
+                    </div>
+
+                    
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt6)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>Report writer</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt6_suggestion_text}</h3>
+                    </div>
                 </div>}
               </Stack>
             ) : (

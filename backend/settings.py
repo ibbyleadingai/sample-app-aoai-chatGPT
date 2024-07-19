@@ -71,13 +71,19 @@ class _UiSettings(BaseSettings):
     new_chat_button_color: str = "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #2d2d2d 33.63%, #4aae7c 100%)"
     automatic_scroll_down: bool = False
     show_prompt_suggestions: bool = False
+    chat_background_image: str = ""
     prompt1_suggestion_text: str = ""
     prompt2_suggestion_text: str = ""
     prompt3_suggestion_text: str = ""
+    prompt4_suggestion_text:  str = ""
+    prompt5_suggestion_text:  str = ""
+    prompt6_suggestion_text:  str = ""
     prompt1_suggestion_message: str = ""
     prompt2_suggestion_message: str = ""
     prompt3_suggestion_message: str = ""
-    chat_background_image: str = ""
+    prompt4_suggestion_message: str = ""
+    prompt5_suggestion_message: str = ""
+    prompt6_suggestion_message: str = ""
     # Add more env variables here
 
 

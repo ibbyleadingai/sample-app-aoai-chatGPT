@@ -409,10 +409,9 @@ a {
 }
 
 .promptSuggestionsContainer{
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  /* position: absolute;
-  margin-top: 100px; */
 }
 
 .promptSuggestions{
@@ -422,23 +421,33 @@ a {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
   width: 200px;
-  height: 90px;
+  height: 100px;
   cursor: pointer;
   text-align: center;
   transition: background-color 0.3s ease; /* Smooth transition effect */
+  transition: transform 0.3s ease; /* Smooth transition */
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .promptSuggestions:hover{
   background-color: #e0e0e0; /* Slightly darker shade of white */
+  transform: scale(0.9); /* Shrink to 90% of original size */
 }
 
 .promptTitle{
   font-size: 14px;
   font-weight: 600;
+  margin: 5px;
+}
+
+.promptDescription{
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0px;
 }
 
 @media (max-width: 680px){
