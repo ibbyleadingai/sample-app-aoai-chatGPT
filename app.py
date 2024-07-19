@@ -196,7 +196,7 @@ async def get_improved_prompt(request_body):
         messages = [
             {
                 "role": "system",
-                "content": "You are an AI assistant that optimises and enhances the clarity of input prompts without executing the action described. You do this strictly in a non-conversational way, only giving your answer as the improved prompt.You should be able to achieve this without context. #### User:'What is the policy for constant student absences? System response:'What is the institution's policy regarding frequent student absences?'"
+                "content": "You are an AI assistant that optimises and enhances the clarity of input prompts without executing the action described. You do this strictly in a non-conversational way, only giving your answer as the improved prompt.You should be able to achieve this without context. Do not use any quotation marks. #### User:'What is the policy for constant student absences? System response:'What is the institution's policy regarding frequent student absences?'"
             },
             {
                 "role": "user",

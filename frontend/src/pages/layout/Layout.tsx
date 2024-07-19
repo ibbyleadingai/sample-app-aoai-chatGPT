@@ -42,12 +42,6 @@ const Layout = () => {
   }
 
   useEffect(() => {
-    if (!appStateContext?.state.isLoading) {
-      setLogo(ui?.logo || Contoso)
-    }
-  }, [appStateContext?.state.isLoading])
-
-  useEffect(() => {
     if (copyClicked) {
       setCopyText('Copied URL')
     }
