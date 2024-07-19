@@ -163,7 +163,7 @@ const Chat = () => {
     }
   }
 
-  const makeApiRequestWithoutCosmosDB = async (question: string, conversationId?: string) => {
+  const makeApiRequestWithoutCosmosDB = async (question: string, isHidden: boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
@@ -287,7 +287,7 @@ const Chat = () => {
     return abortController.abort()
   }
 
-  const makeApiRequestWithCosmosDB = async (question: string, conversationId?: string) => {
+  const makeApiRequestWithCosmosDB = async (question: string, isHidden: boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
@@ -752,7 +752,8 @@ const Chat = () => {
     'prompt3': ui?.prompt3_suggestion_message || "What is RAG? (Prompt 3)",
     'prompt4': ui?.prompt4_suggestion_message || "Tell me a joke (prompt 4)",
     'prompt5': ui?.prompt5_suggestion_message || "What's the weather? (prompt 5)",
-    'prompt6': ui?.prompt6_suggestion_message || "Give me a quote (prompt 6)"
+    'prompt6': ui?.prompt6_suggestion_message || "Give me a quote (prompt 6)",
+    'prompt7': ui?.prompt7_suggestion_message || "What is ML (prompt 7)?"
   }
     
   const handlePromptClick = (prompt: string) => {
@@ -800,34 +801,39 @@ const Chat = () => {
                 </div>
                 {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt1)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>Policy adviser</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt1_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt1_suggestion_text}</h3>
                     </div>
 
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt2)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>Comms professional</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt2_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt2_suggestion_text}</h3>
                     </div>
                     
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt3)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>School Improvement Planner</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt3_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt3_suggestion_text}</h3>
                     </div>
                     
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt4)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>Bid writer</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt4_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt4_suggestion_text}</h3>
                     </div>
 
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt5)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>SEND planner</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt5_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt5_suggestion_text}</h3>
                     </div>
 
                     
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt6)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>Report writer</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt5_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt6_suggestion_text}</h3>
+                    </div>
+
+                    <div onClick={() => handlePromptClick(promptBtnObj.prompt7)} className={styles.promptSuggestions}>
+                      <h2 className={styles.promptTitle}>{ui?.prompt6_header_text}</h2>
+                      <h3 className={styles.promptDescription}>{ui?.prompt7_suggestion_text}</h3>
                     </div>
                 </div>}
               </Stack>
@@ -971,8 +977,8 @@ const Chat = () => {
                 disabled={isLoading}
                 onSend={(question, id) => {
                   appStateContext?.state.isCosmosDBAvailable?.cosmosDB
-                    ? makeApiRequestWithCosmosDB(question, id)
-                    : makeApiRequestWithoutCosmosDB(question, id)
+                    ? makeApiRequestWithCosmosDB(question, false, id)
+                    : makeApiRequestWithoutCosmosDB(question, false, id)
                 }}
                 conversationId={
                   appStateContext?.state.currentChat?.id ? appStateContext?.state.currentChat?.id : undefined

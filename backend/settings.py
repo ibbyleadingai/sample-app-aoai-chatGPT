@@ -78,12 +78,22 @@ class _UiSettings(BaseSettings):
     prompt4_suggestion_text:  str = ""
     prompt5_suggestion_text:  str = ""
     prompt6_suggestion_text:  str = ""
+    prompt7_suggestion_text:  str = ""
     prompt1_suggestion_message: str = ""
     prompt2_suggestion_message: str = ""
     prompt3_suggestion_message: str = ""
     prompt4_suggestion_message: str = ""
     prompt5_suggestion_message: str = ""
     prompt6_suggestion_message: str = ""
+    prompt7_suggestion_message: str = ""
+    prompt1_header_text: str = ""
+    prompt1_header_text: str = ""
+    prompt2_header_text: str = ""
+    prompt3_header_text: str = ""
+    prompt4_header_text: str = ""
+    prompt5_header_text: str = ""
+    prompt6_header_text: str = ""
+    prompt7_header_text: str = ""
     # Add more env variables here
 
 
