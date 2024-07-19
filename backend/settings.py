@@ -87,7 +87,6 @@ class _UiSettings(BaseSettings):
     prompt6_suggestion_message: str = ""
     prompt7_suggestion_message: str = ""
     prompt1_header_text: str = ""
-    prompt1_header_text: str = ""
     prompt2_header_text: str = ""
     prompt3_header_text: str = ""
     prompt4_header_text: str = ""

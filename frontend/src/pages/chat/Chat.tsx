@@ -827,19 +827,19 @@ const Chat = () => {
 
                     
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt6)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt5_header_text}</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt6_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt6_suggestion_text}</h3>
                     </div>
 
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt7)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt6_header_text}</h2>
+                      <h2 className={styles.promptTitle}>{ui?.prompt7_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt7_suggestion_text}</h3>
                     </div>
                 </div>}
               </Stack>
             ) : (
               <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? '40px' : '0px' }} role="log">
-                {messages.map((answer, index) => (
+                {messages.filter(msg => !msg.hidden).map((answer, index) => (
                   <>
                     {answer.role === 'user' ? (
                       <div className={styles.chatMessageUser} tabIndex={0}>
