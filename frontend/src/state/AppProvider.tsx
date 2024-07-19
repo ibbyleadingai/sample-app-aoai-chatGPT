@@ -1,5 +1,9 @@
-import React, { createContext, ReactNode, useEffect, 
-  useReducer } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer
+} from 'react'
 
 import {
   ChatHistoryLoadingState,
@@ -25,6 +29,7 @@ export interface AppState {
     frontendSettings: FrontendSettings | null;
     feedbackState: { [answerId: string]: Feedback.Neutral | Feedback.Positive | Feedback.Negative; };
     selectedFile: string | undefined; // Added to manage the selected file
+  isLoading: boolean;
 }
 
 export type Action =
@@ -57,14 +62,15 @@ const initialState: AppState = {
     },
     frontendSettings: null,
     feedbackState: {},
+  isLoading: true,
     selectedFile: undefined
 };
 
 export const AppStateContext = createContext<
   | {
-      state: AppState
-      dispatch: React.Dispatch<Action>
-    }
+    state: AppState
+    dispatch: React.Dispatch<Action>
+  }
   | undefined
 >(undefined)
 

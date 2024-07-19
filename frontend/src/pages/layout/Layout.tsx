@@ -17,6 +17,7 @@ const Layout = () => {
   const [shareLabel, setShareLabel] = useState<string | undefined>('Share')
   const [hideHistoryLabel, setHideHistoryLabel] = useState<string>('Hide chat history')
   const [showHistoryLabel, setShowHistoryLabel] = useState<string>('Show chat history')
+  const [logo, setLogo] = useState('')
   const appStateContext = useContext(AppStateContext)
   const ui = appStateContext?.state.frontendSettings?.ui
 
@@ -41,12 +42,18 @@ const Layout = () => {
   }
 
   useEffect(() => {
+    if (!appStateContext?.state.isLoading) {
+      setLogo(ui?.logo || Contoso)
+    }
+  }, [appStateContext?.state.isLoading])
+
+  useEffect(() => {
     if (copyClicked) {
       setCopyText('Copied URL')
     }
   }, [copyClicked])
 
-  useEffect(() => {}, [appStateContext?.state.isCosmosDBAvailable.status])
+  useEffect(() => { }, [appStateContext?.state.isCosmosDBAvailable.status])
 
   useEffect(() => {
     const handleResize = () => {

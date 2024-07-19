@@ -108,6 +108,12 @@ const Chat = () => {
   }
 
   useEffect(() => {
+    if (!appStateContext?.state.isLoading) {
+      setLogo(ui?.chat_logo || ui?.logo || Contoso)
+    }
+  }, [appStateContext?.state.isLoading])
+
+  useEffect(() => {
     setIsLoading(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
     setIsLoadingWebsite(appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Loading)
   }, [appStateContext?.state.chatHistoryLoadingState])
