@@ -173,7 +173,8 @@ const Chat = () => {
       id: uuid(),
       role: 'user',
       content: question,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      hidden: isHidden
     }
 
     let conversation: Conversation | null | undefined
@@ -297,7 +298,8 @@ const Chat = () => {
       id: uuid(),
       role: 'user',
       content: question,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      hidden: isHidden
     }
 
     //api call params set here (generate)
@@ -799,7 +801,7 @@ const Chat = () => {
                   <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
-                {ui?.show_prompt_suggestions && <div className={styles.promptSuggestionsContainer}>
+                {ui?.show_prompt_suggestions && !isLoadingWebsite && <div className={styles.promptSuggestionsContainer}>
                     <div onClick={() => handlePromptClick(promptBtnObj.prompt1)} className={styles.promptSuggestions}>
                       <h2 className={styles.promptTitle}>{ui?.prompt1_header_text}</h2>
                       <h3 className={styles.promptDescription}>{ui?.prompt1_suggestion_text}</h3>

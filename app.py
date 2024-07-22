@@ -119,6 +119,7 @@ frontend_settings = {
         "prompt4_suggestion_text": app_settings.ui.prompt4_suggestion_text,
         "prompt5_suggestion_text": app_settings.ui.prompt5_suggestion_text,
         "prompt6_suggestion_text": app_settings.ui.prompt6_suggestion_text,
+        "prompt7_suggestion_text": app_settings.ui.prompt7_suggestion_text,
         "prompt1_suggestion_message": app_settings.ui.prompt1_suggestion_message,
         "prompt2_suggestion_message": app_settings.ui.prompt2_suggestion_message,
         "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message,
