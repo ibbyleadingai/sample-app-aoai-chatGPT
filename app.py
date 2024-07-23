@@ -176,7 +176,7 @@ async def upload_pdf():
             pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
             text = ' '.join(pages)
 
-        return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Just remember this information for further questions:\n\n' + text})
+        return jsonify({'text': 'The following text is the source information I want you to answer questions on. I have copied this from a document. Please do not generate a response. Let users know that they can upload another PDF if needed. Remember this information for further questions:\n\n' + text})
     except pdfplumber.PDFSyntaxError as e:
         logging.error(f"PDF syntax error: {e}", exc_info=True)  # Detailed logging
         return jsonify({'error': 'Invalid PDF file'}), 400
