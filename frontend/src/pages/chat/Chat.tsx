@@ -748,15 +748,43 @@ const Chat = () => {
     ? imageImports[ui.chat_background_image] || ""
     : "";
 
-  const promptBtnObj = {
-    'prompt1': ui?.prompt1_suggestion_message || "Hello (prompt 1)",
-    'prompt2': ui?.prompt2_suggestion_message || "What can you do? (prompt 2)",
-    'prompt3': ui?.prompt3_suggestion_message || "What is RAG? (Prompt 3)",
-    'prompt4': ui?.prompt4_suggestion_message || "Tell me a joke (prompt 4)",
-    'prompt5': ui?.prompt5_suggestion_message || "What's the weather? (prompt 5)",
-    'prompt6': ui?.prompt6_suggestion_message || "Give me a quote (prompt 6)",
-    'prompt7': ui?.prompt7_suggestion_message || "What is ML (prompt 7)?"
-  }
+    const prompts = [
+      {
+        headerText: ui?.prompt1_header_text || 'Default Header 1',
+        suggestionText: ui?.prompt1_suggestion_text || 'Default Suggestion 1',
+        message: ui?.prompt1_suggestion_message || 'Hello (prompt 1)',
+      },
+      {
+        headerText: ui?.prompt2_header_text || 'Default Header 2',
+        suggestionText: ui?.prompt2_suggestion_text || 'Default Suggestion 2',
+        message: ui?.prompt2_suggestion_message || 'What can you do? (prompt 2)',
+      },
+      {
+        headerText: ui?.prompt3_header_text || 'Default Header 3',
+        suggestionText: ui?.prompt3_suggestion_text || 'Default Suggestion 3',
+        message: ui?.prompt3_suggestion_message || 'What is RAG? (Prompt 3)',
+      },
+      {
+        headerText: ui?.prompt4_header_text || 'Default Header 4',
+        suggestionText: ui?.prompt4_suggestion_text || 'Default Suggestion 4',
+        message: ui?.prompt4_suggestion_message || 'Tell me a joke (prompt 4)',
+      },
+      {
+        headerText: ui?.prompt5_header_text || 'Default Header 5',
+        suggestionText: ui?.prompt5_suggestion_text || 'Default Suggestion 5',
+        message: ui?.prompt5_suggestion_message || "What's the weather? (prompt 5)",
+      },
+      {
+        headerText: ui?.prompt6_header_text || 'Default Header 6',
+        suggestionText: ui?.prompt6_suggestion_text || 'Default Suggestion 6',
+        message: ui?.prompt6_suggestion_message || 'Give me a quote (prompt 6)',
+      },
+      {
+        headerText: ui?.prompt7_header_text || 'Default Header 7',
+        suggestionText: ui?.prompt7_suggestion_text || 'Default Suggestion 7',
+        message: ui?.prompt7_suggestion_message || 'What is ML (prompt 7)?',
+      },
+    ];
     
   const handlePromptClick = (prompt: string) => {
     appStateContext?.state.isCosmosDBAvailable.cosmosDB ? makeApiRequestWithCosmosDB(prompt, true, undefined) : makeApiRequestWithoutCosmosDB(prompt, true, undefined);
@@ -802,41 +830,16 @@ const Chat = () => {
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
                 {ui?.show_prompt_suggestions && !isLoadingWebsite && <div className={styles.promptSuggestionsContainer}>
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt1)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt1_header_text}</h2>
-                      <h3 className={styles.promptDescription}>{ui?.prompt1_suggestion_text}</h3>
+                {prompts.map((prompt, index) => ( //Map over prompt obj and display prompt btn
+                    <div
+                      key={index}
+                      onClick={() => handlePromptClick(prompt.message)}
+                      className={styles.promptSuggestions}
+                    >
+                      <h2 className={styles.promptTitle}>{prompt.headerText}</h2>
+                      <h3 className={styles.promptDescription}>{prompt.suggestionText}</h3>
                     </div>
-
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt2)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt2_header_text}</h2>
-                      <h3 className={styles.promptDescription}>{ui?.prompt2_suggestion_text}</h3>
-                    </div>
-                    
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt3)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt3_header_text}</h2>
-                      <h3 className={styles.promptDescription}>{ui?.prompt3_suggestion_text}</h3>
-                    </div>
-                    
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt4)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt4_header_text}</h2>
-                      <h3 className={styles.promptDescription}>{ui?.prompt4_suggestion_text}</h3>
-                    </div>
-
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt5)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt5_header_text}</h2>
-                      <h3 className={styles.promptDescription}>{ui?.prompt5_suggestion_text}</h3>
-                    </div>
-
-                    
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt6)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt6_header_text}</h2>
-                      <h3 className={styles.promptDescription}>{ui?.prompt6_suggestion_text}</h3>
-                    </div>
-
-                    <div onClick={() => handlePromptClick(promptBtnObj.prompt7)} className={styles.promptSuggestions}>
-                      <h2 className={styles.promptTitle}>{ui?.prompt7_header_text}</h2>
-                      <h3 className={styles.promptDescription}>{ui?.prompt7_suggestion_text}</h3>
-                    </div>
+                  ))}
                 </div>}
               </Stack>
             ) : (
