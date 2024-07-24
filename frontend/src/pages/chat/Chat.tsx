@@ -748,6 +748,10 @@ const Chat = () => {
     ? imageImports[ui.chat_background_image] || ""
     : "";
 
+  const dynamicImageLogo = ui?.chat_logo
+    ? imageImports[ui.chat_logo] || ""
+    : "";
+
     const prompts = [
       {
         headerText: ui?.prompt1_header_text || 'Default Header 1',
@@ -769,21 +773,21 @@ const Chat = () => {
         suggestionText: ui?.prompt4_suggestion_text || 'Default Suggestion 4',
         message: ui?.prompt4_suggestion_message || 'Tell me a joke (prompt 4)',
       },
-      {
-        headerText: ui?.prompt5_header_text || 'Default Header 5',
-        suggestionText: ui?.prompt5_suggestion_text || 'Default Suggestion 5',
-        message: ui?.prompt5_suggestion_message || "What's the weather? (prompt 5)",
-      },
-      {
-        headerText: ui?.prompt6_header_text || 'Default Header 6',
-        suggestionText: ui?.prompt6_suggestion_text || 'Default Suggestion 6',
-        message: ui?.prompt6_suggestion_message || 'Give me a quote (prompt 6)',
-      },
-      {
-        headerText: ui?.prompt7_header_text || 'Default Header 7',
-        suggestionText: ui?.prompt7_suggestion_text || 'Default Suggestion 7',
-        message: ui?.prompt7_suggestion_message || 'What is ML (prompt 7)?',
-      },
+      // {
+      //   headerText: ui?.prompt5_header_text || 'Default Header 5',
+      //   suggestionText: ui?.prompt5_suggestion_text || 'Default Suggestion 5',
+      //   message: ui?.prompt5_suggestion_message || "What's the weather? (prompt 5)",
+      // },
+      // {
+      //   headerText: ui?.prompt6_header_text || 'Default Header 6',
+      //   suggestionText: ui?.prompt6_suggestion_text || 'Default Suggestion 6',
+      //   message: ui?.prompt6_suggestion_message || 'Give me a quote (prompt 6)',
+      // },
+      // {
+      //   headerText: ui?.prompt7_header_text || 'Default Header 7',
+      //   suggestionText: ui?.prompt7_suggestion_text || 'Default Suggestion 7',
+      //   message: ui?.prompt7_suggestion_message || 'What is ML (prompt 7)?',
+      // },
     ];
     
   const handlePromptClick = (prompt: string) => {
@@ -824,23 +828,25 @@ const Chat = () => {
           <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color, backgroundImage: `url(${dynamicImage})`}}>
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>
-                {/* <img src={ui?.chat_logo ? ui.chat_logo : Contoso} className={styles.chatIcon} aria-hidden="true" /> */}
                 <div className={styles.chatHeader}>
                   <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
-                {ui?.show_prompt_suggestions && !isLoadingWebsite && <div className={styles.promptSuggestionsContainer}>
-                {prompts.map((prompt, index) => ( //Map over prompt obj and display prompt btn
-                    <div
-                      key={index}
-                      onClick={() => handlePromptClick(prompt.message)}
-                      className={styles.promptSuggestions}
-                    >
-                      <h2 className={styles.promptTitle}>{prompt.headerText}</h2>
-                      <h3 className={styles.promptDescription}>{prompt.suggestionText}</h3>
-                    </div>
-                  ))}
-                </div>}
+                <div className={styles.promptAndLogoContainer}>
+                    {ui?.show_prompt_suggestions && !isLoadingWebsite && <div className={styles.promptSuggestionsContainer}>
+                    {prompts.map((prompt, index) => ( //Map over prompt obj and display prompt btn
+                        <div
+                          key={index}
+                          onClick={() => handlePromptClick(prompt.message)}
+                          className={styles.promptSuggestions}
+                        >
+                          <h2 className={styles.promptTitle}>{prompt.headerText}</h2>
+                          <h3 className={styles.promptDescription}>{prompt.suggestionText}</h3>
+                        </div>
+                      ))}
+                    </div>}
+                    <img src={dynamicImageLogo} className={styles.chatIcon} aria-hidden="true" />
+                </div>
               </Stack>
             ) : (
               <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? '40px' : '0px' }} role="log">

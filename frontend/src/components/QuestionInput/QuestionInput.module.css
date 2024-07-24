@@ -15,6 +15,7 @@
     justify-content: center;
     align-items: center;
     padding: 5px 0px;
+    border: 2px solid #2effab;
 }
 
 .questionInputTextArea {
