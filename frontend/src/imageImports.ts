@@ -10,6 +10,7 @@ import glasgowUni from "./assets/glasgowuni.svg"
 import tri from "./assets/tri.png"
 import nhbc from "./assets/nhbc-logo.svg"
 import northYorkshire from "./assets/NorthYorkshire.svg"
+import usp from "./assets/USP.png"
 
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
@@ -33,6 +34,7 @@ type ImageImports = {
     nhbcBackgroundImage: nhbcBackgroundImage,
     northYorkshire: northYorkshire,
     engineBackgroundImage: engineBackgroundImage,
+    usp: usp,
     // Add more entries as needed for other images
   };
 
