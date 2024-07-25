@@ -120,6 +120,7 @@ frontend_settings = {
         "prompt5_suggestion_text": app_settings.ui.prompt5_suggestion_text,
         "prompt6_suggestion_text": app_settings.ui.prompt6_suggestion_text,
         "prompt7_suggestion_text": app_settings.ui.prompt7_suggestion_text,
+        "prompt8_suggestion_text": app_settings.ui.prompt8_suggestion_text,
         "prompt1_suggestion_message": app_settings.ui.prompt1_suggestion_message,
         "prompt2_suggestion_message": app_settings.ui.prompt2_suggestion_message,
         "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message,
@@ -127,6 +128,7 @@ frontend_settings = {
         "prompt5_suggestion_message": app_settings.ui.prompt5_suggestion_message,
         "prompt6_suggestion_message": app_settings.ui.prompt6_suggestion_message,
         "prompt7_suggestion_message": app_settings.ui.prompt7_suggestion_message,
+        "prompt8_suggestion_message": app_settings.ui.prompt8_suggestion_message,
         "prompt1_header_text": app_settings.ui.prompt1_header_text,
         "prompt2_header_text": app_settings.ui.prompt2_header_text,
         "prompt3_header_text": app_settings.ui.prompt3_header_text,
@@ -134,6 +136,7 @@ frontend_settings = {
         "prompt5_header_text": app_settings.ui.prompt5_header_text,
         "prompt6_header_text": app_settings.ui.prompt6_header_text,
         "prompt7_header_text": app_settings.ui.prompt7_header_text,
+        "prompt8_header_text": app_settings.ui.prompt8_header_text,
         "chat_background_image": app_settings.ui.chat_background_image,
         "render_prompt_button_number": app_settings.ui.render_prompt_button_number
     },

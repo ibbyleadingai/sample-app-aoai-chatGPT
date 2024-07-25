@@ -784,6 +784,11 @@ const Chat = () => {
         suggestionText: ui?.prompt7_suggestion_text || 'Default Suggestion 7',
         message: ui?.prompt7_suggestion_message || 'What is ML (prompt 7)?',
       },
+      {
+        headerText: ui?.prompt8_header_text || 'Default Header 8',
+        suggestionText: ui?.prompt8_suggestion_text || 'Default Suggestion 8',
+        message: ui?.prompt8_suggestion_message || 'What is ML (prompt 8)?',
+      }
     ];
     
   const handlePromptClick = (prompt: string) => {

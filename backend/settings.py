@@ -79,6 +79,7 @@ class _UiSettings(BaseSettings):
     prompt5_suggestion_text:  str = ""
     prompt6_suggestion_text:  str = ""
     prompt7_suggestion_text:  str = ""
+    prompt8_suggestion_text:  str = ""
     prompt1_suggestion_message: str = ""
     prompt2_suggestion_message: str = ""
     prompt3_suggestion_message: str = ""
@@ -86,6 +87,7 @@ class _UiSettings(BaseSettings):
     prompt5_suggestion_message: str = ""
     prompt6_suggestion_message: str = ""
     prompt7_suggestion_message: str = ""
+    prompt8_suggestion_message: str = ""
     prompt1_header_text: str = ""
     prompt2_header_text: str = ""
     prompt3_header_text: str = ""
@@ -93,6 +95,7 @@ class _UiSettings(BaseSettings):
     prompt5_header_text: str = ""
     prompt6_header_text: str = ""
     prompt7_header_text: str = ""
+    prompt8_header_text: str = ""
     render_prompt_button_number: int = 0
     # Add more env variables here
 
