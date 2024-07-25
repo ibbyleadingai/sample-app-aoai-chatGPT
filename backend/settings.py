@@ -93,6 +93,7 @@ class _UiSettings(BaseSettings):
     prompt5_header_text: str = ""
     prompt6_header_text: str = ""
     prompt7_header_text: str = ""
+    render_prompt_button_number: int = 0
     # Add more env variables here
 
 

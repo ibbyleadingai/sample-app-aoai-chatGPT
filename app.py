@@ -134,7 +134,8 @@ frontend_settings = {
         "prompt5_header_text": app_settings.ui.prompt5_header_text,
         "prompt6_header_text": app_settings.ui.prompt6_header_text,
         "prompt7_header_text": app_settings.ui.prompt7_header_text,
-        "chat_background_image": app_settings.ui.chat_background_image
+        "chat_background_image": app_settings.ui.chat_background_image,
+        "render_prompt_button_number": app_settings.ui.render_prompt_button_number
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
