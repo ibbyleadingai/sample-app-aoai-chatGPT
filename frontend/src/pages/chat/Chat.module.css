@@ -110,11 +110,12 @@
 
 .chatIcon {
     width: 28%;
-    height: 40%;
+    height: auto;
     position: fixed;
     bottom: 155px;
     right: 162px;
     z-index: 0;
+    max-width: 100%;
     /* border-radius: 30%; */
 }
 
@@ -428,6 +429,12 @@ a {
   margin-right: 384px;
 }
 
+.promptOuterSuggestionsContainer{
+  width: 100%;
+  display: flex;
+  z-index: 1;
+}
+
 .promptSuggestions{
   background-color: white;
   color: black;
@@ -470,7 +477,7 @@ a {
   }
 
   .promptSuggestionsContainer{
-    display: flex;
+    /* display: flex; */
     gap: 10px;
   }
 
@@ -488,7 +495,7 @@ a {
       font-size: 12px;
   }
   .promptSuggestions{
-    width: 150px;
+    /* width: 150px; */
     font-size: 12px;
   }
 }
@@ -533,6 +540,7 @@ a {
       display: none;
   }
   .promptSuggestionsContainer{
+    display: flex;
     flex-direction: column;
     margin-top: 70px;
   }
