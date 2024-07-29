@@ -163,7 +163,7 @@ const Chat = () => {
     }
   }
 
-  const makeApiRequestWithoutCosmosDB = async (question: string, isHidden: boolean, conversationId?: string) => {
+  const makeApiRequestWithoutCosmosDB = async (question: string, isPrompt: Boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
@@ -174,7 +174,7 @@ const Chat = () => {
       role: 'user',
       content: question,
       date: new Date().toISOString(),
-      hidden: isHidden
+      isPrompt: isPrompt
     }
 
     let conversation: Conversation | null | undefined
@@ -288,7 +288,7 @@ const Chat = () => {
     return abortController.abort()
   }
 
-  const makeApiRequestWithCosmosDB = async (question: string, isHidden: boolean, conversationId?: string) => {
+  const makeApiRequestWithCosmosDB = async (question: string, isPrompt: Boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
@@ -299,7 +299,7 @@ const Chat = () => {
       role: 'user',
       content: question,
       date: new Date().toISOString(),
-      hidden: isHidden
+      isPrompt: isPrompt
     }
 
     //api call params set here (generate)
@@ -850,38 +850,38 @@ const Chat = () => {
               </Stack>
             ) : (
               <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? '40px' : '0px' }} role="log">
-                {messages.filter(msg => !msg.hidden).map((answer, index) => (
-                  <>
-                    {answer.role === 'user' ? (
-                      <div className={styles.chatMessageUser} tabIndex={0}>
-                        <div className={styles.chatMessageUserMessage}>{answer.content}</div>
-                      </div>
-                    ) : answer.role === 'assistant' ? (
-                      <div className={styles.chatMessageGpt}>
-                        <Answer
-                          answer={{
-                            answer: answer.content,
-                            citations: parseCitationFromMessage(messages[index - 1]),
-                            plotly_data: parsePlotFromMessage(messages[index - 1]),
-                            message_id: answer.id,
-                            feedback: answer.feedback,
-                            exec_results: execResults
-                          }}
-                          onCitationClicked={c => onShowCitation(c)}
-                          onExectResultClicked={() => onShowExecResult()}
-                        />
-                      </div>
-                    ) : answer.role === ERROR ? (
-                      <div className={styles.chatMessageError}>
-                        <Stack horizontal className={styles.chatMessageErrorContent}>
-                          <ErrorCircleRegular className={styles.errorIcon} style={{ color: 'rgba(182, 52, 67, 1)' }} />
-                          <span>Error</span>
-                        </Stack>
-                        <span className={styles.chatMessageErrorContent}>{answer.content}</span>
-                      </div>
-                    ) : null}
-                  </>
-                ))}
+                    {messages.map((answer, index) => (
+                        <>
+                            {answer.role === 'user' && !answer.isPrompt ? ( // Check if message is from a prompt and hide it
+                                <div className={styles.chatMessageUser} tabIndex={0}>
+                                    <div className={styles.chatMessageUserMessage}>{answer.content}</div>
+                                </div>
+                            ) : answer.role === 'assistant' ? (
+                                <div className={styles.chatMessageGpt}>
+                                    <Answer
+                                        answer={{
+                                            answer: answer.content,
+                                            citations: parseCitationFromMessage(messages[index - 1]),
+                                            plotly_data: parsePlotFromMessage(messages[index - 1]),
+                                            message_id: answer.id,
+                                            feedback: answer.feedback,
+                                            exec_results: execResults
+                                        }}
+                                        onCitationClicked={c => onShowCitation(c)}
+                                        onExectResultClicked={() => onShowExecResult()}
+                                    />
+                                </div>
+                            ) : answer.role === ERROR ? (
+                                <div className={styles.chatMessageError}>
+                                    <Stack horizontal className={styles.chatMessageErrorContent}>
+                                        <ErrorCircleRegular className={styles.errorIcon} style={{ color: 'rgba(182, 52, 67, 1)' }} />
+                                        <span>Error</span>
+                                    </Stack>
+                                    <span className={styles.chatMessageErrorContent}>{answer.content}</span>
+                                </div>
+                            ) : null}
+                        </>
+                    ))}
                 {showLoadingMessage && (
                   <>
                     <div className={styles.chatMessageGpt}>
