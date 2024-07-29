@@ -52,7 +52,7 @@ export type ChatMessage = {
   date: string
   feedback?: Feedback
   context?: string
-  isPrompt?: boolean
+  isPrompt?: any
 }
 
 export type ExecResults = {
