@@ -825,6 +825,7 @@ const Chat = () => {
         </Stack>
       ) : (
         <Stack horizontal className={styles.chatRoot}>
+          <img src={dynamicImageLogo} className={styles.chatIcon} aria-hidden="true" />
           <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color, backgroundImage: `url(${dynamicImage})`}}>
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>
@@ -832,7 +833,6 @@ const Chat = () => {
                   <h1 className={styles.chatEmptyStateTitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_title}</h1>
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
-                <div className={styles.promptAndLogoContainer}>
                     {ui?.show_prompt_suggestions && !isLoadingWebsite && <div className={styles.promptSuggestionsContainer}>
                     {prompts.map((prompt, index) => ( //Map over prompt obj and display prompt btn
                         <div
@@ -845,8 +845,6 @@ const Chat = () => {
                         </div>
                       ))}
                     </div>}
-                    <img src={dynamicImageLogo} className={styles.chatIcon} aria-hidden="true" />
-                </div>
               </Stack>
             ) : (
               <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? '40px' : '0px' }} role="log">
