@@ -49,6 +49,7 @@
     justify-content: center;
     align-items: center;
     gap: 15px;
+    width: 60%;
 }
 
 .chatEmptyStateTitle {
@@ -434,7 +435,6 @@ a {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
-  margin-right: 384px;
 }
 
 .promptOuterSuggestionsContainer{
@@ -556,6 +556,10 @@ a {
   .promptSuggestions{
     width: 200px;
     font-size: 14px;
+  }
+
+  .promptOuterSuggestionsContainer{
+    justify-content: center;
   }
 }
 
