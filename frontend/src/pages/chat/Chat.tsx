@@ -825,7 +825,7 @@ const Chat = () => {
         </Stack>
       ) : (
         <Stack horizontal className={styles.chatRoot}>
-          <img src={dynamicImageLogo} className={styles.chatIcon} aria-hidden="true" />
+          {!isCitationPanelOpen && <img src={dynamicImageLogo} className={styles.chatIcon} aria-hidden="true" />}
           <div className={styles.chatContainer} style={{backgroundColor: ui?.chat_color, backgroundImage: `url(${dynamicImage})`}}>
             {!messages || messages.length < 1 ? (
               <Stack className={styles.chatEmptyState}>

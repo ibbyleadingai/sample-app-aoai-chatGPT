@@ -123,6 +123,7 @@
     right: 200px;
     z-index: 0;
     max-width: 100%;
+    pointer-events: none;
     /* border-radius: 30%; */
 }
 
