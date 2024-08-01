@@ -12,6 +12,14 @@ import nhbc from "./assets/nhbc-logo.svg"
 import northYorkshire from "./assets/NorthYorkshire.svg"
 import usp from "./assets/USP.png"
 
+import policyAdvisorIcon from './assets/icons/Engine_artwork_EducationEngine_BLACK.png'
+import commsProfessional from './assets/icons/Engine_artwork_WebEngine_BLACK.png'
+import schoolImprovementPlanIcon from './assets/icons/Engine_artwork_DataEngine_BLACK.png'
+import bidWriterIcon from './assets/icons/Engine_artwork_Privacy_BLACK.png'
+import sendPlannerIcon from './assets/icons/Engine_artwork_KnowledgeEngine_BLACK.png'
+import reportWriterIcon from './assets/icons/Engine_artwork_ProposalEngine_BLACK.png'
+import inspectionToolKitIcon from './assets/icons/Engine_artwork_InstantEngine_BLACK.png'
+
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
 
@@ -35,6 +43,14 @@ type ImageImports = {
     northYorkshire: northYorkshire,
     engineBackgroundImage: engineBackgroundImage,
     usp: usp,
+
+    policyAdvisorIcon: policyAdvisorIcon,
+    commsProfessional: commsProfessional,
+    schoolImprovementPlanIcon: schoolImprovementPlanIcon,
+    bidWriterIcon: bidWriterIcon,
+    sendPlannerIcon: sendPlannerIcon,
+    reportWriterIcon: reportWriterIcon,
+    inspectionToolKitIcon: inspectionToolKitIcon
     // Add more entries as needed for other images
   };
 

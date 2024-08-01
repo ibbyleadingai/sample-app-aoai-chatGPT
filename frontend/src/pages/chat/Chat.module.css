@@ -450,6 +450,10 @@ a {
   margin: 0px;
 }
 
+.promptIcon{
+  width: 25%;
+}
+
 @media (max-width: 680px){
   .chatEmptyStateTitle{
       font-size: 40px;
