@@ -9,14 +9,14 @@ const AutoRefreshOnInactivity: React.FC<AutoRefreshOnInactivityProps> = ({
 }) => {
     let inactivityThreshold = 1000 * 60 * inactivityThresholdinMinutes
     useEffect(() => {
-        let inactivityTimer: ReturnType<typeof setTimeout>;
+        let inactivityTimer: ReturnType<typeof setTimeout>; //holds the ID of the timer created by setTimeout
 
         const resetInactivityTimer = () => {
-            if (inactivityTimer) {
+            if (inactivityTimer) { //clears any existing timer and then starts a new one with the updated inactivityThreshold
                 clearTimeout(inactivityTimer);
             }
-            inactivityTimer = setTimeout(() => {
-                alert(`You’ve been inactive for ${inactivityThresholdinMinutes} minutes. The page will refresh.`);
+            inactivityTimer = setTimeout(() => { //This function creates a timer based on the inactivityThreshold. Thre content inside is what should happen when timer is completed.
+                alert(`Session timeout. The page will refresh.`); 
                 window.location.reload();
             }, inactivityThreshold);
         };
@@ -35,7 +35,7 @@ const AutoRefreshOnInactivity: React.FC<AutoRefreshOnInactivityProps> = ({
         resetInactivityTimer();
 
         // Cleanup on component unmount
-        return () => {
+        return () => { //clears the inactivity timer and removes the event listeners to prevent memory leaks.
             if (inactivityTimer) {
                 clearTimeout(inactivityTimer);
             }
