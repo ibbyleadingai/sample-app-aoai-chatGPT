@@ -868,7 +868,7 @@ const Chat = () => {
                 </Stack>
               )}
               <Stack>
-                {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && (
+                {/* {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && (
                   <CommandBarButton
                     role="button"
                     styles={{
@@ -893,8 +893,8 @@ const Chat = () => {
                     aria-label="Start a new chat button"
                     tabIndex={0}
                   />
-                )}
-                {/* <CommandBarButton
+                )} */}
+                <CommandBarButton
                   role="button"
                   styles={{
                     icon: {
@@ -905,8 +905,7 @@ const Chat = () => {
                     },
                     root: {
                       color: '#FFFFFF',
-                      background:
-                        'radial-gradient(109.81% 107.82% at 100.1% 90.19%, #0F6CBD 33.63%, #2D87C3 70.31%, #8DDDD8 100%)'
+                      background: 'radial-gradient(109.81% 107.82% at 100.1% 90.19%, rgb(45, 45, 45) 33.63%, rgb(74, 174, 124) 100%);'
                     },
                     rootDisabled: {
                       background: '#F0F0F0'
@@ -925,7 +924,7 @@ const Chat = () => {
                   }
                   disabled={disabledButton()}
                   aria-label="clear chat button"
-                /> */}
+                />
                 <Dialog
                   hidden={hideErrorDialog}
                   onDismiss={handleErrorDialogClose}
