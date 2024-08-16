@@ -168,6 +168,7 @@ export type UI = {
     prompt3_suggestion_message?: string;
     show_prompt_suggestions?: boolean;
     chat_background_image?: string;
+    session_inactivity_time_in_minutes?: number;
 }
 
 export type FrontendSettings = {
