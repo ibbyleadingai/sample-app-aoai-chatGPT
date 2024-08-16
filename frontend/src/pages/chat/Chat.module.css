@@ -117,10 +117,10 @@
 }
 
 .chatIcon {
-    width: 28%;
+    width: 36%;
     height: auto;
     position: fixed;
-    bottom: 155px;
+    bottom: 115px;
     right: 200px;
     z-index: 0;
     max-width: 100%;
