@@ -434,7 +434,7 @@ a {
 .promptSuggestionsContainer{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap: 15px;
 }
 
 .promptOuterSuggestionsContainer{
@@ -479,9 +479,26 @@ a {
   margin: 0px;
 }
 
-@media (min-width: 1500px) {
+/* On bigger screens, magnify a few elements */
+@media (min-width: 1500px) { 
   .chatIcon{
       margin-right: 200px;
+  }
+  .promptSuggestions{
+    width: 250px;
+    height: 160px;
+  }
+  .promptTitle{
+    font-size: 18px
+  }
+  .promptDescription{
+    font-size: 16px;
+  }
+  .chatEmptyStateTitle{
+    font-size: 70px;
+  }
+  .promptSuggestionsContainer{
+    gap: 30px;
   }
   }
 
