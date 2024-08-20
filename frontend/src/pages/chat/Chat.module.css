@@ -479,6 +479,12 @@ a {
   margin: 0px;
 }
 
+@media (min-width: 1500px) {
+  .chatIcon{
+      margin-right: 200px;
+  }
+  }
+
 @media (max-width: 680px){
   .chatEmptyStateTitle{
       font-size: 40px;
