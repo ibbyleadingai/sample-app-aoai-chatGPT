@@ -50,6 +50,7 @@
     align-items: center;
     gap: 15px;
     width: 60%;
+    margin-bottom: 60px;
 }
 
 .chatEmptyStateTitle {
@@ -565,15 +566,14 @@ a {
 
 @media (max-width: 420px){
   .chatEmptyStateTitle{
-      display: none;
+      
   }
   .chatEmptyStateSubtitle{
-      display: none;
+      
   }
   .promptSuggestionsContainer{
     display: flex;
     flex-direction: column;
-    margin-top: 70px;
   }
 
   .promptSuggestions{
