@@ -50,7 +50,7 @@
     align-items: center;
     gap: 15px;
     width: 60%;
-    margin-bottom: 140px;
+    margin-bottom: 160px;
 }
 
 .chatEmptyStateTitle {
@@ -121,8 +121,8 @@
     width: 36%;
     height: auto;
     position: fixed;
-    bottom: 115px;
-    right: 200px;
+    bottom: 225px;
+    right: 160px;
     z-index: 0;
     max-width: 100%;
     pointer-events: none;
@@ -570,6 +570,9 @@ a {
   }
   .chatEmptyStateSubtitle{
       
+  }
+  .chatEmptyState{
+    margin-bottom: 0;
   }
   .promptSuggestionsContainer{
     display: flex;
