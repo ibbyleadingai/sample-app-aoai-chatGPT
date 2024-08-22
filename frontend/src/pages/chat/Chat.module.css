@@ -79,7 +79,7 @@
   text-align: left;
   letter-spacing: -0.01em;
   color: #f5f5f5;
-  width: 45%;
+  width: 80%;
 }
 
 .chatEmptyStateAuth{
@@ -506,6 +506,7 @@ a {
 @media (max-width: 680px){
   .chatEmptyStateTitle{
       font-size: 40px;
+      line-height: 40px
   }
 
   .promptSuggestionsContainer{
@@ -533,6 +534,10 @@ a {
 }
 
 @media (max-width: 480px) {
+.chatIcon{
+  display: none;
+}
+
 .chatInput {
   width: 90%;
   max-width: 90%;
@@ -548,10 +553,6 @@ a {
 
 .clearChatBroomNoCosmos {
   left: 0px;
-}
-
-.chatEmptyStateTitle {
-  line-height: 36px;
 }
 
 .citationPanel {
