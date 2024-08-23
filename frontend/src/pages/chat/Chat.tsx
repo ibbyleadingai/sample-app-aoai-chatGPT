@@ -918,7 +918,7 @@ const Chat = () => {
                 </Stack>
               )}
               <Stack>
-                {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && (
+                {/* {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && (
                   <CommandBarButton
                     role="button"
                     styles={{
@@ -943,8 +943,8 @@ const Chat = () => {
                     aria-label="Start a new chat button"
                     tabIndex={0}
                   />
-                )}
-                {/* <CommandBarButton
+                )} */}
+                <CommandBarButton
                   role="button"
                   styles={{
                     icon: {
@@ -975,7 +975,7 @@ const Chat = () => {
                   }
                   disabled={disabledButton()}
                   aria-label="clear chat button"
-                /> */}
+                />
                 <Dialog
                   hidden={hideErrorDialog}
                   onDismiss={handleErrorDialogClose}
