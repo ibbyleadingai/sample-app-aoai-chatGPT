@@ -303,7 +303,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
           {!!parsedAnswer.citations.length && (
             <Stack.Item onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? toggleIsRefAccordionOpen() : null)}>
               <Stack style={{ width: '100%' }}>
-                <Stack horizontal horizontalAlign="start" verticalAlign="center">
+                {/* <Stack horizontal horizontalAlign="start" verticalAlign="center">
                   <Text
                     className={styles.accordionTitle}
                     onClick={toggleIsRefAccordionOpen}
@@ -321,7 +321,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                     onClick={handleChevronClick}
                     iconName={chevronIsExpanded ? 'ChevronDown' : 'ChevronRight'}
                   />
-                </Stack>
+                </Stack> */}
               </Stack>
             </Stack.Item>
           )}
