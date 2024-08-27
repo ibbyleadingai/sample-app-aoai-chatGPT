@@ -616,10 +616,12 @@ def extract_pdf_content(file_path, form_recognizer_client, use_layout=False):
         if use_layout:
             tables_on_page = []
             for table in form_recognizer_results.tables:
-                table_offset = table.spans[0].offset
-                table_length = table.spans[0].length
-                if page_offset <= table_offset and table_offset + table_length < page_offset + page_length:
-                    tables_on_page.append(table)
+                # If the table is empty, the span is empty, so we skip it
+                if len(table.spans) > 0:
+                    table_offset = table.spans[0].offset
+                    table_length = table.spans[0].length
+                    if page_offset <= table_offset and table_offset + table_length < page_offset + page_length:
+                        tables_on_page.append(table)
         else:
             tables_on_page = []
 
@@ -672,11 +674,14 @@ def extract_pdf_content(file_path, form_recognizer_client, use_layout=False):
             page_number = bounding_box['pageNumber'] - 1  # Page numbers in PyMuPDF start from 0
             x0, y0, x1, y1 = polygon_to_bbox(bounding_box['polygon'])
 
-            # Select the figure and upscale it by 200% for higher resolution
             page = document.load_page(page_number)
             bbox = fitz.Rect(x0, y0, x1, y1)
 
-            zoom = 2.0 
+            # If either the width or height of the bounding box is less than 3 inches, we upscale by 2x
+            if bbox.width < 72*3 or bbox.height < 72*3:
+                zoom = 2.0
+            else:
+                zoom = 1.0 
             mat = fitz.Matrix(zoom, zoom)
             image = page.get_pixmap(matrix=mat, clip=bbox)
 
@@ -685,9 +690,15 @@ def extract_pdf_content(file_path, form_recognizer_client, use_layout=False):
             image_base64 = base64.b64encode(image_data).decode("utf-8")
             image_base64 = f"data:image/jpg;base64,{image_base64}"
 
-            # Add the image tag to the full text
+            # Identify the text that corresponds to the figure
             replace_start = figure["spans"][0]["offset"]
             replace_end = figure["spans"][0]["offset"] + figure["spans"][0]["length"]
+
+            # Sometimes the figure doesn't correspond to any text, in which case we skip it
+            if replace_start == replace_end:
+                continue
+            
+            # Now we get the image tag
             original_text = form_recognizer_results.content[replace_start:replace_end]
 
             if original_text not in full_text:
@@ -695,7 +706,8 @@ def extract_pdf_content(file_path, form_recognizer_client, use_layout=False):
             
             img_tag = image_content_to_tag(original_text)
             
-            full_text = full_text.replace(original_text, img_tag)
+            # We replace only the first occurrence of the original text
+            full_text = full_text.replace(original_text, img_tag, 1)
             image_mapping[img_tag] = image_base64
 
     return full_text, image_mapping
