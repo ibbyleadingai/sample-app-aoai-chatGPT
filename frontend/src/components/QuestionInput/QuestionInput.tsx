@@ -27,14 +27,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
     const selectedFile = appStateContext?.state.selectedFile;  // Access the selectedFile from the global state
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
-    const [buttonText, setButtonText] = useState('Improve Prompt');
+    const [buttonText, setButtonText] = useState('Improve prompt');
     const [multiline, { toggle: toggleMultiline }] = useBoolean(false);
 
     const updateButtonText = () => {
         if (window.innerWidth <= 480) {
             setButtonText('Improve');
         } else {
-            setButtonText('Improve Prompt');
+            setButtonText('Improve prompt');
         }
     }
 

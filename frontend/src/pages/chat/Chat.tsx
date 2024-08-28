@@ -799,6 +799,7 @@ const Chat = () => {
         headerText: ui?.prompt8_header_text || '',
         suggestionText: ui?.prompt8_suggestion_text || '',
         message: ui?.prompt8_suggestion_message || 'What is ML (prompt 8)?',
+        imageIcon: imageImports.dataAnalysisIcon
       }
     ];
     

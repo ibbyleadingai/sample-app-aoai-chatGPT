@@ -88,7 +88,6 @@
     border-radius: 3px;
     border: none;
     font-family: monospace;
-    text-transform: capitalize;
     width: 140px;
 }
 
@@ -149,8 +148,8 @@
   
   .customUploadButton {
     padding: 5px 10px;
-    background-color: #3498db;
-    color: #fff;
+    background-color: #2effab;
+    color: #2d2d2d;
     border: none;
     cursor: pointer;
     border-radius: 4px;

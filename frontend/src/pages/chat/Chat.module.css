@@ -116,6 +116,7 @@
   z-index: 0;
   max-width: 100%;
   pointer-events: none;
+  /* border-radius: 30%; */
 }
 
 .chatMessageStream {
@@ -465,6 +466,12 @@ a {
 
 .promptIcon{
   width: 25%;
+}
+
+@media (min-width: 1500px) {
+  .chatIcon{
+      margin-right: 200px;
+  }
 }
 
 @media (max-width: 680px){

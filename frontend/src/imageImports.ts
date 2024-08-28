@@ -20,6 +20,7 @@ import bidWriterIcon from './assets/icons/Engine_artwork_Privacy_BLACK.png'
 import sendPlannerIcon from './assets/icons/Engine_artwork_KnowledgeEngine_BLACK.png'
 import reportWriterIcon from './assets/icons/Engine_artwork_ProposalEngine_BLACK.png'
 import inspectionToolKitIcon from './assets/icons/Engine_artwork_InstantEngine_BLACK.png'
+import dataAnalysisIcon from './assets/icons/Engine_artwork_APIENgine_BLACK.png'
 
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
@@ -52,7 +53,8 @@ type ImageImports = {
     bidWriterIcon: bidWriterIcon,
     sendPlannerIcon: sendPlannerIcon,
     reportWriterIcon: reportWriterIcon,
-    inspectionToolKitIcon: inspectionToolKitIcon
+    inspectionToolKitIcon: inspectionToolKitIcon,
+    dataAnalysisIcon: dataAnalysisIcon
     // Add more entries as needed for other images
   };
 
