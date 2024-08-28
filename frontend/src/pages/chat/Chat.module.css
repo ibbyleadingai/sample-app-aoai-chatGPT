@@ -108,9 +108,14 @@
 }
 
 .chatIcon {
-    height: 62px;
-    width: 150px;
-    /* border-radius: 30%; */
+  width: 36%;
+  height: auto;
+  position: fixed;
+  bottom: 115px;
+  right: 200px;
+  z-index: 0;
+  max-width: 100%;
+  pointer-events: none;
 }
 
 .chatMessageStream {
@@ -129,6 +134,7 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 12px;
+  z-index: 1;
 }
 
 .chatMessageUserMessage {
@@ -155,6 +161,7 @@
   margin-bottom: 12px;
   max-width: 80%;
   display: flex;
+  z-index: 1;
 }
 
 .chatMessageError {
@@ -412,6 +419,12 @@ a {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
+}
+
+.promptOuterSuggestionsContainer{
+  width: 100%;
+  display: flex;
+  z-index: 1;
 }
 
 .promptSuggestions{
