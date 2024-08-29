@@ -150,6 +150,8 @@ export type UI = {
     show_chat_logo?: boolean;
     show_logo?: boolean;
     show_upload_button?: boolean;
+    upload_button_color?: string;
+    upload_button_text_color?: string;
     show_history_button?: boolean;
     text_input_border_color?: string;
     improve_button_text_color?: string;
@@ -184,6 +186,7 @@ export type UI = {
     prompt7_header_text?: string;
     show_prompt_suggestions?: boolean;
     chat_background_image?: string;
+    session_inactivity_time_in_minutes?: number;
 }
 
 export type FrontendSettings = {

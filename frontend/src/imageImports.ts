@@ -11,6 +11,8 @@ import tri from "./assets/tri.png"
 import nhbc from "./assets/nhbc-logo.svg"
 import northYorkshire from "./assets/NorthYorkshire.svg"
 import engineBackgroundIcon from "./assets/engine-background-icon.png"
+import mapp from "./assets/mapp-logo.svg"
+import hruc from "./assets/hruc-logo.svg"
 
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
@@ -35,6 +37,8 @@ type ImageImports = {
     northYorkshire: northYorkshire,
     engineBackgroundImage: engineBackgroundImage,
     engineBackgroundIcon: engineBackgroundIcon,
+    mapp: mapp,
+    hruc: hruc,
     // Add more entries as needed for other images
   };
 

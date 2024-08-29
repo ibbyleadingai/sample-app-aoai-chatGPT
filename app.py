@@ -118,11 +118,13 @@ frontend_settings = {
         "show_chat_logo": app_settings.ui.show_chat_logo,
         "show_logo": app_settings.ui.show_logo,
         "show_upload_button": app_settings.ui.show_upload_button,
+        "upload_button_color":app_settings.ui.upload_button_color,
+        "upload_button_text_color": app_settings.ui.upload_button_text_color,
         "show_history_button": app_settings.ui.show_history_button,
         "chat_font_empty_state": app_settings.ui.chat_font_empty_state,
         "show_citation_panel": app_settings.ui.show_citation_panel,
         "disclaimer_text": app_settings.ui.disclaimer_text,
-        "disclaimer_text_link": app_settings.ui.disclaimer_text,
+        "disclaimer_text_link": app_settings.ui.disclaimer_text_link,
         "chat_text_shadow": app_settings.ui.chat_text_shadow,
         "show_title": app_settings.ui.show_title,
         "new_chat_button_color": app_settings.ui.new_chat_button_color,
@@ -149,7 +151,8 @@ frontend_settings = {
         "prompt5_header_text": app_settings.ui.prompt5_header_text,
         "prompt6_header_text": app_settings.ui.prompt6_header_text,
         "prompt7_header_text": app_settings.ui.prompt7_header_text,
-        "chat_background_image": app_settings.ui.chat_background_image
+        "chat_background_image": app_settings.ui.chat_background_image,
+        "session_inactivity_time_in_minutes": app_settings.ui.session_inactivity_time_in_minutes
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
