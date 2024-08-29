@@ -188,6 +188,7 @@ export type UI = {
     prompt7_header_text?: string;
     prompt8_header_text?: string;
     show_prompt_suggestions?: boolean;
+    render_prompt_button_number?: number;
     chat_background_image?: string;
     session_inactivity_time_in_minutes?: number;
 }
