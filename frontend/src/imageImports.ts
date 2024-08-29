@@ -21,6 +21,8 @@ import sendPlannerIcon from './assets/icons/Engine_artwork_KnowledgeEngine_BLACK
 import reportWriterIcon from './assets/icons/Engine_artwork_ProposalEngine_BLACK.png'
 import inspectionToolKitIcon from './assets/icons/Engine_artwork_InstantEngine_BLACK.png'
 import dataAnalysisIcon from './assets/icons/Engine_artwork_APIENgine_BLACK.png'
+import mapp from "./assets/mapp-logo.svg"
+import hruc from "./assets/hruc-logo.svg"
 
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
@@ -54,7 +56,9 @@ type ImageImports = {
     sendPlannerIcon: sendPlannerIcon,
     reportWriterIcon: reportWriterIcon,
     inspectionToolKitIcon: inspectionToolKitIcon,
-    dataAnalysisIcon: dataAnalysisIcon
+    dataAnalysisIcon: dataAnalysisIcon,
+    mapp: mapp,
+    hruc: hruc,
     // Add more entries as needed for other images
   };
 

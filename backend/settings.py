@@ -60,6 +60,8 @@ class _UiSettings(BaseSettings):
     show_chat_logo: bool = False
     show_logo: bool = True
     show_upload_button: bool = False
+    upload_button_color: str = "2effab"
+    upload_button_text_color: str = "black"
     show_history_button: bool = True
     improve_button_text_color: str = "black"
     chat_font_empty_state: str = "PowerGroteskLight"
@@ -97,6 +99,8 @@ class _UiSettings(BaseSettings):
     prompt7_header_text: str = ""
     prompt8_header_text: str = ""
     render_prompt_button_number: int = 0
+    chat_background_image: str = ""
+    session_inactivity_time_in_minutes: int
     # Add more env variables here
 
 
@@ -224,16 +228,24 @@ class _AzureOpenAISettings(BaseSettings):
                 "type": "deployment_name",
                 "deployment_name": self.embedding_name
             }
-        
-        elif self.embedding_endpoint and self.embedding_key:
-            return {
-                "type": "endpoint",
-                "endpoint": self.embedding_endpoint,
-                "authentication": {
-                    "type": "api_key",
-                    "api_key": self.embedding_key
+        elif self.embedding_endpoint:
+            if self.embedding_key:
+                return {
+                    "type": "endpoint",
+                    "endpoint": self.embedding_endpoint,
+                    "authentication": {
+                        "type": "api_key",
+                        "key": self.embedding_key
+                    }
                 }
-            }
+            else:
+                return {
+                    "type": "endpoint",
+                    "endpoint": self.embedding_endpoint,
+                    "authentication": {
+                        "type": "system_assigned_managed_identity"
+                    }
+                }
         else:   
             return None
     

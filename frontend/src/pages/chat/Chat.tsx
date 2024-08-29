@@ -39,6 +39,7 @@ import { QuestionInput } from "../../components/QuestionInput";
 import { ChatHistoryPanel } from "../../components/ChatHistory/ChatHistoryPanel";
 import { AppStateContext } from "../../state/AppProvider";
 import { useBoolean } from "@fluentui/react-hooks";
+import AutoRefreshOnInactivity from "../../components/AutoRefreshOnInactivity"
 
 const enum messageStatus {
   NotRunning = 'Not Running',
@@ -56,10 +57,10 @@ const Chat = () => {
     const [activeCitation, setActiveCitation] = useState<Citation>();
     const [isCitationPanelOpen, setIsCitationPanelOpen] = useState<boolean>(false);
     const [isIntentsPanelOpen, setIsIntentsPanelOpen] = useState<boolean>(false)
-  const abortFuncs = useRef([] as AbortController[]);
+    const abortFuncs = useRef([] as AbortController[]);
     const [showAuthMessage, setShowAuthMessage] = useState<boolean>(true);
     const [messages, setMessages] = useState<ChatMessage[]>([])
-  const [execResults, setExecResults] = useState<ExecResults[]>([])
+    const [execResults, setExecResults] = useState<ExecResults[]>([])
     const [processMessages, setProcessMessages] = useState<messageStatus>(messageStatus.NotRunning);
     const [clearingChat, setClearingChat] = useState<boolean>(false);
     const [hideErrorDialog, { toggle: toggleErrorDialog }] = useBoolean(true);
@@ -1104,6 +1105,7 @@ const Chat = () => {
             appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && <ChatHistoryPanel />}
         </Stack>
       )}
+      <AutoRefreshOnInactivity inactivityThresholdinMinutes={ui?.session_inactivity_time_in_minutes} />
     </div>
     );
 };
