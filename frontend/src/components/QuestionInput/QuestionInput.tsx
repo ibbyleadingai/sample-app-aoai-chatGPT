@@ -268,7 +268,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             </div>}
             {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer}>
-                    <label htmlFor="upload-btn" className={styles.customUploadButton}>
+                    <label htmlFor="upload-btn" className={styles.customUploadButton} style={{backgroundColor: ui?.upload_button_color, color: ui?.upload_button_text_color}}>
                         {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
                     </label>
                     <input

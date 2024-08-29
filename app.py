@@ -118,6 +118,8 @@ frontend_settings = {
         "show_chat_logo": app_settings.ui.show_chat_logo,
         "show_logo": app_settings.ui.show_logo,
         "show_upload_button": app_settings.ui.show_upload_button,
+        "upload_button_color":app_settings.ui.upload_button_color,
+        "upload_button_text_color": app_settings.ui.upload_button_text_color,
         "show_history_button": app_settings.ui.show_history_button,
         "chat_font_empty_state": app_settings.ui.chat_font_empty_state,
         "show_citation_panel": app_settings.ui.show_citation_panel,
