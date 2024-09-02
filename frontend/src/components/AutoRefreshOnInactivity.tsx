@@ -5,7 +5,7 @@ interface AutoRefreshOnInactivityProps {
 }
 
 const AutoRefreshOnInactivity: React.FC<AutoRefreshOnInactivityProps> = ({
-    inactivityThresholdinMinutes = 120, // Default to 60 minutes
+    inactivityThresholdinMinutes = 180, // Default to 60 minutes
 }) => {
     let inactivityThreshold = 1000 * 60 * inactivityThresholdinMinutes
     useEffect(() => {
