@@ -83,6 +83,7 @@ class _UiSettings(BaseSettings):
     session_inactivity_time_in_minutes: int
     history_text_color: str = "black"
     history_item_selected_color: str = "#1a1b21"
+    history_item_selected_text_color: str = "white"
     # Add more env variables here
 
 
