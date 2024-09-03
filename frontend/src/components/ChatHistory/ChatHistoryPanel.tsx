@@ -116,7 +116,7 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
               fontSize: '18px',
               marginRight: 'auto',
               paddingLeft: '20px',
-              color: ui?.title_text_color
+              color: ui?.history_text_color
             }}>
             Chat history
           </Text>
