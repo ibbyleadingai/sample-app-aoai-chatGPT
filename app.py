@@ -122,7 +122,7 @@ frontend_settings = {
         "chat_font_empty_state": app_settings.ui.chat_font_empty_state,
         "show_citation_panel": app_settings.ui.show_citation_panel,
         "disclaimer_text": app_settings.ui.disclaimer_text,
-        "disclaimer_text_link": app_settings.ui.disclaimer_text_link,
+        "disclaimer_text_link": app_settings.ui.disclaimer_text,
         "chat_text_shadow": app_settings.ui.chat_text_shadow,
         "show_title": app_settings.ui.show_title,
         "new_chat_button_color": app_settings.ui.new_chat_button_color,
