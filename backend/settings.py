@@ -78,7 +78,6 @@ class _UiSettings(BaseSettings):
     prompt2_suggestion_message: str = ""
     prompt3_suggestion_message: str = ""
     chat_background_image: str = ""
-    session_inactivity_time_in_minutes: int
     # Add more env variables here
 
 

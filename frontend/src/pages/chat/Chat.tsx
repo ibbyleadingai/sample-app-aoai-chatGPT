@@ -1040,7 +1040,7 @@ const Chat = () => {
             appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && <ChatHistoryPanel />}
         </Stack>
       )}
-      <AutoRefreshOnInactivity inactivityThresholdinMinutes={ui?.session_inactivity_time_in_minutes} />
+      <AutoRefreshOnInactivity inactivityThresholdinMinutes={120} />
     </div>
     );
 };
