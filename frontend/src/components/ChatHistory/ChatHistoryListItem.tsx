@@ -249,7 +249,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
             onMouseLeave={() => setIsHovered(false)}
             styles={{
                 root: {
-                    backgroundColor: isSelected ? ui?.history_item_selected_color : 'transparent',
+                    backgroundColor: isSelected ? '#1a1b21' : 'transparent',
                     color: ui?.chat_text_color
                 }
             }}
@@ -286,7 +286,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
                 </Stack.Item>
             </> : <>
                 <Stack horizontal verticalAlign={'center'} style={{ width: '100%' }}>
-                    <div className={styles.chatTitle} style={{color: ui?.history_text_color}}>{truncatedTitle}</div>
+                    <div className={styles.chatTitle} style={{color: ui?.title_text_color}}>{truncatedTitle}</div>
                     {(isSelected || isHovered) && <Stack horizontal horizontalAlign='end'>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Download' }} title="Download" onClick={() => handleDownload(item)} onKeyDown={e => e.key === " " ? onEdit() : null}/>
                         <IconButton className={styles.itemButton} iconProps={{ iconName: 'Delete' }} title="Delete" onClick={toggleDeleteDialog} onKeyDown={e => e.key === " " ? toggleDeleteDialog() : null}/>
@@ -390,7 +390,7 @@ export const ChatHistoryListItemGroups: React.FC<ChatHistoryListItemGroupsProps>
               key={group.month}
               className={styles.chatGroup}
               aria-label={`chat history group: ${group.month}`}>
-              <Stack aria-label={group.month} className={styles.chatMonth} style={{color: ui?.history_text_color}}>
+              <Stack aria-label={group.month} className={styles.chatMonth} style={{color: ui?.title_text_color}}>
                 {formatMonth(group.month)}
               </Stack>
               <List
