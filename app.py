@@ -137,8 +137,7 @@ frontend_settings = {
         "prompt2_suggestion_message": app_settings.ui.prompt2_suggestion_message,
         "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message,
         "chat_background_image": app_settings.ui.chat_background_image,
-        "session_inactivity_time_in_minutes": app_settings.ui.session_inactivity_time_in_minutes,
-        "history_text_color": app_settings.ui.history_text_color
+        "session_inactivity_time_in_minutes": app_settings.ui.session_inactivity_time_in_minutes
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
 }
