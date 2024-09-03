@@ -172,8 +172,6 @@ export type UI = {
     chat_background_image?: string;
     session_inactivity_time_in_minutes?: number;
     history_text_color?: string;
-    history_item_selected_color?: string;
-    history_item_selected_text_color?: string;
 }
 
 export type FrontendSettings = {
