@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { Stack, TextField } from "@fluentui/react";
+import { useContext, useState, useEffect} from "react";
+import { FontIcon, Stack, TextField } from "@fluentui/react";
 import { SendRegular, Whiteboard20Filled } from "@fluentui/react-icons";
 import { useBoolean } from '@fluentui/react-hooks';
 import Send from "../../assets/Send.svg";
@@ -7,9 +7,10 @@ import styles from "./QuestionInput.module.css";
 import { handleImprovePromptApi } from "../../api";
 import { AppStateContext } from "../../state/AppProvider";
 import React from "react";
+import { ChatMessage } from '../../api'
 
 interface Props {
-  onSend: (question: string, id?: string) => void
+  onSend: (question: ChatMessage['content'], id?: string) => void
   disabled: boolean
   placeholder?: string
   clearOnSend?: boolean
@@ -109,16 +110,45 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
           setIsLoadingImproved(false);
         }
     };
+  const [base64Image, setBase64Image] = useState<string | null>(null);
+
+  const OYD_ENABLED = appStateContext?.state.frontendSettings?.oyd_enabled || false;
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      await convertToBase64(file);
+    }
+  };
+
+  const convertToBase64 = async (file: Blob) => {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      setBase64Image(reader.result as string);
+    };
+
+    reader.onerror = (error) => {
+      console.error('Error: ', error);
+    };
+  };
 
   const sendQuestion = () => {
     if (disabled || !question.trim()) {
       return
     }
 
-    if (conversationId) {
-      onSend(question, conversationId)
+    const questionTest: ChatMessage["content"] = base64Image ? [{ type: "text", text: question }, { type: "image_url", image_url: { url: base64Image } }] : question.toString();
+
+    if (conversationId && questionTest !== undefined) {
+      onSend(questionTest, conversationId)
+      setBase64Image(null)
     } else {
-      onSend(question)
+      onSend(questionTest)
+      setBase64Image(null)
     }
 
     if (clearOnSend) {
@@ -225,6 +255,24 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 autoAdjustHeight
                 aria-required="true"
             />
+      {!OYD_ENABLED && (
+        <div className={styles.fileInputContainer}>
+          <input
+            type="file"
+            id="fileInput"
+            onChange={(event) => handleImageUpload(event)}
+            accept="image/*"
+            className={styles.fileInput}
+          />
+          <label htmlFor="fileInput" className={styles.fileLabel} aria-label='Upload Image'>
+            <FontIcon
+              className={styles.fileIcon}
+              iconName={'PhotoCollection'}
+              aria-label='Upload Image'
+            />
+          </label>
+        </div>)}
+      {base64Image && <img className={styles.uploadedImage} src={base64Image} alt="Uploaded Preview" />}
           <div className={styles.questionInputButtonContainer}>
           <button
                     title="Improve prompt"
