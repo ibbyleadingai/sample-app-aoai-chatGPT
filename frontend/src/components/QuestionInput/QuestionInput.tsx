@@ -28,7 +28,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
     const selectedFile = appStateContext?.state.selectedFile;  // Access the selectedFile from the global state
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
-    const [buttonText, setButtonText] = useState('Improve prompt');
+    const [buttonText, setButtonText] = useState('');
     const [multiline, { toggle: toggleMultiline }] = useBoolean(false);
 
     const updateButtonText = () => {
@@ -316,7 +316,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             </div>}
             {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer}>
-                    <label htmlFor="upload-btn" className={styles.customUploadButton} style={{backgroundColor: ui?.upload_button_color, color: ui?.upload_button_text_color}}>
+                    <label htmlFor="upload-btn" className={styles.customUploadButton}>
                         {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
                     </label>
                     <input
