@@ -30,6 +30,7 @@ export interface AppState {
     feedbackState: { [answerId: string]: Feedback.Neutral | Feedback.Positive | Feedback.Negative; };
     selectedFile: string | undefined; // Added to manage the selected file
   isLoading: boolean;
+  answerExecResult: { [answerId: string]: [] }
 }
 
 export type Action =
@@ -47,6 +48,7 @@ export type Action =
     | { type: 'FETCH_FRONTEND_SETTINGS', payload: FrontendSettings | null }  // API Call
     | { type: 'SET_FEEDBACK_STATE'; payload: { answerId: string; feedback: Feedback.Positive | Feedback.Negative | Feedback.Neutral } }
     | { type: 'GET_FEEDBACK_STATE'; payload: string }
+    | { type: 'SET_ANSWER_EXEC_RESULT'; payload: { answerId: string, exec_result: [] } }
     | { type: 'SET_SELECTED_FILE'; payload: string | undefined }
     | { type: 'RESET_SELECTED_FILE' };
 
@@ -63,6 +65,7 @@ const initialState: AppState = {
     frontendSettings: null,
     feedbackState: {},
   isLoading: true,
+  answerExecResult: {},
     selectedFile: undefined
 };
 

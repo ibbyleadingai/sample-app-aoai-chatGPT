@@ -155,6 +155,7 @@ frontend_settings = {
         "session_inactivity_time_in_minutes": app_settings.ui.session_inactivity_time_in_minutes
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
+    "oyd_enabled": app_settings.base_settings.datasource_type,
 }
 
 # File size limit (10 MB)
@@ -392,12 +393,22 @@ def prepare_model_args(request_body, request_headers):
 
     for message in request_messages:
         if message:
-            messages.append(
-                {
-                    "role": message["role"],
-                    "content": message["content"]
-                }
-            )
+            if message["role"] == "assistant" and "context" in message:
+                context_obj = json.loads(message["context"])
+                messages.append(
+                    {
+                        "role": message["role"],
+                        "content": message["content"],
+                        "context": context_obj
+                    }
+                )
+            else:
+                messages.append(
+                    {
+                        "role": message["role"],
+                        "content": message["content"]
+                    }
+                )
 
     user_json = None
     if (MS_DEFENDER_ENABLED):

@@ -67,6 +67,7 @@ const Chat = () => {
     const [errorMsg, setErrorMsg] = useState<ErrorMessage | null>()
     const [inputKey, setInputKey] = useState(0);
     const [isLoadingWebsite, setIsLoadingWebsite] = useState<boolean>(false)
+  const [answerId, setAnswerId] = useState<string>('')
 
   const errorDialogContentProps = {
     type: DialogType.close,
@@ -130,15 +131,27 @@ const Chat = () => {
   let toolMessage = {} as ChatMessage
   let assistantContent = ''
 
+  useEffect(() => parseExecResults(execResults), [execResults])
+
+  const parseExecResults = (exec_results_: any): void => {
+    if (exec_results_ == undefined) return
+    const exec_results = exec_results_.length === 2 ? exec_results_ : exec_results_.splice(2)
+    appStateContext?.dispatch({ type: 'SET_ANSWER_EXEC_RESULT', payload: { answerId: answerId, exec_result: exec_results } })
+  }
+
   const processResultMessage = (resultMessage: ChatMessage, userMessage: ChatMessage, conversationId?: string) => {
-    if (resultMessage.content.includes('all_exec_results')) {
+    if (typeof resultMessage.content === "string" && resultMessage.content.includes('all_exec_results')) {
       const parsedExecResults = JSON.parse(resultMessage.content) as AzureSqlServerExecResults
       setExecResults(parsedExecResults.all_exec_results)
+      assistantMessage.context = JSON.stringify({
+        all_exec_results: parsedExecResults.all_exec_results
+      })
     }
 
     if (resultMessage.role === ASSISTANT) {
+      setAnswerId(resultMessage.id)
       assistantContent += resultMessage.content
-      assistantMessage = resultMessage
+      assistantMessage = { ...assistantMessage, ...resultMessage }
       assistantMessage.content = assistantContent
 
       if (resultMessage.context) {
@@ -164,16 +177,19 @@ const Chat = () => {
     }
   }
 
-  const makeApiRequestWithoutCosmosDB = async (question: string, isPrompt: Boolean, conversationId?: string) => {
+  const makeApiRequestWithoutCosmosDB = async (question: ChatMessage["content"], isPrompt: Boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
     abortFuncs.current.unshift(abortController)
 
+    const questionContent = typeof question === 'string' ? question : [{ type: "text", text: question[0].text }, { type: "image_url", image_url: { url: question[1].image_url.url } }]
+    question = typeof question !== 'string' && question[0]?.text?.length > 0 ? question[0].text : question
+
     const userMessage: ChatMessage = {
       id: uuid(),
       role: 'user',
-      content: question,
+      content: questionContent as string,
       date: new Date().toISOString(),
       isPrompt: isPrompt
     }
@@ -182,7 +198,7 @@ const Chat = () => {
     if (!conversationId) {
       conversation = {
         id: conversationId ?? uuid(),
-        title: question,
+        title: question as string,
         messages: [userMessage],
         date: new Date().toISOString()
       }
@@ -289,21 +305,22 @@ const Chat = () => {
     return abortController.abort()
   }
 
-  const makeApiRequestWithCosmosDB = async (question: string, isPrompt: Boolean, conversationId?: string) => {
+  const makeApiRequestWithCosmosDB = async (question: ChatMessage["content"], isPrompt: Boolean, conversationId?: string) => {
     setIsLoading(true)
     setShowLoadingMessage(true)
     const abortController = new AbortController()
     abortFuncs.current.unshift(abortController)
+    const questionContent = typeof question === 'string' ? question : [{ type: "text", text: question[0].text }, { type: "image_url", image_url: { url: question[1].image_url.url } }]
+    question = typeof question !== 'string' && question[0]?.text?.length > 0 ? question[0].text : question
 
     const userMessage: ChatMessage = {
       id: uuid(),
       role: 'user',
-      content: question,
+      content: questionContent as string,
       date: new Date().toISOString(),
       isPrompt: isPrompt
     }
 
-    //api call params set here (generate)
     let request: ConversationRequest
     let conversation
     if (conversationId) {
@@ -637,7 +654,7 @@ const Chat = () => {
         }
         const noContentError = appStateContext.state.currentChat.messages.find(m => m.role === ERROR)
 
-        if (!noContentError?.content.includes(NO_CONTENT_ERROR)) {
+        if (typeof noContentError?.content === "string" && !noContentError?.content.includes(NO_CONTENT_ERROR)) {
           saveToDB(appStateContext.state.currentChat.messages, appStateContext.state.currentChat.id)
             .then(res => {
               if (!res.ok) {
@@ -693,7 +710,7 @@ const Chat = () => {
     setIsCitationPanelOpen(true)
   }
 
-  const onShowExecResult = () => {
+  const onShowExecResult = (answerId: string) => {
     setIsIntentsPanelOpen(true)
   }
 
@@ -704,7 +721,7 @@ const Chat = () => {
   }
 
   const parseCitationFromMessage = (message: ChatMessage) => {
-    if (message?.role && message?.role === 'tool') {
+    if (message?.role && message?.role === 'tool' && typeof message?.content === "string") {
       try {
         const toolMessage = JSON.parse(message.content) as ToolMessageContent
         return toolMessage.citations
@@ -716,14 +733,15 @@ const Chat = () => {
   }
 
   const parsePlotFromMessage = (message: ChatMessage) => {
-    if (message?.role && message?.role === "tool") {
+    if (message?.role && message?.role === "tool" && typeof message?.content === "string") {
       try {
         const execResults = JSON.parse(message.content) as AzureSqlServerExecResults;
         const codeExecResult = execResults.all_exec_results.at(-1)?.code_exec_result;
+
         if (codeExecResult === undefined) {
           return null;
         }
-        return codeExecResult;
+        return codeExecResult.toString();
       }
       catch {
         return null;
@@ -862,22 +880,24 @@ const Chat = () => {
                         <>
                             {answer.role === 'user' && !answer.isPrompt ? ( // Check if message is from a prompt and hide it
                                 <div className={styles.chatMessageUser} tabIndex={0}>
-                                    <div className={styles.chatMessageUserMessage}>{answer.content}</div>
+                                    <div className={styles.chatMessageUserMessage}>
+                          {typeof answer.content === "string" && answer.content ? answer.content : Array.isArray(answer.content) ? <>{answer.content[0].text} <img className={styles.uploadedImageChat} src={answer.content[1].image_url.url} alt="Uploaded Preview" /></> : null}
+                        </div>
                                 </div>
                             ) : answer.role === 'assistant' ? (
                                 <div className={styles.chatMessageGpt}>
-                                    <Answer
+                                    {typeof answer.content === "string" && <Answer
                                         answer={{
                                             answer: answer.content,
                                             citations: parseCitationFromMessage(messages[index - 1]),
-                                            plotly_data: parsePlotFromMessage(messages[index - 1]),
+                                            generated_chart: parsePlotFromMessage(messages[index - 1]),
                                             message_id: answer.id,
                                             feedback: answer.feedback,
                                             exec_results: execResults
                                         }}
                                         onCitationClicked={c => onShowCitation(c)}
-                                        onExectResultClicked={() => onShowExecResult()}
-                                    />
+                                        onExectResultClicked={() => onShowExecResult(answerId)}
+                                    />}
                                 </div>
                             ) : answer.role === ERROR ? (
                                 <div className={styles.chatMessageError}>
@@ -885,7 +905,7 @@ const Chat = () => {
                                         <ErrorCircleRegular className={styles.errorIcon} style={{ color: 'rgba(182, 52, 67, 1)' }} />
                                         <span>Error</span>
                                     </Stack>
-                                    <span className={styles.chatMessageErrorContent}>{answer.content}</span>
+                                    <span className={styles.chatMessageErrorContent}>{typeof answer.content === "string" && answer.content}</span>
                                 </div>
                             ) : null}
                         </>
@@ -897,7 +917,7 @@ const Chat = () => {
                         answer={{
                           answer: "Generating answer...",
                           citations: [],
-                          plotly_data: null
+                          generated_chart: null
                         }}
                         onCitationClicked={() => null}
                         onExectResultClicked={() => null}
@@ -1064,33 +1084,31 @@ const Chat = () => {
                 />
               </Stack>
               <Stack horizontalAlign="space-between">
-                {execResults.map((execResult) => {
-                  return (
-                    <Stack className={styles.exectResultList} verticalAlign="space-between">
-                      <><span>Intent:</span> <p>{execResult.intent}</p></>
-                      {execResult.search_query && <><span>Search Query:</span>
-                        <SyntaxHighlighter
-                          style={nord}
-                          wrapLines={true}
-                          lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
-                          language="sql"
-                          PreTag="p">
-                          {execResult.search_query}
-                        </SyntaxHighlighter></>}
-                      {execResult.search_result && <><span>Search Result:</span> <p>{execResult.search_result}</p></>}
-                      {execResult.code_generated && <><span>Code Generated:</span>
-                        <SyntaxHighlighter
-                          style={nord}
-                          wrapLines={true}
-                          lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
-                          language="python"
-                          PreTag="p">
-                          {execResult.code_generated}
-                        </SyntaxHighlighter>
-                      </>}
-                    </Stack>
-                  )
-                })}
+                {appStateContext?.state?.answerExecResult[answerId]?.map((execResult: ExecResults, index) => (
+                  <Stack className={styles.exectResultList} verticalAlign="space-between">
+                    <><span>Intent:</span> <p>{execResult.intent}</p></>
+                    {execResult.search_query && <><span>Search Query:</span>
+                      <SyntaxHighlighter
+                        style={nord}
+                        wrapLines={true}
+                        lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
+                        language="sql"
+                        PreTag="p">
+                        {execResult.search_query}
+                      </SyntaxHighlighter></>}
+                    {execResult.search_result && <><span>Search Result:</span> <p>{execResult.search_result}</p></>}
+                    {execResult.code_generated && <><span>Code Generated:</span>
+                      <SyntaxHighlighter
+                        style={nord}
+                        wrapLines={true}
+                        lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
+                        language="python"
+                        PreTag="p">
+                        {execResult.code_generated}
+                      </SyntaxHighlighter>
+                    </>}
+                  </Stack>
+                ))}
               </Stack>
             </Stack.Item>
           )}
