@@ -65,7 +65,7 @@ const initialState: AppState = {
     frontendSettings: null,
     feedbackState: {},
   isLoading: true,
-  answerExecResult: {},,
+  answerExecResult: {},
     selectedFile: undefined
 };
 
