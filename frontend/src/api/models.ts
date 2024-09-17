@@ -181,6 +181,7 @@ export type UI = {
     show_prompt_suggestions?: boolean;
     chat_background_image?: string;
     render_prompt_button_number?: number;
+    hide_prompt_icons?: boolean;
 }
 
 export type FrontendSettings = {

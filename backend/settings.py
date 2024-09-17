@@ -97,6 +97,7 @@ class _UiSettings(BaseSettings):
     prompt7_header_text: str = ""
     prompt8_header_text: str = ""
     render_prompt_button_number: int = 0
+    hide_prompt_icons: bool = False
     # Add more env variables here
 
 

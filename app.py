@@ -86,7 +86,7 @@ frontend_settings = {
     "ui": {
         "title": app_settings.ui.title,
         "logo": app_settings.ui.logo,
-        "chat_logo": app_settings.ui.chat_logo or app_settings.ui.logo,
+        "chat_logo": app_settings.ui.chat_logo,
         "chat_title": app_settings.ui.chat_title,
         "chat_description": app_settings.ui.chat_description,
         "show_share_button": app_settings.ui.show_share_button,
@@ -138,7 +138,8 @@ frontend_settings = {
         "prompt7_header_text": app_settings.ui.prompt7_header_text,
         "prompt8_header_text": app_settings.ui.prompt8_header_text,
         "chat_background_image": app_settings.ui.chat_background_image,
-        "render_prompt_button_number": app_settings.ui.render_prompt_button_number
+        "render_prompt_button_number": app_settings.ui.render_prompt_button_number,
+        "hide_prompt_icons": app_settings.ui.hide_prompt_icons
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
     "oyd_enabled": app_settings.base_settings.datasource_type,
