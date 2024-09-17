@@ -43,7 +43,7 @@ class _UiSettings(BaseSettings):
 
     title: str = ""
     logo: Optional[str] = None
-    chat_logo: Optional[str] = "engineBackgroundIcon"
+    chat_logo: Optional[str] = ""
     chat_title: str = ""
     chat_description: str = ""
     favicon: str = "/favicon.ico"
