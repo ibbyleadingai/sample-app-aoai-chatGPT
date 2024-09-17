@@ -250,7 +250,7 @@ export const ChatHistoryListItemCell: React.FC<ChatHistoryListItemCellProps> = (
             styles={{
                 root: {
                     backgroundColor: isSelected ? '#1a1b21' : 'transparent',
-                    color: ui?.chat_text_color
+                    color: ui?.title_text_color
                 }
             }}
         >
