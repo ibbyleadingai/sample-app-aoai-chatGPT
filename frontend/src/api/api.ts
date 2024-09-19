@@ -51,29 +51,6 @@ export async function getUserInfo(): Promise<UserInfo[]> {
   return payload
 }
 
-export const handleImprovePromptApi = async (question: string): Promise<string> => {
-    try {
-      const response = await fetch("/improve-prompt", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ request_body: question }),
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        return data.improved_prompt;
-      } else {
-        console.error("Error improving prompt:", response.status, response.statusText);
-        return "Failed to improve prompt";
-      }
-    } catch (error) {
-      console.error("Error improving prompt:", error);
-      return "Failed to improve prompt";
-    }
-  };
-
 // export const fetchChatHistoryInit = async (): Promise<Conversation[] | null> => {
 export const fetchChatHistoryInit = (): Conversation[] | null => {
   // Make initial API call here
