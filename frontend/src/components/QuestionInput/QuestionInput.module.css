@@ -50,6 +50,7 @@
 }
 
 .questionInputSendButton {
+    cursor: pointer;
     width: 24px;
     height: 23px;
     cursor: pointer;

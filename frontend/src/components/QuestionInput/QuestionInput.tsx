@@ -3,6 +3,7 @@ import { FontIcon, Stack, TextField } from "@fluentui/react";
 import { SendRegular, Whiteboard20Filled } from "@fluentui/react-icons";
 import { useBoolean } from '@fluentui/react-hooks';
 import Send from "../../assets/Send.svg";
+import Suggestions from "../../assets/Suggestions.svg"
 import styles from "./QuestionInput.module.css";
 import { handleImprovePromptApi } from "../../api";
 import React from "react";
@@ -294,12 +295,11 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 aria-disabled={sendQuestionDisabled}
                 onClick={sendQuestion}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
-                style={{ cursor: sendQuestionDisabled ? 'not-allowed' : 'pointer' }}
             >
                 { sendQuestionDisabled ? 
                     <SendRegular className={styles.questionInputSendButtonDisabled}/>
                     :
-                    <img src={Send} className={styles.questionInputSendButton}/>
+                    <img title="Send prompt" src={Send} className={styles.questionInputSendButton}/>
                 }
             </div>
           </div>
