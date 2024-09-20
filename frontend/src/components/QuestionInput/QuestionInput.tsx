@@ -315,7 +315,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             <button className={styles.linkBtn} onClick={scrapeLink} aria-label="Web scrape a website button">Web Scrape</button>
             </div>}
             {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
-                <div className={styles.innerdocumentUploadContainer}>
+                <div className={styles.innerdocumentUploadContainer} style={{bottom: ui?.disclaimer_text ? "61px" : "-33px"}}>
                     <label htmlFor="upload-btn" className={styles.customUploadButton}>
                         {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
                     </label>
