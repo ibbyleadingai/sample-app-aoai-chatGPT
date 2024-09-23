@@ -898,7 +898,7 @@ const Chat = () => {
                         >
                           <h2 className={styles.promptTitle}>{prompt.headerText}</h2>
                           <h3 className={styles.promptDescription}>{prompt.suggestionText}</h3>
-                          {prompt.imageIcon && ui?.hide_prompt_icons && <img className={styles.promptIcon} alt="promptAdviserIcon" src={prompt.imageIcon}></img>}
+                          {prompt.imageIcon && !ui?.hide_prompt_icons && <img className={styles.promptIcon} alt="promptAdviserIcon" src={prompt.imageIcon}></img>}
                         </div>
                       ))}
                     </div>}
