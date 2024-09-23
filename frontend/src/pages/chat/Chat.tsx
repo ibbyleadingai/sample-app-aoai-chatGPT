@@ -818,6 +818,30 @@ const Chat = () => {
         suggestionText: ui?.prompt8_suggestion_text || '',
         message: ui?.prompt8_suggestion_message || 'What is ML (prompt 8)?',
         imageIcon: imageImports.dataAnalysisIcon
+      },
+      {
+        headerText: ui?.prompt9_header_text || '',
+        suggestionText: ui?.prompt9_suggestion_text || '',
+        message: ui?.prompt9_suggestion_message || 'What is ML (prompt 9)?',
+        imageIcon: imageImports.inspectionToolKitIcon
+      },
+      {
+        headerText: ui?.prompt10_header_text || '',
+        suggestionText: ui?.prompt10_suggestion_text || '',
+        message: ui?.prompt10_suggestion_message || 'What is ML (prompt 10)?',
+        imageIcon: imageImports.policyAdvisorIcon
+      },
+      {
+        headerText: ui?.prompt11_header_text || '',
+        suggestionText: ui?.prompt11_suggestion_text || '',
+        message: ui?.prompt11_suggestion_message || 'What is ML (prompt 11)?',
+        imageIcon: imageImports.schoolImprovementPlanIcon
+      },
+      {
+        headerText: ui?.prompt12_header_text || '',
+        suggestionText: ui?.prompt12_suggestion_text || '',
+        message: ui?.prompt12_suggestion_message || 'What is ML (prompt 12)?',
+        imageIcon: imageImports.bidWriterIcon
       }
     ];
     

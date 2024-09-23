@@ -162,6 +162,10 @@ export type UI = {
     prompt6_suggestion_text?: string;
     prompt7_suggestion_text?: string;
     prompt8_suggestion_text?: string;
+    prompt9_suggestion_text?: string;
+    prompt10_suggestion_text?: string;
+    prompt11_suggestion_text?: string;
+    prompt12_suggestion_text?: string;
     prompt1_suggestion_message?: string;
     prompt2_suggestion_message?: string;
     prompt3_suggestion_message?: string;
@@ -170,6 +174,10 @@ export type UI = {
     prompt6_suggestion_message?: string;
     prompt7_suggestion_message?: string;
     prompt8_suggestion_message?: string;
+    prompt9_suggestion_message?: string;
+    prompt10_suggestion_message?: string;
+    prompt11_suggestion_message?: string;
+    prompt12_suggestion_message?: string;
     prompt1_header_text?: string;
     prompt2_header_text?: string;
     prompt3_header_text?: string;
@@ -178,6 +186,10 @@ export type UI = {
     prompt6_header_text?: string;
     prompt7_header_text?: string;
     prompt8_header_text?: string;
+    prompt9_header_text?: string;
+    prompt10_header_text?: string;
+    prompt11_header_text?: string;
+    prompt12_header_text?: string;
     show_prompt_suggestions?: boolean;
     chat_background_image?: string;
     render_prompt_button_number?: number;

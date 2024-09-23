@@ -80,6 +80,10 @@ class _UiSettings(BaseSettings):
     prompt6_suggestion_text:  str = ""
     prompt7_suggestion_text:  str = ""
     prompt8_suggestion_text:  str = ""
+    prompt9_suggestion_text:  str = ""
+    prompt10_suggestion_text:  str = ""
+    prompt11_suggestion_text:  str = ""
+    prompt12_suggestion_text:  str = ""
     prompt1_suggestion_message: str = ""
     prompt2_suggestion_message: str = ""
     prompt3_suggestion_message: str = ""
@@ -88,6 +92,10 @@ class _UiSettings(BaseSettings):
     prompt6_suggestion_message: str = ""
     prompt7_suggestion_message: str = ""
     prompt8_suggestion_message: str = ""
+    prompt9_suggestion_message: str = ""
+    prompt10_suggestion_message: str = ""
+    prompt11_suggestion_message: str = ""
+    prompt12_suggestion_message: str = ""
     prompt1_header_text: str = ""
     prompt2_header_text: str = ""
     prompt3_header_text: str = ""
@@ -96,6 +104,10 @@ class _UiSettings(BaseSettings):
     prompt6_header_text: str = ""
     prompt7_header_text: str = ""
     prompt8_header_text: str = ""
+    prompt9_header_text: str = ""
+    prompt10_header_text: str = ""
+    prompt11_header_text: str = ""
+    prompt12_header_text: str = ""
     render_prompt_button_number: int = 0
     hide_prompt_icons: bool = False
     # Add more env variables here
