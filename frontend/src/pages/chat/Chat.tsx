@@ -976,7 +976,7 @@ const Chat = () => {
                 </Stack>
               )}
               <Stack>
-                {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && (
+              {appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && (
                   <CommandBarButton
                     role="button"
                     styles={{
@@ -995,7 +995,7 @@ const Chat = () => {
                       }
                     }}
                     className={styles.newChatIcon}
-                    iconProps={{ iconName: 'Add' }}
+                    iconProps={{ iconName: 'Broom' }}
                     onClick={newChat}
                     disabled={disabledButton()}
                     aria-label="Start a new chat button"
