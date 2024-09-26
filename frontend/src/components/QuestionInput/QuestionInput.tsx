@@ -25,7 +25,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     const [link, setLink] = useState<string>("")
     const [isLoadingImproved, setIsLoadingImproved] = useState<boolean>(false)
     const [isScraped, setIsScraped] = useState<boolean>(false)
-    const [textFromDocument, setTextFromDocument] = useState<boolean>(false);
     const selectedFile = appStateContext?.state.selectedFile;  // Access the selectedFile from the global state
     const [isLoadingDocument, setIsLoadingDocument] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState('Improve prompt');
@@ -84,9 +83,9 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
               if (!response.ok || data.error) {
                   throw new Error(data.error || `Server responded with status ${response.status}`);
               }
-  
-              setTextFromDocument(true);
-              setQuestion(data.text);
+            
+            // Automatically send the question without showing it
+            sendQuestion(data.text);
           } catch (error) {
               console.error('Error uploading file:', error);
   
@@ -136,12 +135,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
     };
   };
 
-  const sendQuestion = () => {
-    if (disabled || !question.trim()) {
-      return
+  const sendQuestion = (textFromDocument?: string) => {
+     // Use the passed text if available, otherwise fall back to the visible input
+    const textToSend = textFromDocument || question.trim();
+    if (disabled || !textToSend) {
+        return;
     }
 
-    const questionTest: ChatMessage["content"] = base64Image ? [{ type: "text", text: question }, { type: "image_url", image_url: { url: base64Image } }] : question.toString();
+    const questionTest: ChatMessage["content"] = base64Image ? [{ type: "text", text: textToSend }, { type: "image_url", image_url: { url: base64Image } }] : textToSend.toString();
 
     if (conversationId && questionTest !== undefined) {
       onSend(questionTest, conversationId)
@@ -151,7 +152,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
       setBase64Image(null)
     }
 
-    if (clearOnSend) {
+    if (!textFromDocument && clearOnSend) {
       setQuestion('')
     }
   }
@@ -218,13 +219,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             sendQuestion()
         }
       }, [question, isScraped])
-
-      useEffect(() => {
-        if (question && textFromDocument) {
-            sendQuestion();
-            setTextFromDocument(false); // Reset the flag after sending
-        }
-    }, [question, textFromDocument]);
     
 
 
@@ -292,7 +286,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 tabIndex={0}
                 aria-label="Ask question button"
                 aria-disabled={sendQuestionDisabled}
-                onClick={sendQuestion}
+                onClick={() => sendQuestion()}
                 onKeyDown={e => e.key === "Enter" || e.key === " " ? sendQuestion() : null}
                 style={{ cursor: sendQuestionDisabled ? 'not-allowed' : 'pointer' }}
             >
