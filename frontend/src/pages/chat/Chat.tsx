@@ -907,7 +907,7 @@ const Chat = () => {
                       }
                     }}
                     className={styles.newChatIcon}
-                    iconProps={{ iconName: 'Add' }}
+                    iconProps={{ iconName: 'Broom' }}
                     onClick={newChat}
                     disabled={disabledButton()}
                     aria-label="Start a new chat button"
