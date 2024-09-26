@@ -113,42 +113,6 @@ frontend_settings = {
         "new_chat_button_color": app_settings.ui.new_chat_button_color,
         "automatic_scroll_down": app_settings.ui.automatic_scroll_down,
         "show_prompt_suggestions": app_settings.ui.show_prompt_suggestions,
-        "prompt1_suggestion_text": app_settings.ui.prompt1_suggestion_text,
-        "prompt2_suggestion_text": app_settings.ui.prompt2_suggestion_text,
-        "prompt3_suggestion_text": app_settings.ui.prompt3_suggestion_text,
-        "prompt4_suggestion_text": app_settings.ui.prompt4_suggestion_text,
-        "prompt5_suggestion_text": app_settings.ui.prompt5_suggestion_text,
-        "prompt6_suggestion_text": app_settings.ui.prompt6_suggestion_text,
-        "prompt7_suggestion_text": app_settings.ui.prompt7_suggestion_text,
-        "prompt8_suggestion_text": app_settings.ui.prompt8_suggestion_text,
-        "prompt9_suggestion_text": app_settings.ui.prompt9_suggestion_text,
-        "prompt10_suggestion_text": app_settings.ui.prompt10_suggestion_text,
-        "prompt11_suggestion_text": app_settings.ui.prompt11_suggestion_text,
-        "prompt12_suggestion_text": app_settings.ui.prompt12_suggestion_text,
-        "prompt1_suggestion_message": app_settings.ui.prompt1_suggestion_message,
-        "prompt2_suggestion_message": app_settings.ui.prompt2_suggestion_message,
-        "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message,
-        "prompt4_suggestion_message": app_settings.ui.prompt4_suggestion_message,
-        "prompt5_suggestion_message": app_settings.ui.prompt5_suggestion_message,
-        "prompt6_suggestion_message": app_settings.ui.prompt6_suggestion_message,
-        "prompt7_suggestion_message": app_settings.ui.prompt7_suggestion_message,
-        "prompt8_suggestion_message": app_settings.ui.prompt8_suggestion_message,
-        "prompt9_suggestion_message": app_settings.ui.prompt9_suggestion_message,
-        "prompt10_suggestion_message": app_settings.ui.prompt10_suggestion_message,
-        "prompt11_suggestion_message": app_settings.ui.prompt11_suggestion_message,
-        "prompt12_suggestion_message": app_settings.ui.prompt12_suggestion_message,
-        "prompt1_header_text": app_settings.ui.prompt1_header_text,
-        "prompt2_header_text": app_settings.ui.prompt2_header_text,
-        "prompt3_header_text": app_settings.ui.prompt3_header_text,
-        "prompt4_header_text": app_settings.ui.prompt4_header_text,
-        "prompt5_header_text": app_settings.ui.prompt5_header_text,
-        "prompt6_header_text": app_settings.ui.prompt6_header_text,
-        "prompt7_header_text": app_settings.ui.prompt7_header_text,
-        "prompt8_header_text": app_settings.ui.prompt8_header_text,
-        "prompt9_header_text": app_settings.ui.prompt9_header_text,
-        "prompt10_header_text": app_settings.ui.prompt10_header_text,
-        "prompt11_header_text": app_settings.ui.prompt11_header_text,
-        "prompt12_header_text": app_settings.ui.prompt12_header_text,
         "chat_background_image": app_settings.ui.chat_background_image,
         "render_prompt_button_number": app_settings.ui.render_prompt_button_number,
         "hide_prompt_icons": app_settings.ui.hide_prompt_icons
@@ -156,6 +120,12 @@ frontend_settings = {
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
     "oyd_enabled": app_settings.base_settings.datasource_type,
 }
+
+# Dynamically add prompt fields
+for i in range(1, 13):
+    frontend_settings["ui"][f"prompt{i}_suggestion_text"] = getattr(app_settings.ui, f"prompt{i}_suggestion_text")
+    frontend_settings["ui"][f"prompt{i}_suggestion_message"] = getattr(app_settings.ui, f"prompt{i}_suggestion_message")
+    frontend_settings["ui"][f"prompt{i}_header_text"] = getattr(app_settings.ui, f"prompt{i}_header_text")
 
 # File size limit (10 MB)
 MAX_FILE_SIZE = 20 * 1024 * 1024  # 10 MB
