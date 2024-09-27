@@ -112,7 +112,6 @@ frontend_settings = {
         "show_title": app_settings.ui.show_title,
         "new_chat_button_color": app_settings.ui.new_chat_button_color,
         "automatic_scroll_down": app_settings.ui.automatic_scroll_down,
-        "show_prompt_suggestions": app_settings.ui.show_prompt_suggestions,
         "chat_background_image": app_settings.ui.chat_background_image,
         "render_prompt_button_number": app_settings.ui.render_prompt_button_number,
         "hide_prompt_icons": app_settings.ui.hide_prompt_icons
