@@ -69,7 +69,7 @@ class _UiSettings(BaseSettings):
     chat_text_shadow: bool = False
     show_title: bool = True
     new_chat_button_color: str = "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #2d2d2d 33.63%, #4aae7c 100%)"
-    automatic_scroll_down: bool = False
+    automatic_scroll_down: bool = True
     chat_background_image: str = ""
     prompt1_suggestion_text: str = ""
     prompt2_suggestion_text: str = ""
