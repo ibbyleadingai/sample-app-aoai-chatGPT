@@ -15,6 +15,7 @@ import hruc from "./assets/hruc-logo.svg"
 
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
+import RorySutherlandBackgroundImage from "./assets/RorySutherland.jpg"
 
 type ImageImports = {
     [key: string]: string;
@@ -37,6 +38,7 @@ type ImageImports = {
     engineBackgroundImage: engineBackgroundImage,
     mapp: mapp,
     hruc: hruc,
+    RorySutherlandBackgroundImage: RorySutherlandBackgroundImage
     // Add more entries as needed for other images
   };
 

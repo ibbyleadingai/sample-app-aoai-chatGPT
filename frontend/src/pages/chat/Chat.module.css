@@ -21,55 +21,23 @@
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
-    max-height: calc(100vh - 60px);
-    background-position: center; /* Center the image */
+    background-image: url("../../assets/faequality.jpg");
+    background-position: top; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
-}
+    background-position: center 20%;
+    background-color: #02264c;
+    max-height: calc(100vh - 60px);
 
-.chatHeader {
-  display: flex;
-  flex-direction: row; /* Display title and subtitle side by side */
-  justify-content: center;
-  align-items: center;
 }
 
 .chatEmptyState {
     flex-grow: 1;
     display: flex;
-    /* flex-direction: row; */
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 15px;
-}
-
-.chatEmptyStateTitle {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 50px;
-  font-family: monospace;
-
-  display: flex;
-  align-items: flex-end;
-  text-align: left;
-  line-height: 55px;
-  color: #f5f5f5;
-  width: 30%;
-}
-
-.chatEmptyStateSubtitle {
-  margin-top: 20px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  font-family: monospace;
-  line-height: 150%;
-  align-items: flex-end;
-  text-align: left;
-  letter-spacing: -0.01em;
-  color: #f5f5f5;
-  padding: 15px;
-  width: 45%;
 }
 
 .chatEmptyStateAuth{
@@ -93,6 +61,25 @@
     color: #f5f5f5;
 }
 
+.chatEmptyStateTitle {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    font-family: monospace;
+
+    display: flex;
+    align-items: flex-end;
+    text-align: left;
+    line-height: 55px;
+    color: #f5f5f5;
+    width: 30%;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+
+    position: relative; /* Ensure the text/content is positioned relative */
+    z-index: 3; /* Ensure the text/content is above the overlay */
+}
+
 .chatEmptyStateSubtitleAuth {
     margin-top: 20px;
     font-style: normal;
@@ -105,6 +92,23 @@
     letter-spacing: -0.01em;
     color: #f5f5f5;
     padding: 15px;
+}
+
+.chatEmptyStateSubtitle {
+    margin-top: 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    font-family: monospace;
+    line-height: 150%;
+    align-items: flex-end;
+    text-align: left;
+    letter-spacing: -0.01em;
+    color: #f5f5f5;
+    padding: 15px;
+    width: 45%;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    padding-left: 40px;
 }
 
 .chatIcon {
@@ -132,7 +136,6 @@
 }
 
 .chatMessageUserMessage {
-  position: relative;
   display: flex;
   padding: 20px;
   background: #edf5fd;
@@ -266,6 +269,7 @@
 .stopGeneratingIcon {
   width: 14px;
   height: 14px;
+  color: #424242;
 }
 
 .stopGeneratingText {
@@ -277,7 +281,6 @@
     line-height: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
     color: whitesmoke;
     flex: none;
     order: 0;
@@ -357,34 +360,6 @@
   flex-grow: 0;
 }
 
-.exectResultList {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  border-bottom: 1px solid #ccc;
-  margin-top: 12px;
-}
-
-.exectResultList:first-child {
-  margin-top: 0;
-}
-
-.exectResultList:last-child {
-  border-bottom: none;
-}
-
-.exectResultList > p {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  margin: 0;
-  margin-bottom: 16px;
-}
-
-.exectResultList > span {
-  font-weight: 600;
-}
-
 a {
   padding-left: 5px;
   padding-right: 5px;
@@ -409,129 +384,59 @@ a {
   cursor: pointer;
 }
 
-.uploadedImageChat {
-  position: absolute;
-  right: -23px;
-  bottom: -35px;
-  max-width: 70%;
-  max-height: 70%;
-  border-radius: 4px;
-}
-
-.promptSuggestionsContainer{
-  display: flex;
-  gap: 30px;
-  /* position: absolute;
-  margin-top: 100px; */
-}
-
-.promptSuggestions{
-  background-color: white;
-  color: black;
-  padding: 0px 10px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
-  border-radius: 15px;
-  width: 200px;
-  height: 90px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s ease; /* Smooth transition effect */
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.promptSuggestions:hover{
-  background-color: #e0e0e0; /* Slightly darker shade of white */
-}
-
-.promptTitle{
-  font-size: 14px;
-  font-weight: 600;
-}
-
-@media (max-width: 680px){
-  .chatEmptyStateTitle{
-      font-size: 40px;
-  }
-
-  .promptSuggestionsContainer{
-    display: flex;
-    gap: 10px;
-  }
-
-  .promptSuggestions{
-    width: 175px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 550px){
-  .chatEmptyStateTitle{
-      font-size: 32px;
-  }
-  .chatEmptyStateSubtitle{
-      font-size: 12px;
-  }
-  .promptSuggestions{
-    width: 150px;
-    font-size: 12px;
-  }
-}
-
 @media (max-width: 480px) {
-.chatInput {
-  width: 90%;
-  max-width: 90%;
-}
-
-.newChatIcon {
-  left: 0px;
-}
-
-.clearChatBroom {
-  left: 0px;
-}
-
-.clearChatBroomNoCosmos {
-  left: 0px;
-}
-
-.chatEmptyStateTitle {
-  line-height: 36px;
-}
-
-.citationPanel {
-  max-width: 100%;
-}
-
-.promptSuggestions{
-  width: 130px;
-  font-size: 11px;
-}
-}
-
-@media (max-width: 420px){
-  .chatEmptyStateTitle{
-      display: none;
-  }
-  .chatEmptyStateSubtitle{
-      display: none;
-  }
-  .promptSuggestionsContainer{
-    flex-direction: column;
-    margin-top: 70px;
+  .chatInput {
+    width: 90%;
+    max-width: 90%;
   }
 
-  .promptSuggestions{
-    width: 200px;
-    font-size: 14px;
+  .newChatIcon {
+    left: 0px;
+  }
+
+  .clearChatBroom {
+    left: 0px;
+  }
+
+  .clearChatBroomNoCosmos {
+    left: 0px;
+  }
+
+  .chatEmptyStateTitle {
+    line-height: 36px;
+  }
+
+  .citationPanel {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 350px) {
-.chatMessageGpt{
-    max-width: 100%;
+    .chatMessageGpt{
+        max-width: 100%;
+    }
 }
+
+@media (max-width: 680px){
+    .chatEmptyStateTitle{
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 550px){
+    .chatEmptyStateTitle{
+        font-size: 32px;
+    }
+    .chatEmptyStateSubtitle{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px){
+    .chatEmptyStateTitle{
+        display: none;
+    }
+    .chatEmptyStateSubtitle{
+        display: none;
+    }
 }
