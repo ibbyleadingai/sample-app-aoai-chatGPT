@@ -889,7 +889,7 @@ const Chat = () => {
                   <h2 className={styles.chatEmptyStateSubtitle} style={{color: ui?.chat_text_color, fontFamily: ui?.chat_font_empty_state, textShadow: ui?.chat_text_shadow ? '1px 1px 4px rgba(0, 0, 0, 0.4)' : 'none'}}>{ui?.chat_description}</h2>
                 </div>
                 <div className={styles.promptOuterSuggestionsContainer}>
-                    {ui?.show_prompt_suggestions && !isLoadingWebsite && <div className={styles.promptSuggestionsContainer}>
+                    {!isLoadingWebsite && <div className={styles.promptSuggestionsContainer}>
                     {prompts.slice(0, ui?.render_prompt_button_number).map((prompt, index) => ( //Map over prompt obj and display prompt btn
                         <div
                           key={index}
