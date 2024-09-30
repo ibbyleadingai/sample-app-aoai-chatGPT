@@ -16,6 +16,8 @@ import { XSSAllowTags } from '../../constants/sanatizeAllowables'
 
 import imageImports from '../../imageImports'; //Where all the logo and other images are
 
+import AutoRefreshOnInactivity from "../../components/AutoRefreshOnInactivity"
+
 import {
   ChatMessage,
   ConversationRequest,
@@ -1115,6 +1117,7 @@ const Chat = () => {
             appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && <ChatHistoryPanel />}
         </Stack>
       )}
+      <AutoRefreshOnInactivity inactivityThresholdinMinutes={180} />
     </div>
     );
 };
