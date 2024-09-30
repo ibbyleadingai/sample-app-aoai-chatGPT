@@ -15,6 +15,7 @@ import styles from './Chat.module.css'
 import { XSSAllowTags } from '../../constants/sanatizeAllowables'
 
 import imageImports from '../../imageImports'; //Where all the logo and other images are
+import AutoRefreshOnInactivity from "../../components/AutoRefreshOnInactivity" //To refresh the page after certain time period
 
 import {
   ChatMessage,
@@ -1146,6 +1147,7 @@ const Chat = () => {
             appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured && <ChatHistoryPanel />}
         </Stack>
       )}
+      <AutoRefreshOnInactivity inactivityThresholdinMinutes={1} />
     </div>
     );
 };
