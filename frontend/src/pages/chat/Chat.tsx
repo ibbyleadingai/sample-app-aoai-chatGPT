@@ -774,24 +774,24 @@ const Chat = () => {
 
     const prompts = [
       {
-        headerText: ui?.prompt1_header_text || 'Default Header 1',
-        suggestionText: ui?.prompt1_suggestion_text || 'Default Suggestion 1',
-        message: ui?.prompt1_suggestion_message || 'Hello (prompt 1)',
+        headerText: ui?.prompt1_header_text || '',
+        suggestionText: ui?.prompt1_suggestion_text || '',
+        message: ui?.prompt1_suggestion_message || '',
       },
       {
-        headerText: ui?.prompt2_header_text || 'Default Header 2',
-        suggestionText: ui?.prompt2_suggestion_text || 'Default Suggestion 2',
-        message: ui?.prompt2_suggestion_message || 'What can you do? (prompt 2)',
+        headerText: ui?.prompt2_header_text || '',
+        suggestionText: ui?.prompt2_suggestion_text || '',
+        message: ui?.prompt2_suggestion_message || '',
       },
       {
-        headerText: ui?.prompt3_header_text || 'Default Header 3',
-        suggestionText: ui?.prompt3_suggestion_text || 'Default Suggestion 3',
-        message: ui?.prompt3_suggestion_message || 'What is RAG? (Prompt 3)',
+        headerText: ui?.prompt3_header_text || '',
+        suggestionText: ui?.prompt3_suggestion_text || '',
+        message: ui?.prompt3_suggestion_message || '',
       },
       {
-        headerText: ui?.prompt4_header_text || 'Default Header 4',
-        suggestionText: ui?.prompt4_suggestion_text || 'Default Suggestion 4',
-        message: ui?.prompt4_suggestion_message || 'Tell me a joke (prompt 4)',
+        headerText: ui?.prompt4_header_text || '',
+        suggestionText: ui?.prompt4_suggestion_text || '',
+        message: ui?.prompt4_suggestion_message || '',
       },
       // {
       //   headerText: ui?.prompt5_header_text || 'Default Header 5',
