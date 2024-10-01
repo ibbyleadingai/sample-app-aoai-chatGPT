@@ -127,7 +127,7 @@ class CosmosConversationClient():
         else:
             return conversations[0]
  
-    async def create_message(self, uuid, conversation_id, user_id, input_message: dict):
+    async def create_message(self, uuid, conversation_id, user_id, input_message: dict, is_prompt=False):
         message = {
             'id': uuid,
             'type': 'message',
@@ -136,7 +136,8 @@ class CosmosConversationClient():
             'updatedAt': datetime.utcnow().isoformat(),
             'conversationId' : conversation_id,
             'role': input_message['role'],
-            'content': input_message['content']
+            'content': input_message['content'],
+            'isPrompt': is_prompt  # Add isPrompt flag here
         }
 
         if self.enable_message_feedback:
@@ -174,7 +175,7 @@ class CosmosConversationClient():
                 'value': user_id
             }
         ]
-        query = f"SELECT * FROM c WHERE c.conversationId = @conversationId AND c.type='message' AND c.userId = @userId ORDER BY c.timestamp ASC"
+        query = f"SELECT * FROM c WHERE c.conversationId = @conversationId AND c.type='message' AND c.userId = @userId AND (NOT IS_DEFINED(c.isPrompt) OR c.isPrompt = false) ORDER BY c.timestamp ASC"
         messages = []
         async for item in self.container_client.query_items(query=query, parameters=parameters):
             messages.append(item)
