@@ -137,7 +137,7 @@ class CosmosConversationClient():
             'conversationId' : conversation_id,
             'role': input_message['role'],
             'content': input_message['content'],
-            'isPrompt': is_prompt  # Add isPrompt flag here
+            'isPrompt': input_message.get('isPrompt')  # Add isPrompt flag here
         }
 
         if self.enable_message_feedback:
