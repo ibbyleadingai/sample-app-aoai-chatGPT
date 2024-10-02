@@ -137,7 +137,7 @@ class CosmosConversationClient():
             'conversationId' : conversation_id,
             'role': input_message['role'],
             'content': input_message['content'],
-            'isPrompt': input_message.get('isPrompt')  # Add isPrompt flag here
+            'isPrompt': input_message.get('isPrompt')  # Add isPrompt flag here. Accesses the isPrompt property. If it cant, it will return none. app wont crash.
         }
 
         if self.enable_message_feedback:
