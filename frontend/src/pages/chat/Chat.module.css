@@ -31,6 +31,13 @@
 
 }
 
+.chatHeader {
+  display: flex;
+  flex-direction: row; /* Display title and subtitle side by side */
+  justify-content: center;
+  align-items: center;
+}
+
 .chatEmptyState {
     flex-grow: 1;
     display: flex;
