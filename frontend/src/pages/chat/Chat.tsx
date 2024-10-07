@@ -876,6 +876,7 @@ const Chat = () => {
                 <Stack
                   horizontal
                   className={styles.stopGeneratingContainer}
+                  style={{border: `1px solid ${ui?.stop_generating_color}`}}
                   role="button"
                   aria-label="Stop generating"
                   tabIndex={0}
