@@ -114,7 +114,8 @@ frontend_settings = {
         "automatic_scroll_down": app_settings.ui.automatic_scroll_down,
         "chat_background_image": app_settings.ui.chat_background_image,
         "render_prompt_button_number": app_settings.ui.render_prompt_button_number,
-        "hide_prompt_icons": app_settings.ui.hide_prompt_icons
+        "hide_prompt_icons": app_settings.ui.hide_prompt_icons,
+        "show_pdf_initial_text": app_settings.ui.show_pdf_initial_text
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
     "oyd_enabled": app_settings.base_settings.datasource_type,
@@ -162,8 +163,15 @@ async def upload_pdf():
         with pdfplumber.open(io.BytesIO(file_content)) as pdf:
             pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
             text = ' '.join(pages)
-
-        return jsonify({'text': text})
+            if app_settings.ui.show_pdf_initial_text:
+                message = ('The following text is the source information I want you to answer questions on. '
+               'I have copied this from a web page. Please do not generate a response. '
+               'Just remember this information for further questions:\n\n' + text)
+            else:
+                message = text  # Or set to '' if you don't want to include any text
+                
+        return jsonify({'text': message})
+    
     except pdfplumber.PDFSyntaxError as e:
         logging.error(f"PDF syntax error: {e}", exc_info=True)  # Detailed logging
         return jsonify({'error': 'Invalid PDF file'}), 400

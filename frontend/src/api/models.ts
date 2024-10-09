@@ -157,6 +157,7 @@ export type UI = {
     chat_background_image?: string;
     render_prompt_button_number?: number;
     hide_prompt_icons?: boolean;
+    show_pdf_initial_text?: boolean;
 } & {
   [key in `prompt${number}_suggestion_text` | 
     `prompt${number}_suggestion_message` | 
