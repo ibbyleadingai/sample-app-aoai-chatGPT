@@ -161,6 +161,8 @@ export type UI = {
     prompt3_suggestion_message?: string;
     show_prompt_suggestions?: boolean;
     chat_background_image?: string;
+    upload_pdf_and_scrape_button_color?: string;
+    upload_pdf_and_scrape_button_text_color?: string;
 }
 
 export type FrontendSettings = {

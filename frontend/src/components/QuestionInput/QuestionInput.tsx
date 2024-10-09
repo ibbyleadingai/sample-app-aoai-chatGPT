@@ -308,11 +308,24 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
             />
-            <button className={styles.linkBtn} onClick={scrapeLink} aria-label="Web scrape a website button">Web Scrape</button>
+            <button 
+              style={{
+                backgroundColor: ui?.upload_pdf_and_scrape_button_color,
+                color: ui?.upload_pdf_and_scrape_button_text_color
+                 }} 
+              className={styles.linkBtn} 
+              onClick={scrapeLink} 
+              aria-label="Web scrape a website button"
+              >Web Scrape</button>
             </div>}
             {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer} style={{bottom: ui?.disclaimer_text ? "61px" : "-33px"}}>
-                    <label htmlFor="upload-btn" className={styles.customUploadButton}>
+                    <label htmlFor="upload-btn" 
+                      className={styles.customUploadButton} 
+                      style={{backgroundColor: ui?.upload_pdf_and_scrape_button_color,
+                        color: ui?.upload_pdf_and_scrape_button_text_color
+                      }}
+                      >
                         {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
                     </label>
                     <input

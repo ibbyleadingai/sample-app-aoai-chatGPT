@@ -134,7 +134,9 @@ frontend_settings = {
         "prompt1_suggestion_message": app_settings.ui.prompt1_suggestion_message,
         "prompt2_suggestion_message": app_settings.ui.prompt2_suggestion_message,
         "prompt3_suggestion_message": app_settings.ui.prompt3_suggestion_message,
-        "chat_background_image": app_settings.ui.chat_background_image
+        "chat_background_image": app_settings.ui.chat_background_image,
+        "upload_pdf_and_scrape_button_color": app_settings.ui.upload_pdf_and_scrape_button_color,
+        "upload_pdf_and_scrape_button_text_color": app_settings.ui.upload_pdf_and_scrape_button_text_color
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
     "oyd_enabled": app_settings.base_settings.datasource_type,

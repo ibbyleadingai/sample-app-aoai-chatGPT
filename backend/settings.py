@@ -78,6 +78,8 @@ class _UiSettings(BaseSettings):
     prompt2_suggestion_message: str = ""
     prompt3_suggestion_message: str = ""
     chat_background_image: str = ""
+    upload_pdf_and_scrape_button_color: str = "#3498db"
+    upload_pdf_and_scrape_button_text_color: str = "#fff"
     # Add more env variables here
 
 
