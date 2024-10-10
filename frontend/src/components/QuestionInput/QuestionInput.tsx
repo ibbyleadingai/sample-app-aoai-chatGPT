@@ -325,6 +325,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                       style={{backgroundColor: ui?.upload_pdf_and_scrape_button_color,
                         color: ui?.upload_pdf_and_scrape_button_text_color
                       }}
+                      tabIndex={0} //To make label element focusable with tab key.
                       >
                         {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
                     </label>
@@ -335,6 +336,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
                     type="file"
                     accept="application/pdf"
                     onChange={handleFileChange}
+                    tabIndex={-1} //To make label element focusable with tab key only. We dont want both input and label to be focused separetly.
                     key={resetKey}  // Use the key to force a re-render
                     />
                     {selectedFile && <div style={{ 
