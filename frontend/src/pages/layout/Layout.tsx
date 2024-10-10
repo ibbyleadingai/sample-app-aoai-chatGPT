@@ -89,8 +89,16 @@ const Layout = () => {
                             aria-hidden="true"
                             alt=""
                         />}
-                        <Link to="/" className={styles.headerTitleContainer} aria-hidden="true">
-                            {ui?.show_title && <h1 className={styles.headerTitle} style={{color: ui?.title_text_color}}>{ui?.title}</h1>}
+                        <Link to="/" className={styles.headerTitleContainer}>
+                            {ui?.show_title ? (
+                                <h1 className={styles.headerTitle} style={{ color: ui?.title_text_color }}>
+                                    {ui?.title}
+                                </h1>
+                            ) : (
+                                <h1 className={styles.headerTitle} aria-hidden="true" style={{ display: 'none' }}>
+                                    {ui?.title}
+                                </h1>
+                            )}
                         </Link>
                     </Stack>
                         <Stack horizontal tokens={{ childrenGap: 4 }} style={{marginRight: '25px'}}>
