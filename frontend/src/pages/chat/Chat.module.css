@@ -80,7 +80,6 @@
     line-height: 55px;
     color: #f5f5f5;
     width: 30%;
-    text-transform: capitalize;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 
     position: relative; /* Ensure the text/content is positioned relative */
