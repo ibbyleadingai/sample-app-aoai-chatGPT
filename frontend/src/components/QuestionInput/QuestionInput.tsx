@@ -270,16 +270,17 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
         </div>)}
       {base64Image && <img className={styles.uploadedImage} src={base64Image} alt="Uploaded Preview" />}
           <div className={styles.questionInputButtonContainer}>
-          <button
-                    title="Improve prompt"
+              <button
                     className={styles.improvePromptButton}
                     style={{ color: ui?.improve_button_text_color, backgroundColor: ui?.improve_button_color}}
                     onClick={(e) => {
                         e.stopPropagation();
                         handleImprovePrompt()
                     }}
-                    aria-label="Improve your prompt button"
+                    aria-label="Improve prompt button"
                     disabled={isLoadingImproved}
+                    aria-busy={isLoadingImproved} // Communicate the loading state
+                    aria-live="polite" //let screen reader know state has changed
                 >{isLoadingImproved ? "Loading prompt..." : buttonText}
               </button>
 
@@ -320,12 +321,13 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             </div>}
             {ui?.show_upload_button && <div className={styles.documentUploadContainer}>
                 <div className={styles.innerdocumentUploadContainer} style={{bottom: ui?.disclaimer_text ? "61px" : "-33px"}}>
-                    <label htmlFor="upload-btn" 
+                    <label 
+                      htmlFor="upload-btn" 
                       className={styles.customUploadButton} 
-                      style={{backgroundColor: ui?.upload_pdf_and_scrape_button_color,
-                        color: ui?.upload_pdf_and_scrape_button_text_color
-                      }}
+                      style={{backgroundColor: ui?.upload_pdf_and_scrape_button_color, color: ui?.upload_pdf_and_scrape_button_text_color}}
                       tabIndex={0} //To make label element focusable with tab key.
+                      aria-busy={isLoadingDocument} // Indicate loading state to screen reader
+                      aria-live="polite"
                       >
                         {isLoadingDocument ? "Loading document..." : "Choose PDF File"}
                     </label>

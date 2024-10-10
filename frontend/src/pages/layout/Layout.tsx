@@ -87,7 +87,7 @@ const Layout = () => {
                             src={dynamicImage}
                             className={styles.headerIcon}
                             aria-hidden="true"
-                            alt=""
+                            alt="Logo image"
                         />}
                         <Link to="/" className={styles.headerTitleContainer}>
                             {ui?.show_title ? (
