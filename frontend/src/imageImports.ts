@@ -12,6 +12,7 @@ import nhbc from "./assets/nhbc-logo.svg"
 import northYorkshire from "./assets/NorthYorkshire.svg"
 import mapp from "./assets/mapp-logo.svg"
 import hruc from "./assets/hruc-logo.svg"
+import everythingict from "./assets/EverythingICT-logo.jpg"
 
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
@@ -38,7 +39,8 @@ type ImageImports = {
     engineBackgroundImage: engineBackgroundImage,
     mapp: mapp,
     hruc: hruc,
-    RorySutherlandBackgroundImage: RorySutherlandBackgroundImage
+    RorySutherlandBackgroundImage: RorySutherlandBackgroundImage,
+    everythingict: everythingict
     // Add more entries as needed for other images
   };
 
