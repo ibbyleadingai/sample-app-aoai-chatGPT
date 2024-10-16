@@ -158,6 +158,8 @@ export type UI = {
     render_prompt_button_number?: number;
     hide_prompt_icons?: boolean;
     show_pdf_initial_text?: boolean;
+    upload_pdf_and_scrape_button_color?: string;
+    upload_pdf_and_scrape_button_text_color?: string;
 } & {
   [key in `prompt${number}_suggestion_text` | 
     `prompt${number}_suggestion_message` | 

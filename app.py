@@ -115,7 +115,9 @@ frontend_settings = {
         "chat_background_image": app_settings.ui.chat_background_image,
         "render_prompt_button_number": app_settings.ui.render_prompt_button_number,
         "hide_prompt_icons": app_settings.ui.hide_prompt_icons,
-        "show_pdf_initial_text": app_settings.ui.show_pdf_initial_text
+        "show_pdf_initial_text": app_settings.ui.show_pdf_initial_text,
+        "upload_pdf_and_scrape_button_color": app_settings.ui.upload_pdf_and_scrape_button_color,
+        "upload_pdf_and_scrape_button_text_color": app_settings.ui.upload_pdf_and_scrape_button_text_color
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
     "oyd_enabled": app_settings.base_settings.datasource_type,

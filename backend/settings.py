@@ -110,6 +110,8 @@ class _UiSettings(BaseSettings):
     render_prompt_button_number: int = 0
     hide_prompt_icons: bool = False
     show_pdf_initial_text: bool = False
+    upload_pdf_and_scrape_button_color: str = "#3498db"
+    upload_pdf_and_scrape_button_text_color: str = "#fff"
     # Add more env variables here
 
 
