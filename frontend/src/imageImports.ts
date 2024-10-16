@@ -12,6 +12,8 @@ import nhbc from "./assets/nhbc-logo.svg"
 import northYorkshire from "./assets/NorthYorkshire.svg"
 import usp from "./assets/USP.png"
 import engineBackgroundIcon from "./assets/engineBackgroundIcon.png"
+import secg from "./assets/secg-logo.svg"
+import wmc from "./assets/wmc-logo.png"
 
 import policyAdvisorIcon from './assets/icons/Engine_artwork_EducationEngine_BLACK.png'
 import commsProfessional from './assets/icons/Engine_artwork_WebEngine_BLACK.png'
@@ -46,6 +48,8 @@ type ImageImports = {
     engineBackgroundImage: engineBackgroundImage,
     usp: usp,
     engineBackgroundIcon: engineBackgroundIcon,
+    secg: secg,
+    wmc: wmc,
 
     policyAdvisorIcon: policyAdvisorIcon,
     commsProfessional: commsProfessional,
