@@ -17,6 +17,8 @@ from quart import (
     request,
     send_from_directory,
     render_template,
+    session,
+    redirect
 )
 
 from openai import AsyncAzureOpenAI
@@ -39,6 +41,11 @@ from backend.utils import (
     format_pf_non_streaming_response,
 )
 
+client_id = os.getenv("GOOGLE_CLIENT_ID")
+client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
+redirect_uri = os.getenv("GOOGLE_REDIRECT_URI")
+secret_key = os.getenv("SECRET_KEY")
+
 bp = Blueprint("routes", __name__, static_folder="static", template_folder="static")
 
 
@@ -46,17 +53,62 @@ def create_app():
     app = Quart(__name__)
     app.register_blueprint(bp)
     app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.secret_key = secret_key
     return app
 
 
 @bp.route("/")
 async def index():
-    return await render_template(
-        "index.html",
-        title=app_settings.ui.title,
-        favicon=app_settings.ui.favicon
-    )
+    if "access_token" in session:
+        # User is already authenticated
+        return await render_template(
+            "index.html",
+            title=app_settings.ui.title,
+            favicon=app_settings.ui.favicon
+        )
+    else:
+        # Redirect to Google OAuth authorization endpoint
+        auth_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email"
+        return redirect(auth_url)
 
+@bp.route("/callback")
+async def callback():
+    code = request.args.get("code")
+    if code:
+        # Exchange authorization code for access token
+        token_url = "https://oauth2.googleapis.com/token"
+        data = {
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "code": code,
+            "redirect_uri": redirect_uri,
+            "grant_type": "authorization_code"
+        }
+        async with httpx.AsyncClient() as client:
+            response = await client.post(token_url, data=data)
+            token_data = response.json()
+            access_token = token_data.get("access_token")
+
+        # Use access token to get user information
+        user_info_url = "https://www.googleapis.com/oauth2/v2/userinfo"
+        headers = {"Authorization": f"Bearer {access_token}"}
+        async with httpx.AsyncClient() as client:
+            response = await client.get(user_info_url, headers=headers)
+            user_info = response.json()
+
+        # Store access token and user information in session
+        session["access_token"] = access_token
+        session["user_info"] = user_info
+
+        return redirect("/")
+    else:
+        # Handle error
+        return "Authentication failed."
+
+@bp.route("/logout")
+async def logout():
+    session.clear()
+    return redirect("/")
 
 @bp.route("/favicon.ico")
 async def favicon():
