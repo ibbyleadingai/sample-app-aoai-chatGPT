@@ -14,6 +14,7 @@ import mapp from "./assets/mapp-logo.svg"
 import hruc from "./assets/hruc-logo.svg"
 import everythingict from "./assets/EverythingICT-logo.jpg"
 import hopwoodHallCollege from "./assets/hopwood-logo.svg"
+import ncfe from "./assets/ncfe-logo.svg"
 
 import nhbcBackgroundImage from "./assets/nhbcimg1.jpg"
 import engineBackgroundImage from "./assets/engine-background-img.png"
@@ -42,7 +43,8 @@ type ImageImports = {
     hruc: hruc,
     RorySutherlandBackgroundImage: RorySutherlandBackgroundImage,
     everythingict: everythingict,
-    hopwoodHallCollege: hopwoodHallCollege
+    hopwoodHallCollege: hopwoodHallCollege,
+    ncfe: ncfe
     // Add more entries as needed for other images
   };
 
