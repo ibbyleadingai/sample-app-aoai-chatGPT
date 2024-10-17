@@ -80,9 +80,6 @@ def create_app():
     app.secret_key = os.getenv("SECRET_KEY", "supersecretkey")  # Add a secret key for session management
     app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-    # Attach OAuth to the app
-    oauth.init_app(app)
-
     # Register the Blueprint
     app.register_blueprint(bp)
     return app
