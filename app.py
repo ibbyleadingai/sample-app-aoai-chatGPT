@@ -17,7 +17,13 @@ from quart import (
     request,
     send_from_directory,
     render_template,
+    
+    redirect,
+    url_for,
+    session
 )
+
+from authlib.integrations.starlette_client import OAuth
 
 from openai import AsyncAzureOpenAI
 from azure.identity.aio import (
@@ -41,11 +47,44 @@ from backend.utils import (
 
 bp = Blueprint("routes", __name__, static_folder="static", template_folder="static")
 
+# OAuth Initialization
+oauth = OAuth()
+google = oauth.register(
+    name='google',
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    access_token_url='https://oauth2.googleapis.com/token',
+    authorize_url='https://accounts.google.com/o/oauth2/v2/auth',
+    api_base_url='https://www.googleapis.com/oauth2/v2/',
+    client_kwargs={'scope': 'openid email profile'},
+)
 
+# Google OAuth Routes in Blueprint
+@bp.route('/login/google')
+async def login_google():
+    # Redirect to Google's OAuth 2.0 server to initiate the authentication flow
+    redirect_uri = url_for('routes.authorize_google', _external=True)  # Use blueprint name for the route
+    return await google.authorize_redirect(request, redirect_uri)  # Pass request explicitly
+
+@bp.route('/authorize/google')
+async def authorize_google():
+    # Handle the response from Google's OAuth 2.0 server
+    token = await google.authorize_access_token(request)  # Pass request explicitly
+    user_info = await google.get('userinfo', token=token)  # Use the access token to get user info
+    session['user_info'] = user_info.json()  # Store user info in session
+    return redirect('/')
+
+# App factory function
 def create_app():
     app = Quart(__name__)
-    app.register_blueprint(bp)
+    app.secret_key = os.getenv("SECRET_KEY", "supersecretkey")  # Add a secret key for session management
     app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+    # Attach OAuth to the app
+    oauth.init_app(app)
+
+    # Register the Blueprint
+    app.register_blueprint(bp)
     return app
 
 
@@ -1037,6 +1076,5 @@ async def generate_title(conversation_messages) -> str:
     except Exception as e:
         logging.exception("Exception while generating title", e)
         return messages[-2]["content"]
-
 
 app = create_app()

@@ -812,6 +812,7 @@ class _BaseSettings(BaseSettings):
     auth_enabled: bool = True
     sanitize_answer: bool = False
     use_promptflow: bool = False
+    
 
 
 class _AppSettings(BaseModel):
