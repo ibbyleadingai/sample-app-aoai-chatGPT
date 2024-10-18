@@ -14,6 +14,8 @@ import usp from "./assets/USP.png"
 import engineBackgroundIcon from "./assets/engineBackgroundIcon.png"
 import secg from "./assets/secg-logo.svg"
 import wmc from "./assets/wmc-logo.png"
+import hruc from "./assets/hruc-logo.svg"
+import hopwood from "./assets/hopwood-logo.svg"
 
 import policyAdvisorIcon from './assets/icons/Engine_artwork_EducationEngine_BLACK.png'
 import commsProfessional from './assets/icons/Engine_artwork_WebEngine_BLACK.png'
@@ -50,6 +52,8 @@ type ImageImports = {
     engineBackgroundIcon: engineBackgroundIcon,
     secg: secg,
     wmc: wmc,
+    hruc: hruc,
+    hopwood: hopwood,
 
     policyAdvisorIcon: policyAdvisorIcon,
     commsProfessional: commsProfessional,
