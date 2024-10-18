@@ -16,6 +16,7 @@ import secg from "./assets/secg-logo.svg"
 import wmc from "./assets/wmc-logo.png"
 import hruc from "./assets/hruc-logo.svg"
 import hopwood from "./assets/hopwood-logo.svg"
+import ncfe from "./assets/ncfe-logo.svg"
 
 import policyAdvisorIcon from './assets/icons/Engine_artwork_EducationEngine_BLACK.png'
 import commsProfessional from './assets/icons/Engine_artwork_WebEngine_BLACK.png'
@@ -54,6 +55,7 @@ type ImageImports = {
     wmc: wmc,
     hruc: hruc,
     hopwood: hopwood,
+    ncfe: ncfe,
 
     policyAdvisorIcon: policyAdvisorIcon,
     commsProfessional: commsProfessional,
