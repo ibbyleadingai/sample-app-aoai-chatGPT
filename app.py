@@ -117,7 +117,9 @@ frontend_settings = {
         "hide_prompt_icons": app_settings.ui.hide_prompt_icons,
         "show_pdf_initial_text": app_settings.ui.show_pdf_initial_text,
         "upload_pdf_and_scrape_button_color": app_settings.ui.upload_pdf_and_scrape_button_color,
-        "upload_pdf_and_scrape_button_text_color": app_settings.ui.upload_pdf_and_scrape_button_text_color
+        "upload_pdf_and_scrape_button_text_color": app_settings.ui.upload_pdf_and_scrape_button_text_color,
+        "prompt_button_onclick": app_settings.ui.prompt_button_onclick,
+        "prompt_button_onclick_link": app_settings.ui.prompt_button_onclick_link
     },
     "sanitize_answer": app_settings.base_settings.sanitize_answer,
     "oyd_enabled": app_settings.base_settings.datasource_type,

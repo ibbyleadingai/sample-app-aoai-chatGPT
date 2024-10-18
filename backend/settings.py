@@ -112,6 +112,9 @@ class _UiSettings(BaseSettings):
     show_pdf_initial_text: bool = False
     upload_pdf_and_scrape_button_color: str = "#3498db"
     upload_pdf_and_scrape_button_text_color: str = "#fff"
+    prompt_button_onclick: bool = True
+    prompt_button_onclick_link: str = ""
+
     # Add more env variables here
 
 

@@ -160,6 +160,8 @@ export type UI = {
     show_pdf_initial_text?: boolean;
     upload_pdf_and_scrape_button_color?: string;
     upload_pdf_and_scrape_button_text_color?: string;
+    prompt_button_onclick?: boolean;
+    prompt_button_onclick_link?: string;
 } & {
   [key in `prompt${number}_suggestion_text` | 
     `prompt${number}_suggestion_message` | 
