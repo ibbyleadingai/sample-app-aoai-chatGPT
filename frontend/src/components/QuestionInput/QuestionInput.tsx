@@ -8,6 +8,7 @@ import { handleImprovePromptApi } from "../../api";
 import { AppStateContext } from "../../state/AppProvider";
 import React from "react";
 import { ChatMessage } from '../../api'
+import { resizeImage } from '../../utils/resizeImage'
 
 interface Props {
   onSend: (question: ChatMessage['content'], id?: string) => void
@@ -123,17 +124,12 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
   };
 
   const convertToBase64 = async (file: Blob) => {
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-
-    reader.onloadend = () => {
-      setBase64Image(reader.result as string);
-    };
-
-    reader.onerror = (error) => {
-      console.error('Error: ', error);
-    };
+    try {
+      const resizedBase64 = await resizeImage(file, 800, 800);
+      setBase64Image(resizedBase64);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const sendQuestion = () => {
