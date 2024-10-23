@@ -17,6 +17,7 @@ import wmc from "./assets/wmc-logo.png"
 import hruc from "./assets/hruc-logo.svg"
 import hopwood from "./assets/hopwood-logo.svg"
 import ncfe from "./assets/ncfe-logo.svg"
+import heartofyorkshire from "./assets/heartofyorkshire-logo.png"
 
 import policyAdvisorIcon from './assets/icons/Engine_artwork_EducationEngine_BLACK.png'
 import commsProfessional from './assets/icons/Engine_artwork_WebEngine_BLACK.png'
@@ -56,6 +57,7 @@ type ImageImports = {
     hruc: hruc,
     hopwood: hopwood,
     ncfe: ncfe,
+    heartofyorkshire: heartofyorkshire,
 
     policyAdvisorIcon: policyAdvisorIcon,
     commsProfessional: commsProfessional,
