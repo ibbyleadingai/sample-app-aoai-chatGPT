@@ -1,6 +1,6 @@
 import ambition from "./assets/ambition.png"
 import leadingAi from "./assets/leadingai.svg"
-import morley from "./assets/morley.png"
+import morley from "./assets/morley-logo.png"
 import engineLogo from "./assets/Engine-Logo.svg"
 import engineBlack from "./assets/Engine-Mark-Black.svg"
 import engineGreen from "./assets/Engine-Mark-Green.svg"
