@@ -61,7 +61,7 @@ export const getPrompts = (ui: any) => [
       suggestionText: ui?.prompt10_suggestion_text || '',
       message: ui?.prompt10_suggestion_message || 'What is ML (prompt 10)?',
       imageIcon: imageImports.policyAdvisorIcon,
-      isSpecial: ui?.prompt_button_onclick
+      isSpecial: ui?.prompt10_button_onclick_link
     },
     {
       headerText: ui?.prompt11_header_text || '',

@@ -161,6 +161,7 @@ export type UI = {
     upload_pdf_and_scrape_button_color?: string;
     upload_pdf_and_scrape_button_text_color?: string;
     prompt9_button_onclick_link?: string;
+    prompt10_button_onclick_link?: string;
 } & {
   [key in `prompt${number}_suggestion_text` | 
     `prompt${number}_suggestion_message` | 

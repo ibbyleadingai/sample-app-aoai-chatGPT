@@ -113,6 +113,7 @@ class _UiSettings(BaseSettings):
     upload_pdf_and_scrape_button_color: str = "#3498db"
     upload_pdf_and_scrape_button_text_color: str = "#fff"
     prompt9_button_onclick_link: str = ""
+    prompt10_button_onclick_link: str = ""
 
     # Add more env variables here
 
