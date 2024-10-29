@@ -822,8 +822,8 @@ const Chat = () => {
                         <div
                           key={index}
                           onClick={() => { //if the prompt is special, onclick changes to open the special link (ie, RAG link)
-                            if (prompt.isSpecial) {
-                              window.open(prompt.specialLink, '_blank', 'width=1200,height=600');
+                            if (prompt.isSpecial &&  prompt.isSpecial !== "") {
+                              window.open(prompt.isSpecial, '_blank', 'width=1200,height=600');
                             } else {
                               handlePromptClick(prompt.message); //Else, just send the prompt button message to the AI
                             }

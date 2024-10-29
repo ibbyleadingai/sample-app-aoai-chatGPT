@@ -54,14 +54,14 @@ export const getPrompts = (ui: any) => [
       suggestionText: ui?.prompt9_suggestion_text || '',
       message: ui?.prompt9_suggestion_message || 'What is ML (prompt 9)?',
       imageIcon: imageImports.inspectionToolKitIcon,
-      isSpecial: ui?.prompt_button_onclick,
-      specialLink: ui?.prompt_button_onclick_link
+      isSpecial: ui?.prompt9_button_onclick_link,
     },
     {
       headerText: ui?.prompt10_header_text || '',
       suggestionText: ui?.prompt10_suggestion_text || '',
       message: ui?.prompt10_suggestion_message || 'What is ML (prompt 10)?',
-      imageIcon: imageImports.policyAdvisorIcon
+      imageIcon: imageImports.policyAdvisorIcon,
+      isSpecial: ui?.prompt_button_onclick
     },
     {
       headerText: ui?.prompt11_header_text || '',
