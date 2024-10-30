@@ -19,6 +19,8 @@ import hopwood from "./assets/hopwood-logo.svg"
 import ncfe from "./assets/ncfe-logo.svg"
 import heartofyorkshire from "./assets/heartofyorkshire-logo.png"
 import barnetsouthgate from "./assets/barnetsouthgate-logo.svg"
+import wcg from "./assets/wcg-logo.svg"
+import wlc from "./assets/wlc-logo.svg"
 
 import policyAdvisorIcon from './assets/icons/Engine_artwork_EducationEngine_BLACK.png'
 import commsProfessional from './assets/icons/Engine_artwork_WebEngine_BLACK.png'
@@ -60,6 +62,8 @@ type ImageImports = {
     ncfe: ncfe,
     heartofyorkshire: heartofyorkshire,
     barnetsouthgate: barnetsouthgate,
+    wcg: wcg,
+    wlc: wlc,
 
     policyAdvisorIcon: policyAdvisorIcon,
     commsProfessional: commsProfessional,
