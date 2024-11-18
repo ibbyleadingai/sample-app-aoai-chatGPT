@@ -164,9 +164,10 @@ async def upload_pdf():
     try:
         text = ''
         # Process the PDF in-memory
-        with pdfplumber.open(io.BytesIO(file_content)) as pdf:
+        with pdfplumber.open(io.BytesIO(file_content)) as pdf: # open pdf from memory
+            #for every page, extract the text out
             pages = [page.extract_text() for page in pdf.pages if page.extract_text() is not None]
-            text = ' '.join(pages)
+            text = ' '.join(pages) # Joins all the extracted page texts together with spaces between them to create a single string.
             if app_settings.ui.show_pdf_initial_text:
                 message = ('The following text is the source information I want you to answer questions on. '
                'I have copied this from a web page. Please do not generate a response. '
