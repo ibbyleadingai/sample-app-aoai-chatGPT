@@ -14,3 +14,5 @@ aiofiles==23.2.1
 pdfplumber==0.11.0
 pydantic-settings==2.2.1
 python-magic==0.4.27
+psutil==5.9.5
+

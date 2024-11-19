@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import httpx
 import pdfplumber
 import io
+import psutil #for reading memory
 
 from quart import (
     Blueprint,
@@ -161,6 +162,13 @@ async def upload_pdf():
     if len(file_content) > MAX_FILE_SIZE:
         return jsonify({'error': 'File size exceeds limit'}), 400
 
+    # Check if there is enough available memory to process the PDF
+    available_memory = psutil.virtual_memory().available
+    estimated_memory_needed = len(file_content) * 2  # Estimate that processing may require roughly twice the file size
+
+    if estimated_memory_needed > available_memory:
+        return jsonify({'error': 'Not enough memory to process the PDF document'}), 400
+
     try:
         text = ''
         # Process the PDF in-memory
@@ -170,19 +178,38 @@ async def upload_pdf():
             text = ' '.join(pages) # Joins all the extracted page texts together with spaces between them to create a single string.
             if app_settings.ui.show_pdf_initial_text:
                 message = ('The following text is the source information I want you to answer questions on. '
-               'I have copied this from a web page. Please do not generate a response. '
-               'Just remember this information for further questions:\n\n' + text)
+                          'I have copied this from a web page. Please do not generate a response. '
+                          'Just remember this information for further questions:\n\n' + text)
             else:
                 message = text  # Or set to '' if you don't want to include any text
-                
+
         return jsonify({'text': message})
-    
+
     except pdfplumber.PDFSyntaxError as e:
         logging.error(f"PDF syntax error: {e}", exc_info=True)  # Detailed logging
         return jsonify({'error': 'Invalid PDF file'}), 400
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}", exc_info=True)  # Detailed logging
         return jsonify({'error': 'An internal server error occurred'}), 500
+
+def test_memory_check():
+    """
+    A test function to simulate checking the available memory and determining whether the file
+    can be processed based on current available memory. This can be used to validate the logic
+    without crashing the server.
+    """
+    # Simulate a file content size (e.g., 15MB)
+    file_size = 15 * 1024 * 1024
+    available_memory = psutil.virtual_memory().available
+    estimated_memory_needed = file_size * 2
+
+    if estimated_memory_needed > available_memory:
+        print("Not enough memory to process the PDF document.")
+    else:
+        print("Sufficient memory available to process the PDF document.")
+
+# Run test function
+test_memory_check()
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])
