@@ -201,6 +201,7 @@ def test_memory_check():
     # Simulate a file content size (e.g., 15MB)
     file_size = 15 * 1024 * 1024
     available_memory = psutil.virtual_memory().available
+    # estimated_memory_needed = file_size * 2
     estimated_memory_needed = file_size * 2
 
     if estimated_memory_needed > available_memory:
