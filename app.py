@@ -153,7 +153,7 @@ async def upload_pdf():
 
     # Read file content
     try:
-        file_content = file.read()  # Use await for async read
+        file_content = file.read()  # Use await for async read. Didnt work with async so removed.
     except Exception as e:
         logging.error(f"Error reading file: {e}", exc_info=True)
         return jsonify({'error': 'Error reading file'}), 500
@@ -191,26 +191,6 @@ async def upload_pdf():
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}", exc_info=True)  # Detailed logging
         return jsonify({'error': 'An internal server error occurred'}), 500
-
-def test_memory_check():
-    """
-    A test function to simulate checking the available memory and determining whether the file
-    can be processed based on current available memory. This can be used to validate the logic
-    without crashing the server.
-    """
-    # Simulate a file content size (e.g., 15MB)
-    file_size = 15 * 1024 * 1024
-    available_memory = psutil.virtual_memory().available
-    # estimated_memory_needed = file_size * 2
-    estimated_memory_needed = file_size * 2
-
-    if estimated_memory_needed > available_memory:
-        print("Not enough memory to process the PDF document.")
-    else:
-        print("Sufficient memory available to process the PDF document.")
-
-# Run test function
-test_memory_check()
 
 #Improve my prompt
 @bp.route("/improve-prompt", methods=["POST"])
