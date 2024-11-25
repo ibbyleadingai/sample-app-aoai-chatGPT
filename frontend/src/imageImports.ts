@@ -21,6 +21,7 @@ import heartofyorkshire from "./assets/heartofyorkshire-logo.png"
 import barnetsouthgate from "./assets/barnetsouthgate-logo.svg"
 import wcg from "./assets/wcg-logo.svg"
 import wlc from "./assets/wlc-logo.svg"
+import tp from "./assets/tp-logo.png"
 
 import policyAdvisorIcon from './assets/icons/Engine_artwork_EducationEngine_BLACK.png'
 import commsProfessional from './assets/icons/Engine_artwork_WebEngine_BLACK.png'
@@ -64,6 +65,7 @@ type ImageImports = {
     barnetsouthgate: barnetsouthgate,
     wcg: wcg,
     wlc: wlc,
+    tp: tp,
 
     policyAdvisorIcon: policyAdvisorIcon,
     commsProfessional: commsProfessional,
